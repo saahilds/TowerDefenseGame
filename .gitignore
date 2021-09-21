@@ -21,3 +21,11 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+#intelliJ files we don't want to worry about
+.idea
+/out
+/_MACOS
+desktop.ini
+.DS_Store #mac os
+*.iml

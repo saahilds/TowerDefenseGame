@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="728.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.main.InitialScreenController">
+    <children>
+        <VBox alignment="TOP_CENTER" prefHeight="174.0" prefWidth="135.9998779296875" spacing="20.0"
+              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+              AnchorPane.topAnchor="0.0">
+            <children>
+                <MenuBar style="-fx-background-color: red;">
+                    <menus>
+                        <Menu mnemonicParsing="false" text="File">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="Close"/>
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Edit">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="Delete"/>
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Help">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="About"/>
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+                <ImageView fitHeight="135.0" fitWidth="290.0" pickOnBounds="true" preserveRatio="true">
+<!--                    <image>-->
+<!--                        <Image url="@../../../../Desktop/Unbenannt.png"/>-->
+<!--                    </image>-->
+                </ImageView>
+                <Label text="Screen 2">
+                    <font>
+                        <Font size="18.0"/>
+                    </font>
+                </Label>
+                <Button mnemonicParsing="false" onAction="#goToMainScreen" text="Go to Screen1"/>
+                <Button mnemonicParsing="false" onAction="#goToGameScreen" text="Go To Screen3"/>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

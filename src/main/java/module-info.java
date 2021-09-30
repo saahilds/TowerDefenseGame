@@ -10,6 +10,8 @@ module com.main {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
 
+    requires com.almasb.fxgl.all;
+
     opens com.main to javafx.fxml;
     exports com.main;
 }

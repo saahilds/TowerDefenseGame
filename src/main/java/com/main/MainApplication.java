@@ -1,12 +1,20 @@
 package com.main;
 
+import com.almasb.fxgl.app.GameSettings;
+import com.almasb.fxgl.core.math.FXGLMath;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import com.almasb.fxgl.app.GameApplication;
+import javafx.util.Duration;
+
+import static com.almasb.fxgl.dsl.FXGL.*;
+import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
+import static javafx.application.Application.launch;
 
 public class MainApplication extends Application {
     public static String mainID = "main";
@@ -38,7 +46,7 @@ public class MainApplication extends Application {
         launch(args);
     }
 
-    public static Stage getMainStage(){
+    public static Stage getMainStage() {
         return primaryStagen;
     }
 }

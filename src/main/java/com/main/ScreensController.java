@@ -6,14 +6,17 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.property.DoubleProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -49,7 +52,19 @@ public class ScreensController extends StackPane {
             primaryStage.setScene(scene);
             ControlledScreen myScreenControler = ((ControlledScreen) myLoader.getController());
             myScreenControler.setScreenParent(this);
-//            primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("bal.png")));
+//            // Get current screen of the stage
+//            ObservableList<Screen> screens
+//                    = Screen.getScreensForRectangle(
+//                            new Rectangle2D(
+//                                    primaryStage.getX(), primaryStage.getY(), primaryStage.getWidth(), primaryStage.getHeight()
+//                            )
+//                    );
+//            // Change stage properties
+//            Rectangle2D bounds = screens.get(0).getVisualBounds();
+//            primaryStage.setX(bounds.getMinX());
+//            primaryStage.setY(bounds.getMinY());
+//            primaryStage.setWidth(bounds.getWidth());
+//            primaryStage.setHeight(bounds.getHeight());
             addScreen(name, loadScreen);
             return true;
         } catch (Exception e) {
@@ -85,7 +100,6 @@ public class ScreensController extends StackPane {
                             }
                         }, new KeyValue(opacity, 0.0)));
                 fade.play();
-
             } else {
                 setOpacity(0.0);
                 getChildren().add(screens.get(name)); // no one else been

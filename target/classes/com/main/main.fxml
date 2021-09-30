@@ -1,57 +1,52 @@
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?xml version="1.0" encoding="UTF-8"?>
 
-<AnchorPane id="AnchorPane" minHeight="122.0" prefHeight="721.0" prefWidth="695.0" xmlns="http://javafx.com/javafx/8"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.main.MainController">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane id="main-screen_anchor" minHeight="768.0" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.main.MainController">
     <children>
-        <VBox alignment="TOP_CENTER" prefHeight="222.0" prefWidth="301.0" spacing="20.0" AnchorPane.bottomAnchor="10.0"
-              AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="1024.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <MenuBar style="-fx-background-color: red;">
+                <MenuBar prefHeight="81.0" prefWidth="1024.0" style="-fx-background-color: #020202;">
                     <menus>
-                        <Menu fx:id="IDT" mnemonicParsing="false" onAction="#performRegistration" text="File">
+                        <Menu fx:id="IDT" mnemonicParsing="false" onAction="#performRegistration" styleClass="menu-bar-item" text="File">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Close"/>
+                                <MenuItem mnemonicParsing="false" text="Close" />
                             </items>
                         </Menu>
-                        <Menu mnemonicParsing="false" text="Edit">
+                        <Menu mnemonicParsing="false" styleClass="menu-bar-item" text="Edit">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Delete"/>
+                                <MenuItem mnemonicParsing="false" text="Delete" />
                             </items>
                         </Menu>
-                        <Menu mnemonicParsing="false" text="Help">
+                        <Menu mnemonicParsing="false" styleClass="menu-bar-item" text="Help">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="About"/>
+                                <MenuItem mnemonicParsing="false" text="About" />
                             </items>
                         </Menu>
                     </menus>
                 </MenuBar>
-                <ImageView fitHeight="200.0" fitWidth="298.0" pickOnBounds="true" preserveRatio="true">
-<!--                    <image>-->
-<!--                        <Image url="@../../../../Desktop/Unbenannt.png"/>-->
-<!--                    </image>-->
-                </ImageView>
-                <Label text="Screen 1">
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                </Label>
-                <HBox alignment="CENTER" prefHeight="57.0" prefWidth="281.0" spacing="20.0">
+                <HBox alignment="CENTER" cacheShape="false" centerShape="false" prefHeight="982.0" prefWidth="1024.0" spacing="20.0">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#performDialoge" text="Button"/>
-                        <Button mnemonicParsing="false" onAction="#goToInitialScreen" text="Screen2"/>
-                        <Button mnemonicParsing="false" onAction="#goToGameScreen" text="Screen3"/>
+                        <Button mnemonicParsing="false" onAction="#goToInitialScreen" text="Screen2" />
+                        <Button mnemonicParsing="false" onAction="#goToGameScreen" text="Screen3" />
                     </children>
                 </HBox>
+            <ButtonBar prefHeight="40.0" prefWidth="200.0">
+              <buttons>
+                <Button mnemonicParsing="false" text="Button" />
+              </buttons>
+            </ButtonBar>
             </children>
             <padding>
-                <Insets/>
+                <Insets />
             </padding>
         </VBox>
     </children>

@@ -43,7 +43,7 @@ public class MainController implements Initializable, ControlledScreen {
             Stage primaryStage = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("initial-screen.fxml"));
             Scene scene = new Scene(root);
-//            scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("css/main.css").toExternalForm());
             primaryStage.setScene(scene);
             primaryStage.show();
 

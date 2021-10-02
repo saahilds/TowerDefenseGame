@@ -2,6 +2,7 @@ package com.main;
 
 import com.main.config.Config;
 import com.main.game.GamePaneWrapper;
+import com.main.game.entity.EntityWithHealth;
 import com.main.game.path.PathBlock;
 import com.main.game.path.TexturePathBlock;
 import javafx.event.ActionEvent;
@@ -38,7 +39,6 @@ public class GameScreenController extends MainApplication implements Initializab
                 Config.UNIT, Config.UNIT
         );
 
-        Rectangle a = new Rectangle(32, 32, Color.RED);
         Rectangle b = new Rectangle(32, 32, Color.RED);
         Rectangle c = new Rectangle(32, 32, Color.RED);
         System.out.println(gamePaneWrapper.widthCapacity + "|" + gamePaneWrapper.heightCapacity);
@@ -48,8 +48,23 @@ public class GameScreenController extends MainApplication implements Initializab
         this.generateSimplePath();
 
         int vCenterIdx = (int) Math.floor(gamePaneWrapper.maxYidx / 2);
-        this.gamePaneWrapper.addNodeWithXidxYidx(0, vCenterIdx, a);
-        this.gamePaneWrapper.addNodeWithXidxYidx(maxXidx, vCenterIdx, b);
+
+        EntityWithHealth enemy = new EntityWithHealth(32, 32, 100, 50);
+        Image enemyImage = new Image(
+                getClass().getResourceAsStream("/com/main/skeleton_01.png")
+        );
+        ImagePattern enemyImgPattern = new ImagePattern(enemyImage);
+        enemy.setEntityImgPattern(enemyImgPattern);
+
+        EntityWithHealth player = new EntityWithHealth(32, 32, 100, 80);
+        Image playerImage = new Image(
+                getClass().getResourceAsStream("/com/main/steve_01.jpeg")
+        );
+        ImagePattern playerImgPattern = new ImagePattern(playerImage);
+        player.setEntityImgPattern(playerImgPattern);
+
+        this.gamePaneWrapper.addNodeWithXidxYidx(0, vCenterIdx, player);
+        this.gamePaneWrapper.addNodeWithXidxYidx(maxXidx - 1, vCenterIdx, enemy);
         this.gamePaneWrapper.addNodeWithXidxYidx(0, maxYidx, c);
     }
 

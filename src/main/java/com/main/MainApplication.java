@@ -1,5 +1,6 @@
 package com.main;
 
+import com.main.config.Config;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -29,7 +30,7 @@ public class MainApplication extends Application {
         primaryStagen = primaryStage;
         Group root = new Group();
         root.getChildren().addAll(mainContainer);
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root, Config.STAGE_WIDTH, Config.STAGE_HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

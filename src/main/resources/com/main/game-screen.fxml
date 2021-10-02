@@ -1,45 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" minWidth="174.0" prefHeight="728.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.main.GameScreenController">
+<AnchorPane id="AnchorPane" minWidth="174.0" prefHeight="728.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.main.GameScreenController">
     <children>
-        <VBox alignment="TOP_CENTER" prefHeight="153.0" prefWidth="174.0" spacing="20.0" AnchorPane.bottomAnchor="0.0"
-              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <children>
-                <MenuBar style="-fx-background-color: red;">
-                    <menus>
-                        <Menu mnemonicParsing="false" text="File">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Close"/>
-                            </items>
+      <BorderPane prefHeight="768.0" prefWidth="1024.0">
+         <top>
+              <VBox alignment="TOP_CENTER" prefHeight="32.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
+               <children>
+                  <MenuBar prefHeight="32.0" prefWidth="525.0" style="-fx-background-color: #ecedee;">
+                     <menus>
+                        <Menu mnemonicParsing="false" text="Back">
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#goToMainScreen" text="Welcome" />
+                              <MenuItem mnemonicParsing="false" onAction="#goToInitialScreen" text="Configuration" />
+                           </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Edit">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Delete"/>
-                            </items>
+                           <items>
+                              <MenuItem mnemonicParsing="false" text="Delete" />
+                           </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Help">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="About"/>
-                            </items>
+                           <items>
+                              <MenuItem mnemonicParsing="false" text="About" />
+                           </items>
                         </Menu>
-                    </menus>
-                </MenuBar>
-                <Label text="Screen 3">
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                </Label>
-                <Button mnemonicParsing="false" onAction="#goToMainScreen" text="Go To Screen1"/>
-                <Button mnemonicParsing="false" onAction="#goToInitialScreen" text="Go To Screen2"/>
-            </children>
-        </VBox>
+                     </menus>
+                  </MenuBar>
+               </children>
+              </VBox>
+         </top>
+         <center>
+            <Pane fx:id="gamePane" prefHeight="664.0" prefWidth="1024.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER" />
+         </center>
+         <left>
+            <HBox prefHeight="664.0" prefWidth="192.0" BorderPane.alignment="CENTER" />
+         </left>
+      </BorderPane>
     </children>
 </AnchorPane>

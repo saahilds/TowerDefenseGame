@@ -29,6 +29,7 @@ public class SimpleGameApp extends GameApplication {
 
     @Override
     protected void initGame() {
+        System.out.println("initGame");
         getGameWorld().addEntityFactory(new SimpleFactory());
 
         run(() -> {

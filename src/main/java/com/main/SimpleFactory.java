@@ -15,17 +15,21 @@ import javafx.scene.shape.Rectangle;
  */
 public class SimpleFactory implements EntityFactory {
 
+    private String BRICK_PNG = "brick.png";
+
     @Spawns("enemy")
     public Entity newEnemy(SpawnData data) {
+        System.out.println("newEnemy");
         return FXGL.entityBuilder(data)
-                .view("brick.png")
+                .view(BRICK_PNG)
                 .with(new ProjectileComponent(new Point2D(1, 0), 150))
                 .build();
     }
 
     @Spawns("ally")
     public Entity newAlly(SpawnData data) {
-        var texture = FXGL.texture("brick.png").multiplyColor(Color.GREEN);
+        System.out.println("newAlly");
+        var texture = FXGL.texture(BRICK_PNG).multiplyColor(Color.GREEN);
 
         return FXGL.entityBuilder(data)
                 .view(texture)

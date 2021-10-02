@@ -52,19 +52,6 @@ public class ScreensController extends StackPane {
             primaryStage.setScene(scene);
             ControlledScreen myScreenControler = ((ControlledScreen) myLoader.getController());
             myScreenControler.setScreenParent(this);
-//            // Get current screen of the stage
-//            ObservableList<Screen> screens
-//                    = Screen.getScreensForRectangle(
-//                            new Rectangle2D(
-//                                    primaryStage.getX(), primaryStage.getY(), primaryStage.getWidth(), primaryStage.getHeight()
-//                            )
-//                    );
-//            // Change stage properties
-//            Rectangle2D bounds = screens.get(0).getVisualBounds();
-//            primaryStage.setX(bounds.getMinX());
-//            primaryStage.setY(bounds.getMinY());
-//            primaryStage.setWidth(bounds.getWidth());
-//            primaryStage.setHeight(bounds.getHeight());
             addScreen(name, loadScreen);
             return true;
         } catch (Exception e) {

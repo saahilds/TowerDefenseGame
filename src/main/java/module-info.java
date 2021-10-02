@@ -13,5 +13,6 @@ module com.main {
     requires com.almasb.fxgl.all;
 
     opens com.main to javafx.fxml;
+    opens assets.textures;
     exports com.main;
 }

@@ -24,17 +24,18 @@ public class MainApplication extends Application {
     public static String gameScreenID = "game-screen";
     public static String gameScreenFile = "game-screen.fxml";
 
-    private static Stage primaryStagen;
+    protected static Stage primaryStagen;
 
     @Override
     public void start(Stage primaryStage) {
+        primaryStagen = primaryStage;
 
         ScreensController mainContainer = new ScreensController();
         mainContainer.loadScreen(MainApplication.mainID, MainApplication.mainFile);
         mainContainer.loadScreen(MainApplication.initialScreenID, MainApplication.initialScreenFile);
         mainContainer.loadScreen(MainApplication.gameScreenID, MainApplication.gameScreenFile);
         mainContainer.setScreen(MainApplication.mainID);
-        primaryStagen = primaryStage;
+
         Group root = new Group();
         root.getChildren().addAll(mainContainer);
         Scene scene = new Scene(root);

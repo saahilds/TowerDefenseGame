@@ -27,5 +27,5 @@ hs_err_pid*
 /out
 /_MACOS
 desktop.ini
-.DS_Store #mac os
+.DS_Store
 *.iml

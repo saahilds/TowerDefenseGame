@@ -1,10 +1,13 @@
 package com.main;
 
 import com.main.config.Config;
+import com.main.game.DataController;
 import com.main.game.GamePaneWrapper;
 import com.main.game.entity.EntityWithHealth;
 import com.main.game.path.PathBlock;
 import com.main.game.path.TexturePathBlock;
+import com.main.model.GameLevelType;
+import com.main.model.GameScreenType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -24,15 +28,25 @@ import java.util.ResourceBundle;
  */
 public class GameScreenController extends MainApplication implements Initializable, ControlledScreen {
 
-    ScreensController screensController;
-
     @FXML
     private Pane gamePane;
 
+    ScreensController screensController;
     private GamePaneWrapper gamePaneWrapper;
 
+    private GameLevelType gameLevel;
+    private String playerName;
+    private Integer gameMoney;
+
+    @FXML
+    private Text gameLevelText;
+    @FXML
+    private Text playerNameText;
+    @FXML
+    private Text gameMoneyText;
+
+
     public void initGamePaneSetting() {
-        System.out.println("gamePane" + gamePane);
         this.gamePaneWrapper = new GamePaneWrapper(
                 this.gamePane, Config.STAGE_WIDTH - Config.LEFT_TOOLBAR_WIDTH,
                 Config.STAGE_HEIGHT - Config.GNB_TOP_HEIGHT,
@@ -86,6 +100,9 @@ public class GameScreenController extends MainApplication implements Initializab
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        setGameLevel(getDataController().getGameLevel());
+        setPlayerName(getDataController().getPlayerName());
+        setGameMoney(getDataController().getGameMoney());
         this.initGamePaneSetting();
     }
 
@@ -95,11 +112,25 @@ public class GameScreenController extends MainApplication implements Initializab
 
     @FXML
     private void goToMainScreen(ActionEvent event) {
-        screensController.setScreen(MainApplication.mainID);
+        screensController.setScreen(GameScreenType.WELCOME_SCREEN);
     }
 
     @FXML
     private void goToInitialScreen(ActionEvent event) {
-        screensController.setScreen(MainApplication.initialScreenID);
+        screensController.setScreen(GameScreenType.WELCOME_SCREEN);
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerNameText.setText(playerName);
+        this.playerName = playerName;
+    }
+
+    public void setGameMoney(Integer gameMoney) {
+        this.gameMoneyText.setText(gameMoney.toString());
+        this.gameMoney = gameMoney;
+    }
+
+    public void setGameLevel(GameLevelType gameLevel) {
+        this.gameLevel = gameLevel;
     }
 }

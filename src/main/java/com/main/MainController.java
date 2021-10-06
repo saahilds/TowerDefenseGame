@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.main.model.GameScreenType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -59,12 +60,12 @@ public class MainController implements Initializable, ControlledScreen {
 
     @FXML
     private void goToInitialScreen(ActionEvent event) {
-        screensController.setScreen(MainApplication.initialScreenID);
+        screensController.setScreen(GameScreenType.CONFIG_SCREEN);
     }
 
     @FXML
     private void goToGameScreen(ActionEvent event) {
-        screensController.setScreen(MainApplication.gameScreenID);
+        screensController.setScreen(GameScreenType.GAME_SCREEN);
     }
 
     public void performDialoge() {

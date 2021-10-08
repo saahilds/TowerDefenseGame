@@ -5,18 +5,18 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.TextBoundsType;
-import org.w3c.dom.Text;
+//import javafx.scene.text.TextBoundsType;
+//import org.w3c.dom.Text;
 
 public class EntityWithHealth extends StackPane {
-    final float HP_PXL_RATIO = (100 / 32);
-    public float maxHP;
-    public float currHP;
-    public int maxWidth;
+    private final float hp_PXL_RATIO = (100 / 32);
+    private float maxHP;
+    private float currHP;
+    private int maxWidth;
 
-    public Rectangle entity;
-    public HealthBar hpBar;
-    public Label hpText;
+    private Rectangle entity;
+    private HealthBar hpBar;
+    private Label hpText;
 
     public EntityWithHealth(int w, int h, float maxHP, float currHP) {
         this.maxHP = maxHP;

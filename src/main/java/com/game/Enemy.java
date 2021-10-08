@@ -16,6 +16,16 @@ public class Enemy {
     private StackPane stackPane;
     private Text text;
 
+    public boolean isBoss() {
+        return isBoss;
+    }
+
+    public void setBoss(boolean boss) {
+        isBoss = boss;
+    }
+
+    private boolean isBoss = false;
+
     public Rectangle getShape() {
         return shape;
     }

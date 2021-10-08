@@ -39,5 +39,15 @@ public class GameScreenTest extends ApplicationTest {
     @Before
     public void setUp() throws Exception {
     }
-    
+
+    @Test
+    public void testPlayerInitialization() {
+        GameLevelType level = GameLevelType.EASY;
+        EntityWithHealth playerEntity = from(mainNode).lookup("#playerEntity").query();
+        assertNotNull(playerEntity);
+        assertSame(
+                (int) playerEntity.getMaxHP(),
+                100
+        );
+    }
 }

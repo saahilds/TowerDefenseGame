@@ -54,4 +54,11 @@ public class ConfigurationScreenTest extends ApplicationTest {
                 GameSettingDataMap.getStartingMonumentHealth(level)
         );
     }
+    
+    @Test
+    public void testPlayerNameValidityWithBlank() {
+        dataController.setPlayerName(" "); //test invalid player name input
+        assertFalse(dataController.isPlayerNameValid(dataController.getPlayerName()));
+        assertFalse(dataController.isAbleToGoGameScreen());
+    }
 }

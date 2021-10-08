@@ -40,4 +40,29 @@ public class GameScreenTest extends ApplicationTest {
     public void setUp() throws Exception {
     }
     
+    @Test
+    public void testGameScreenInitialization() {
+        assertNotNull(mainNode);
+    }
+    @Test
+    public void testEnemyInitialization() {
+        GameLevelType level = GameLevelType.EASY;
+        EntityWithHealth enemyEntity = from(mainNode).lookup("#enemyEntity").query();
+        assertNotNull(enemyEntity);
+        assertSame(
+                (int) enemyEntity.getMaxHP(),
+                GameSettingDataMap.getStartingMonumentHealth(level)
+        );
+    }
+
+    @Test      
+    public void testPlayerInitialization() {
+        GameLevelType level = GameLevelType.EASY;
+        EntityWithHealth playerEntity = from(mainNode).lookup("#playerEntity").query();
+        assertNotNull(playerEntity);
+        assertSame(
+                (int) playerEntity.getMaxHP(),
+                100
+        );
+    }
 }

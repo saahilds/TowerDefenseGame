@@ -44,6 +44,23 @@ public class WelcomeScreenTest extends ApplicationTest {
     }
 
     @Test
+    public void testWelcomeScreenInitialization() {
+        assertNotNull(mainNode);
+    }
+    
+    @Test
+    public void testWelcomText() {
+        Label welcomeLabel = from(mainNode).lookup("#welcomeLabel").query();
+        assertEquals(welcomeLabel.getText(), "Tower Defense Game");
+    }
+    
+    @Test
+    public void testConfigurationScreenButtonClickable() {
+        Button goToInitialScreenBtn = from(mainNode).lookup("#goToInitialScreenBtn").query();
+        clickOn(goToInitialScreenBtn);
+    }
+
+    @Test
     public void testConfigurationScreenButtonText() {
         Button goToInitialScreenBtn = from(mainNode).lookup("#goToInitialScreenBtn").query();
         assertEquals(goToInitialScreenBtn.getText(), "configuration");

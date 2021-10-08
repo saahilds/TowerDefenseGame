@@ -40,6 +40,21 @@ public class ConfigurationScreenTest extends ApplicationTest {
     }
 
     @Test
+    public void testPlayerNameValidityWithBlank() {
+        dataController.setPlayerName(" "); //test invalid player name input
+        assertFalse(dataController.isPlayerNameValid(dataController.getPlayerName()));
+        assertFalse(dataController.isAbleToGoGameScreen());
+    }
+
+    @Test
+    public void testPlayerNameValidityWithValidName() {
+        dataController.setGameLevel(GameLevelType.EASY);
+        dataController.setPlayerName("James Bond"); //test invalid player name input
+        assertTrue(dataController.isPlayerNameValid(dataController.getPlayerName()));
+        assertTrue(dataController.isAbleToGoGameScreen());
+    }
+  
+    @Test
     public void testHardModeSetting() {
         System.out.println(mainNode);
         GameLevelType level = GameLevelType.HARD;
@@ -55,4 +70,26 @@ public class ConfigurationScreenTest extends ApplicationTest {
         );
     }
 
+    @Test
+    public void testNormalModeSetting() {
+        System.out.println(mainNode);
+        GameLevelType level = GameLevelType.NORMAL;
+        dataController.setGameLevel(level);
+        dataController.setPlayerName("King Doma");
+        assertEquals(
+                dataController.getGameMoney(),
+                GameSettingDataMap.getStartingMoney(level)
+        );
+        assertEquals(
+                dataController.getEnemyMonumentHealth(),
+                GameSettingDataMap.getStartingMonumentHealth(level)
+        );
+    }
+    
+    @Test
+    public void testPlayerNameValidityWithBlank() {
+        dataController.setPlayerName(" "); //test invalid player name input
+        assertFalse(dataController.isPlayerNameValid(dataController.getPlayerName()));
+        assertFalse(dataController.isAbleToGoGameScreen());
+    }
 }

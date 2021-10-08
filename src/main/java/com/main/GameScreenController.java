@@ -3,6 +3,7 @@ package com.main;
 import com.main.config.Config;
 //import com.main.game.DataController;
 import com.main.game.GamePaneWrapper;
+import com.main.game.data.GameSettingDataMap;
 import com.main.game.entity.EntityWithHealth;
 import com.main.game.path.PathBlock;
 import com.main.game.path.TexturePathBlock;
@@ -64,8 +65,14 @@ public class GameScreenController extends
         this.generateSimplePath();
 
         int vCenterIdx = (int) Math.floor(gamePaneWrapper.getMaxYidx() / 2);
+        float startingMonumentHealth
+                = (float) GameSettingDataMap.getStartingMonumentHealth(this.gameLevel);
 
-        EntityWithHealth enemy = new EntityWithHealth(32, 32, 100, 50);
+        EntityWithHealth enemy = new EntityWithHealth(
+                32,
+                32,
+                startingMonumentHealth,
+                startingMonumentHealth);
         Image enemyImage = new Image(
                 getClass().getResourceAsStream("/com/main/skeleton_01.png")
         );
@@ -120,7 +127,7 @@ public class GameScreenController extends
 
     @FXML
     private void goToInitialScreen(ActionEvent event) {
-        screensController.setScreen(GameScreenType.WELCOME_SCREEN);
+        screensController.setScreen(GameScreenType.CONFIG_SCREEN);
     }
 
     public void setPlayerName(String playerName) {

@@ -36,6 +36,7 @@ public class GameSettingDataMap {
         return screenFileMap.get(gameScreenType);
     }
 
+
     private static HashMap<GameLevelType, Integer> startingMoneyMap  = new HashMap<>() {
         {
             put(GameLevelType.EASY, 1000);
@@ -46,5 +47,17 @@ public class GameSettingDataMap {
 
     public static Integer getStartingMoney(GameLevelType gameLevelType) {
         return startingMoneyMap.get(gameLevelType);
+    }
+
+    private static HashMap<GameLevelType, Integer> startingMonumentHealthMap  = new HashMap<>() {
+        {
+            put(GameLevelType.EASY, 100);
+            put(GameLevelType.NORMAL, 500);
+            put(GameLevelType.HARD, 1000);
+        }
+    };
+
+    public static Integer getStartingMonumentHealth(GameLevelType gameLevelType) {
+        return startingMonumentHealthMap.get(gameLevelType);
     }
 }

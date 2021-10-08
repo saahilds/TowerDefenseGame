@@ -8,5 +8,4 @@ public class Config {
     public static final int GNB_TOP_HEIGHT = 64;
 
     public static final int UNIT = 32;
-    public static final int DIMENSION = 2;
 }

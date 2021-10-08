@@ -1,6 +1,6 @@
 package com.main.game.path;
 
-import com.main.game.path.PathBlock;
+
 import javafx.scene.paint.ImagePattern;
 
 public class TexturePathBlock extends PathBlock {

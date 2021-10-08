@@ -43,5 +43,9 @@ public class WelcomeScreenTest extends ApplicationTest {
     public void setUp() throws Exception {
     }
 
-
+    @Test
+    public void testConfigurationScreenButtonText() {
+        Button goToInitialScreenBtn = from(mainNode).lookup("#goToInitialScreenBtn").query();
+        assertEquals(goToInitialScreenBtn.getText(), "configuration");
+    }
 }

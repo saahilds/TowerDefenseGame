@@ -6,13 +6,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class HealthBar extends StackPane {
-    public int w;
-    public int h;
-    public float maxHP;
-    public float currHP;
+    private int w;
+    private int h;
+    private float maxHP;
+    private float currHP;
 
-    public Rectangle hpBar;
-    public Rectangle hpBarBack;
+    private Rectangle hpBar;
+    private Rectangle hpBarBack;
 
     public HealthBar(int w, int h, float maxHP, float currHP) {
         this.w = w;

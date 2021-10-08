@@ -10,7 +10,7 @@ import javafx.scene.shape.Rectangle;
 
 public class EntityWithHealth extends StackPane {
 
-    private final float hp_PXL_RATIO = (100 / 32);
+    private final float hpPXLRATIO = (100 / 32);
 
     private float maxHP;
     private float currHP;

@@ -1,7 +1,7 @@
 package com.main;
 
 import com.main.config.Config;
-import com.main.game.DataController;
+//import com.main.game.DataController;
 import com.main.game.GamePaneWrapper;
 import com.main.game.entity.EntityWithHealth;
 import com.main.game.path.PathBlock;
@@ -26,12 +26,13 @@ import java.util.ResourceBundle;
  *
  * @author Angie
  */
-public class GameScreenController extends MainApplication implements Initializable, ControlledScreen {
+public class GameScreenController extends
+        MainApplication implements Initializable, ControlledScreen {
 
     @FXML
     private Pane gamePane;
 
-    ScreensController screensController;
+    private ScreensController screensController;
     private GamePaneWrapper gamePaneWrapper;
 
     private GameLevelType gameLevel;
@@ -55,7 +56,8 @@ public class GameScreenController extends MainApplication implements Initializab
 
         Rectangle b = new Rectangle(32, 32, Color.RED);
         Rectangle c = new Rectangle(32, 32, Color.RED);
-        System.out.println(gamePaneWrapper.getWidthCapacity() + "|" + gamePaneWrapper.getHeightCapacity());
+        System.out.println(gamePaneWrapper.getWidthCapacity()
+                + "|" + gamePaneWrapper.getHeightCapacity());
         int maxXidx = gamePaneWrapper.getMaxXidx();
         int maxYidx = gamePaneWrapper.getMaxYidx();
 
@@ -89,7 +91,8 @@ public class GameScreenController extends MainApplication implements Initializab
                     getClass().getResourceAsStream("/com/main/grass_1.png")
             );
             ImagePattern textureImagePattern = new ImagePattern(textureImage);
-            PathBlock pathBlock = new TexturePathBlock(Config.UNIT, Config.UNIT, xIdx, textureImagePattern);
+            PathBlock pathBlock =
+                    new TexturePathBlock(Config.UNIT, Config.UNIT, xIdx, textureImagePattern);
             this.gamePaneWrapper.addNodeWithXidxYidx(xIdx, vCenterIdx, pathBlock);
         }
     }

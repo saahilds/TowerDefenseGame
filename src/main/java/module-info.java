@@ -1,4 +1,4 @@
-module com.example.hellojfx {
+module com.main {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
@@ -10,6 +10,6 @@ module com.example.hellojfx {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
 
-    opens com.example.hellojfx to javafx.fxml;
-    exports com.example.hellojfx;
+    opens com.main to javafx.fxml;
+    exports com.main;
 }

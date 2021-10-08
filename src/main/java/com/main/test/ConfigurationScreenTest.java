@@ -52,6 +52,7 @@ public class ConfigurationScreenTest extends ApplicationTest {
         dataController.setPlayerName("James Bond"); //test invalid player name input
         assertTrue(dataController.isPlayerNameValid(dataController.getPlayerName()));
         assertTrue(dataController.isAbleToGoGameScreen());
+    }
 
     @Test
     public void testNormalModeSetting() {

@@ -51,6 +51,6 @@ public class WelcomeScreenTest extends ApplicationTest {
     @Test
     public void testWelcomText() {
         Label welcomeLabel = from(mainNode).lookup("#welcomeLabel").query();
-        assertEquals(welcomeLabel.getText(), "WELCOME");
+        assertEquals(welcomeLabel.getText(), "Tower Defense Game");
     }
 }

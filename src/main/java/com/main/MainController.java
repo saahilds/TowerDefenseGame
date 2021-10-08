@@ -22,8 +22,8 @@ import javafx.stage.Stage;
  */
 public class MainController implements Initializable, ControlledScreen {
     @FXML
-    private Menu IDT;
-    ScreensController screensController;
+    private Menu idt;
+    private ScreensController screensController;
 
     /**
      * Initializes the controller class.
@@ -32,8 +32,8 @@ public class MainController implements Initializable, ControlledScreen {
     public void initialize(URL url, ResourceBundle rb) {
         Label lblRegister = new Label("File");
         lblRegister.setOnMouseClicked((e) -> performRegistration());
-        IDT.setGraphic(lblRegister);
-        IDT.setText("");
+        idt.setGraphic(lblRegister);
+        idt.setText("");
 
     }
 
@@ -44,7 +44,6 @@ public class MainController implements Initializable, ControlledScreen {
             Stage primaryStage = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("initial-screen.fxml"));
             Scene scene = new Scene(root);
-//            scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
             primaryStage.setScene(scene);
             primaryStage.show();
 
@@ -69,7 +68,5 @@ public class MainController implements Initializable, ControlledScreen {
     }
 
     public void performDialoge() {
-//        ControllerDialog a = new ControllerDialog().start();
-        //a.setId(IDRTA.getText());
     }
 }

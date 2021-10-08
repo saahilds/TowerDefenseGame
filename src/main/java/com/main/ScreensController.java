@@ -75,13 +75,16 @@ public class ScreensController extends StackPane {
         if (screens.get(gameScreenType) != null) { // screen loaded
             final DoubleProperty opacity = opacityProperty();
             if (!getChildren().isEmpty()) { // if there is more than one screen
-                Timeline fade = new Timeline(new KeyFrame(Duration.ZERO, new KeyValue(opacity, 1.0)),
+                Timeline fade = new Timeline(
+                        new KeyFrame(Duration.ZERO, new KeyValue(opacity, 1.0)
+                        ),
                         new KeyFrame(new Duration(80), new EventHandler<ActionEvent>() {
                             @Override
                             public void handle(ActionEvent t) {
                                 getChildren().remove(0); // remove the displayed
                                 getChildren().add(0, screens.get(gameScreenType));
-                                Timeline fadeIn = new Timeline(new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
+                                Timeline fadeIn = new Timeline(
+                                        new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
                                         new KeyFrame(new Duration(80), new KeyValue(opacity, 1.0)));
                                 fadeIn.play();
                             }
@@ -90,7 +93,8 @@ public class ScreensController extends StackPane {
             } else {
                 setOpacity(0.0);
                 getChildren().add(screens.get(gameScreenType)); // no one else been
-                Timeline fadeIn = new Timeline(new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
+                Timeline fadeIn = new Timeline(
+                        new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
                         new KeyFrame(new Duration(80), new KeyValue(opacity, 1.0)));
                 fadeIn.play();
             }

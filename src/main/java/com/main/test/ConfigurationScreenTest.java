@@ -85,11 +85,20 @@ public class ConfigurationScreenTest extends ApplicationTest {
                 GameSettingDataMap.getStartingMonumentHealth(level)
         );
     }
-    
+
     @Test
-    public void testPlayerNameValidityWithBlank() {
-        dataController.setPlayerName(" "); //test invalid player name input
-        assertFalse(dataController.isPlayerNameValid(dataController.getPlayerName()));
-        assertFalse(dataController.isAbleToGoGameScreen());
+    public void testEasyModeSetting() {
+        System.out.println(mainNode);
+        GameLevelType level = GameLevelType.EASY;
+        dataController.setGameLevel(level);
+        dataController.setPlayerName("King Doma");
+        assertEquals(
+                dataController.getGameMoney(),
+                GameSettingDataMap.getStartingMoney(level)
+        );
+        assertEquals(
+                dataController.getEnemyMonumentHealth(),
+                GameSettingDataMap.getStartingMonumentHealth(level)
+        );
     }
 }

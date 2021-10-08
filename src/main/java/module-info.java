@@ -9,7 +9,13 @@ module com.main {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
+    requires junit;
+    requires testfx.core;
+    requires testfx.junit;
+    requires javafx.swing;
+    requires hamcrest.core;
 
     opens com.main to javafx.fxml;
     exports com.main;
+    exports com.main.test;
 }

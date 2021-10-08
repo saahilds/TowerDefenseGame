@@ -9,6 +9,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+
 public class MainApplication extends Application {
     private static Stage primaryStage;
 
@@ -36,11 +37,16 @@ public class MainApplication extends Application {
         launch(args);
     }
 
-    public static Stage getMainStage() {
+    public static Stage getPrimaryStage() {
         return primaryStage;
+    }
+
+    public static void setPrimaryStage(Stage primaryStage) {
+        MainApplication.primaryStage = primaryStage;
     }
 
     public static DataController getDataController() {
         return dataController;
     }
+
 }

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" minWidth="174.0" prefHeight="728.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.main.GameScreenController">
+<AnchorPane id="AnchorPane" minWidth="174.0" prefHeight="728.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.main.GameScreenController">
     <children>
       <BorderPane prefHeight="768.0" prefWidth="1024.0">
          <top>

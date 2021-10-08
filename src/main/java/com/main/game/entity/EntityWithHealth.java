@@ -53,4 +53,7 @@ public class EntityWithHealth extends StackPane {
         }
     }
 
+    public float getMaxHP() {
+        return maxHP;
+    }
 }

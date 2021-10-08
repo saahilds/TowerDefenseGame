@@ -15,7 +15,7 @@
             <children>
                 <MenuBar style="-fx-background-color: red;">
                     <menus>
-                        <Menu fx:id="idt" mnemonicParsing="false" onAction="#performRegistration" text="File">
+                        <Menu fx:id="idt" mnemonicParsing="false" text="File">
                             <items>
                                 <MenuItem mnemonicParsing="false" text="Close"/>
                             </items>
@@ -37,14 +37,14 @@
 <!--                        <Image url="@../../../../Desktop/Unbenannt.png"/>-->
 <!--                    </image>-->
                 </ImageView>
-                <Label text="Tower Defense Game">
+                <Label fx:id="welcomeLabel" text="Tower Defense Game">
                     <font>
                         <Font size="24.0"/>
                     </font>
                 </Label>
                 <HBox alignment="CENTER" prefHeight="57.0" prefWidth="281.0" spacing="20.0">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#goToInitialScreen" text="Start"/>
+                        <Button fx:id="goToInitialScreenBtn" mnemonicParsing="false" onAction="#goToInitialScreen" text="Start"/>
                     </children>
                 </HBox>
             </children>

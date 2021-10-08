@@ -9,6 +9,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+
 public class MainApplication extends Application {
     private static Stage primaryStage;
 
@@ -43,4 +44,5 @@ public class MainApplication extends Application {
     public static DataController getDataController() {
         return dataController;
     }
+
 }

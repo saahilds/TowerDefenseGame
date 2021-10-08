@@ -37,16 +37,14 @@
 <!--                        <Image url="@../../../../Desktop/Unbenannt.png"/>-->
 <!--                    </image>-->
                 </ImageView>
-                <Label text="Screen 1">
+                <Label text="WELCOME">
                     <font>
                         <Font size="18.0"/>
                     </font>
                 </Label>
                 <HBox alignment="CENTER" prefHeight="57.0" prefWidth="281.0" spacing="20.0">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#performDialoge" text="Button"/>
-                        <Button mnemonicParsing="false" onAction="#goToInitialScreen" text="Screen2"/>
-                        <Button mnemonicParsing="false" onAction="#goToGameScreen" text="Screen3"/>
+                        <Button mnemonicParsing="false" onAction="#goToInitialScreen" text="configuration"/>
                     </children>
                 </HBox>
             </children>

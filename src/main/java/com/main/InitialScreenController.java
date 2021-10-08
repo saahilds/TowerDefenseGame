@@ -122,4 +122,5 @@ public class InitialScreenController extends MainApplication
             this.playerName = playerName;
         }
     }
+
 }

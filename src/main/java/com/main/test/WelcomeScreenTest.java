@@ -47,4 +47,10 @@ public class WelcomeScreenTest extends ApplicationTest {
     public void testWelcomeScreenInitialization() {
         assertNotNull(mainNode);
     }
+    
+    @Test
+    public void testWelcomText() {
+        Label welcomeLabel = from(mainNode).lookup("#welcomeLabel").query();
+        assertEquals(welcomeLabel.getText(), "WELCOME");
+    }
 }

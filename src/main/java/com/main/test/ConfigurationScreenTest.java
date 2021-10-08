@@ -39,5 +39,19 @@ public class ConfigurationScreenTest extends ApplicationTest {
         dataController = MainApplication.getDataController();
     }
 
-
+    @Test
+    public void testNormalModeSetting() {
+        System.out.println(mainNode);
+        GameLevelType level = GameLevelType.NORMAL;
+        dataController.setGameLevel(level);
+        dataController.setPlayerName("King Doma");
+        assertEquals(
+                dataController.getGameMoney(),
+                GameSettingDataMap.getStartingMoney(level)
+        );
+        assertEquals(
+                dataController.getEnemyMonumentHealth(),
+                GameSettingDataMap.getStartingMonumentHealth(level)
+        );
+    }
 }

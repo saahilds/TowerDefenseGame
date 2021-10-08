@@ -39,5 +39,12 @@ public class ConfigurationScreenTest extends ApplicationTest {
         dataController = MainApplication.getDataController();
     }
 
+    @Test
+    public void testPlayerNameValidityWithBlank() {
+        dataController.setPlayerName(" "); //test invalid player name input
+        assertFalse(dataController.isPlayerNameValid(dataController.getPlayerName()));
+        assertFalse(dataController.isAbleToGoGameScreen());
+    }
+
 
 }

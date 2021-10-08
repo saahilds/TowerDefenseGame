@@ -43,5 +43,8 @@ public class WelcomeScreenTest extends ApplicationTest {
     public void setUp() throws Exception {
     }
 
-
+    @Test
+    public void testWelcomeScreenInitialization() {
+        assertNotNull(mainNode);
+    }
 }

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" minHeight="122.0" prefHeight="721.0" prefWidth="695.0" xmlns="http://javafx.com/javafx/8"
+<AnchorPane id="AnchorPane" minHeight="174.0" prefHeight="728.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.main.MainController">
     <children>
         <VBox alignment="TOP_CENTER" prefHeight="222.0" prefWidth="301.0" spacing="20.0" AnchorPane.bottomAnchor="10.0"
@@ -37,16 +37,14 @@
 <!--                        <Image url="@../../../../Desktop/Unbenannt.png"/>-->
 <!--                    </image>-->
                 </ImageView>
-                <Label text="Screen 1">
+                <Label text="Tower Defense Game">
                     <font>
                         <Font size="18.0"/>
                     </font>
                 </Label>
                 <HBox alignment="CENTER" prefHeight="57.0" prefWidth="281.0" spacing="20.0">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#performDialoge" text="Button"/>
-                        <Button mnemonicParsing="false" onAction="#goToInitialScreen" text="Screen2"/>
-                        <Button mnemonicParsing="false" onAction="#goToGameScreen" text="Screen3"/>
+                        <Button mnemonicParsing="false" onAction="#goToInitialScreen" text="Start"/>
                     </children>
                 </HBox>
             </children>

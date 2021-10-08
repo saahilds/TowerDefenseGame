@@ -12,7 +12,8 @@ import javafx.stage.Stage;
 public class MainApplication extends Application {
     private static Stage primaryStage;
 
-    public static DataController dataController = new DataController();
+    private static DataController dataController = new DataController();
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -39,4 +40,5 @@ public class MainApplication extends Application {
     public static DataController getDataController() {
         return dataController;
     }
+
 }

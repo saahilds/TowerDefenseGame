@@ -124,4 +124,5 @@ public class InitialScreenController extends MainApplication implements Initiali
             this.playerName = playerName;
         }
     }
+
 }

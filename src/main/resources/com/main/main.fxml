@@ -37,8 +37,7 @@
 <!--                        <Image url="@../../../../Desktop/Unbenannt.png"/>-->
 <!--                    </image>-->
                 </ImageView>
-                <Label fx:id="welcomeLabel" text="WELCOME">
-                <Label text="Tower Defense Game">
+                <Label fx:id="welcomeLabel" text="Tower Defense Game">
                     <font>
                         <Font size="24.0"/>
                     </font>

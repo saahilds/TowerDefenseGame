@@ -89,26 +89,4 @@ public class BasicTest {
         Thread.sleep(1000); // Time to use the app, with out this, the thread
         // will be killed before you can tell.
     }
-
-    @Test
-    public void testInitialtoGameScreenMove() throws InterruptedException {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                MainApplication mainApplication = new MainApplication();
-                DataController dataController = mainApplication.getDataController();
-
-                dataController.setPlayerName("James Bond"); //test valid player name input
-                assertEquals(dataController.getPlayerName(), "James Bond");
-                dataController.setGameLevel(GameLevelType.EASY);
-                assertEquals(dataController.isAbleToGoGameScreen(), true);
-            }
-        });
-        thread.start(); // Initialize the thread
-        Thread.sleep(1000); // Time to use the app, with out this, the thread
-        // will be killed before you can tell.
-    }
-
-
-
 }

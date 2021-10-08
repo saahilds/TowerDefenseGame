@@ -2,7 +2,7 @@ package com.main.game;
 
 import com.main.game.data.GameSettingDataMap;
 import com.main.model.GameLevelType;
-import com.main.model.GameScreenType;
+//import com.main.model.GameScreenType;
 
 import java.util.Objects;
 
@@ -23,18 +23,12 @@ public class DataController {
         }
     }
 
-    /**
-     * GETTER for the playerName
-     * @return
-     */
+    //GETTER for the playerName
     public String getPlayerName() {
         return playerName;
     }
 
-    /**
-     * GETTER for the playerName
-     * @param playerName
-     */
+    //GETTER for the playerName
     public void setPlayerName(String name) {
         this.playerName = name;
     }

@@ -12,13 +12,18 @@ import javafx.stage.Stage;
 public class MainApplication extends Application {
     private static Stage primaryStage;
 
-    public static DataController dataController = new DataController();
+    private static DataController dataController = new DataController();
+    //GETTER
+    public static void setDataController(DataController dataController) {
+        MainApplication.dataController = dataController;
+    }
 
     @Override
     public void start(Stage primaryStage) {
 
         ScreensController mainContainer = new ScreensController();
-        mainContainer.loadScreen(GameScreenType.WELCOME_SCREEN, GameSettingDataMap.getFileName(GameScreenType.WELCOME_SCREEN));
+        mainContainer.loadScreen(GameScreenType.WELCOME_SCREEN,
+                GameSettingDataMap.getFileName(GameScreenType.WELCOME_SCREEN));
         mainContainer.setScreen(GameScreenType.WELCOME_SCREEN);
         MainApplication.primaryStage = primaryStage;
         Group root = new Group();

@@ -48,4 +48,11 @@ public class WelcomeScreenTest extends ApplicationTest {
         Label welcomeLabel = from(mainNode).lookup("#welcomeLabel").query();
         assertEquals(welcomeLabel.getText(), "WELCOME");
     }
+    
+    @Test
+    public void testConfigurationScreenButtonClickable() {
+        Button goToInitialScreenBtn = from(mainNode).lookup("#goToInitialScreenBtn").query();
+        clickOn(goToInitialScreenBtn);
+    }
+}
 }

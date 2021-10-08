@@ -36,9 +36,9 @@ public class GameScreenController extends
     private ScreensController screensController;
     private GamePaneWrapper gamePaneWrapper;
 
-    private GameLevelType gameLevel;
-    private String playerName;
-    private Integer gameMoney;
+    private GameLevelType gameLevel = GameLevelType.EASY;
+    private String playerName = "";
+    private Integer gameMoney = 0;
 
     @FXML
     private Text gameLevelText;
@@ -65,8 +65,12 @@ public class GameScreenController extends
         this.generateSimplePath();
 
         int vCenterIdx = (int) Math.floor(gamePaneWrapper.getMaxYidx() / 2);
-        float startingMonumentHealth
-                = (float) GameSettingDataMap.getStartingMonumentHealth(this.gameLevel);
+        Integer startingMonumentHealth;
+        if (this.gameLevel == null) {
+            startingMonumentHealth = 100;
+        } else {
+            startingMonumentHealth = GameSettingDataMap.getStartingMonumentHealth(this.gameLevel);
+        }
 
         EntityWithHealth enemy = new EntityWithHealth(
                 32,
@@ -78,6 +82,7 @@ public class GameScreenController extends
         );
         ImagePattern enemyImgPattern = new ImagePattern(enemyImage);
         enemy.setEntityImgPattern(enemyImgPattern);
+        enemy.setId("enemyEntity");
 
         EntityWithHealth player = new EntityWithHealth(32, 32, 100, 80);
         Image playerImage = new Image(
@@ -85,6 +90,7 @@ public class GameScreenController extends
         );
         ImagePattern playerImgPattern = new ImagePattern(playerImage);
         player.setEntityImgPattern(playerImgPattern);
+        player.setId("playerEntity");
 
         this.gamePaneWrapper.addNodeWithXidxYidx(0, vCenterIdx, player);
         this.gamePaneWrapper.addNodeWithXidxYidx(maxXidx - 1, vCenterIdx, enemy);
@@ -110,10 +116,12 @@ public class GameScreenController extends
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        setGameLevel(getDataController().getGameLevel());
-        setPlayerName(getDataController().getPlayerName());
-        setGameMoney(getDataController().getGameMoney());
-        this.initGamePaneSetting();
+        if (url != null && getDataController() != null) {
+            setGameLevel(getDataController().getGameLevel());
+            setPlayerName(getDataController().getPlayerName());
+            setGameMoney(getDataController().getGameMoney());
+            this.initGamePaneSetting();
+        }
     }
 
     public void setScreenParent(ScreensController screenParent) {
@@ -131,12 +139,16 @@ public class GameScreenController extends
     }
 
     public void setPlayerName(String playerName) {
-        this.playerNameText.setText(playerName);
+        if (this.playerNameText != null) {
+            this.playerNameText.setText(playerName);
+        }
         this.playerName = playerName;
     }
 
     public void setGameMoney(Integer gameMoney) {
-        this.gameMoneyText.setText(gameMoney.toString());
+        if (this.gameMoneyText != null) {
+            this.gameMoneyText.setText(gameMoney.toString());
+        }
         this.gameMoney = gameMoney;
     }
 

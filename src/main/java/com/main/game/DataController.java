@@ -8,8 +8,9 @@ import java.util.Objects;
 
 public class DataController {
     private GameLevelType gameLevel;
-    private String playerName;
-    private Integer gameMoney;
+    private String playerName = "";
+    private Integer gameMoney = 0;
+    private Integer enemyMonumentHealth = 0;
 
     // GETTER / SETTER
     public GameLevelType getGameLevel() {
@@ -19,6 +20,7 @@ public class DataController {
     public void setGameLevel(GameLevelType gameLevel) {
         if (gameLevel != null) {
             this.gameMoney = GameSettingDataMap.getStartingMoney(gameLevel);
+            this.enemyMonumentHealth = GameSettingDataMap.getStartingMonumentHealth(gameLevel);
             this.gameLevel = gameLevel;
         }
     }
@@ -41,8 +43,18 @@ public class DataController {
         this.gameMoney = gameMoney;
     }
 
+    public Integer getEnemyMonumentHealth() {
+        return enemyMonumentHealth;
+    }
+
+    public void setEnemyMonumentHealth(Integer enemyMonumentHealth) {
+        this.enemyMonumentHealth = enemyMonumentHealth;
+    }
+
     public boolean isPlayerNameValid(String nameInText) {
-        return !(nameInText == null || Objects.equals(nameInText, "") || nameInText.contains(" "));
+        return !(nameInText == null
+                || Objects.equals(nameInText, "")
+                || nameInText.trim().isEmpty());
     }
 
     public boolean isGameLevelValid(GameLevelType gameLevelType) {

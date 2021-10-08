@@ -55,13 +55,13 @@ public class GameScreenController extends MainApplication implements Initializab
 
         Rectangle b = new Rectangle(32, 32, Color.RED);
         Rectangle c = new Rectangle(32, 32, Color.RED);
-        System.out.println(gamePaneWrapper.widthCapacity + "|" + gamePaneWrapper.heightCapacity);
-        int maxXidx = gamePaneWrapper.maxXidx;
-        int maxYidx = gamePaneWrapper.maxYidx;
+        System.out.println(gamePaneWrapper.getWidthCapacity() + "|" + gamePaneWrapper.getHeightCapacity());
+        int maxXidx = gamePaneWrapper.getMaxXidx();
+        int maxYidx = gamePaneWrapper.getMaxYidx();
 
         this.generateSimplePath();
 
-        int vCenterIdx = (int) Math.floor(gamePaneWrapper.maxYidx / 2);
+        int vCenterIdx = (int) Math.floor(gamePaneWrapper.getMaxYidx() / 2);
 
         EntityWithHealth enemy = new EntityWithHealth(32, 32, 100, 50);
         Image enemyImage = new Image(
@@ -83,8 +83,8 @@ public class GameScreenController extends MainApplication implements Initializab
     }
 
     public void generateSimplePath() {
-        int vCenterIdx = (int) Math.floor(gamePaneWrapper.maxYidx / 2);
-        for (int xIdx = 0; xIdx < gamePaneWrapper.maxXidx + 1; xIdx++) {
+        int vCenterIdx = (int) Math.floor(gamePaneWrapper.getMaxYidx() / 2);
+        for (int xIdx = 0; xIdx < gamePaneWrapper.getMaxXidx() + 1; xIdx++) {
             Image textureImage = new Image(
                     getClass().getResourceAsStream("/com/main/grass_1.png")
             );

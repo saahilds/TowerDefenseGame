@@ -10,9 +10,9 @@ import org.w3c.dom.Text;
 
 public class EntityWithHealth extends StackPane {
     final float HP_PXL_RATIO = (100 / 32);
-    public float maxHP;
-    public float currHP;
-    public int maxWidth;
+    private float maxHP;
+    private float currHP;
+    private int maxWidth;
 
     public Rectangle entity;
     public HealthBar hpBar;

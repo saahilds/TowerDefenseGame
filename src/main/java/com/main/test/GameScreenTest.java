@@ -39,7 +39,11 @@ public class GameScreenTest extends ApplicationTest {
     @Before
     public void setUp() throws Exception {
     }
-
+    
+    @Test
+    public void testGameScreenInitialization() {
+        assertNotNull(mainNode);
+    }
     @Test
     public void testPlayerInitialization() {
         GameLevelType level = GameLevelType.EASY;

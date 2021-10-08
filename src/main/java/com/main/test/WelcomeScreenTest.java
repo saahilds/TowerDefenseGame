@@ -59,5 +59,10 @@ public class WelcomeScreenTest extends ApplicationTest {
         Button goToInitialScreenBtn = from(mainNode).lookup("#goToInitialScreenBtn").query();
         clickOn(goToInitialScreenBtn);
     }
-}
+
+    @Test
+    public void testConfigurationScreenButtonText() {
+        Button goToInitialScreenBtn = from(mainNode).lookup("#goToInitialScreenBtn").query();
+        assertEquals(goToInitialScreenBtn.getText(), "configuration");
+    }
 }

@@ -53,6 +53,22 @@ public class ConfigurationScreenTest extends ApplicationTest {
         assertTrue(dataController.isPlayerNameValid(dataController.getPlayerName()));
         assertTrue(dataController.isAbleToGoGameScreen());
     }
+  
+    @Test
+    public void testHardModeSetting() {
+        System.out.println(mainNode);
+        GameLevelType level = GameLevelType.HARD;
+        dataController.setGameLevel(level);
+        dataController.setPlayerName("King Doma");
+        assertEquals(
+                dataController.getGameMoney(),
+                GameSettingDataMap.getStartingMoney(level)
+        );
+        assertEquals(
+                dataController.getEnemyMonumentHealth(),
+                GameSettingDataMap.getStartingMonumentHealth(level)
+        );
+    }
 
     @Test
     public void testNormalModeSetting() {

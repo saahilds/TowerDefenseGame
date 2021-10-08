@@ -9,14 +9,18 @@ import javafx.scene.shape.Rectangle;
 //import org.w3c.dom.Text;
 
 public class EntityWithHealth extends StackPane {
+
     private final float hp_PXL_RATIO = (100 / 32);
+
     private float maxHP;
     private float currHP;
     private int maxWidth;
 
+
     private Rectangle entity;
     private HealthBar hpBar;
     private Label hpText;
+
 
     public EntityWithHealth(int w, int h, float maxHP, float currHP) {
         this.maxHP = maxHP;

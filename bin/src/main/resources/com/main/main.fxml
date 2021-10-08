@@ -1,0 +1,58 @@
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" minHeight="122.0" prefHeight="721.0" prefWidth="695.0" xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.main.MainController">
+    <children>
+        <VBox alignment="TOP_CENTER" prefHeight="222.0" prefWidth="301.0" spacing="20.0" AnchorPane.bottomAnchor="10.0"
+              AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+            <children>
+                <MenuBar style="-fx-background-color: red;">
+                    <menus>
+                        <Menu fx:id="IDT" mnemonicParsing="false" onAction="#performRegistration" text="File">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="Close"/>
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Edit">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="Delete"/>
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Help">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="About"/>
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+                <ImageView fitHeight="200.0" fitWidth="298.0" pickOnBounds="true" preserveRatio="true">
+<!--                    <image>-->
+<!--                        <Image url="@../../../../Desktop/Unbenannt.png"/>-->
+<!--                    </image>-->
+                </ImageView>
+                <Label text="Screen 1">
+                    <font>
+                        <Font size="18.0"/>
+                    </font>
+                </Label>
+                <HBox alignment="CENTER" prefHeight="57.0" prefWidth="281.0" spacing="20.0">
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#performDialoge" text="Button"/>
+                        <Button mnemonicParsing="false" onAction="#goToInitialScreen" text="Screen2"/>
+                        <Button mnemonicParsing="false" onAction="#goToGameScreen" text="Screen3"/>
+                    </children>
+                </HBox>
+            </children>
+            <padding>
+                <Insets/>
+            </padding>
+        </VBox>
+    </children>
+</AnchorPane>

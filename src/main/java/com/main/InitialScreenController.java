@@ -18,7 +18,8 @@ import javafx.stage.Stage;
  *
  * @author Concentration 64
  */
-public class InitialScreenController extends MainApplication implements Initializable, ControlledScreen {
+public class InitialScreenController extends MainApplication
+        implements Initializable, ControlledScreen {
 
     @FXML
     private Text nameOut;
@@ -59,9 +60,6 @@ public class InitialScreenController extends MainApplication implements Initiali
     private void goToGameScreen(ActionEvent event) {
         if (getDataController().isAbleToGoGameScreen()) {
             screensController.setScreen(GameScreenType.GAME_SCREEN);
-        } else {
-            // FIXME:
-            // do something when user cannot proceed to the game screen
         }
     }
 

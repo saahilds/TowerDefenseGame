@@ -20,7 +20,6 @@ public class MainApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-
         ScreensController mainContainer = new ScreensController();
         mainContainer.loadScreen(GameScreenType.WELCOME_SCREEN,
                 GameSettingDataMap.getFileName(GameScreenType.WELCOME_SCREEN));

@@ -68,7 +68,11 @@ public class ScreensController extends StackPane {
     // to the root.
     public boolean setScreen(final GameScreenType gameScreenType) {
         // force the method to load the screen
-        if (screens.get(gameScreenType) == null) {
+        // force the method if the new screen is the game screen
+        if (
+                screens.get(gameScreenType) == null
+                || gameScreenType == GameScreenType.GAME_SCREEN
+        ) {
             loadScreen(gameScreenType, GameSettingDataMap.getFileName(gameScreenType));
         }
 

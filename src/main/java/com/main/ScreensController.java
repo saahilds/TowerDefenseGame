@@ -75,13 +75,24 @@ public class ScreensController extends StackPane {
         if (screens.get(gameScreenType) != null) { // screen loaded
             final DoubleProperty opacity = opacityProperty();
             if (!getChildren().isEmpty()) { // if there is more than one screen
+<<<<<<< HEAD
                 Timeline fade = new Timeline(new KeyFrame(Duration.ZERO, new KeyValue(opacity, 1.0)),
+=======
+                Timeline fade =
+                        new Timeline(new KeyFrame(Duration.ZERO, new KeyValue(opacity, 1.0)),
+>>>>>>> 38e31749abd80f5cbea4c212fd4d6f58bfe05a4b
                         new KeyFrame(new Duration(80), new EventHandler<ActionEvent>() {
                             @Override
                             public void handle(ActionEvent t) {
                                 getChildren().remove(0); // remove the displayed
                                 getChildren().add(0, screens.get(gameScreenType));
+<<<<<<< HEAD
                                 Timeline fadeIn = new Timeline(new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
+=======
+                                Timeline fadeIn =
+                                        new Timeline(new KeyFrame(Duration.ZERO,
+                                                new KeyValue(opacity, 0.0)),
+>>>>>>> 38e31749abd80f5cbea4c212fd4d6f58bfe05a4b
                                         new KeyFrame(new Duration(80), new KeyValue(opacity, 1.0)));
                                 fadeIn.play();
                             }
@@ -90,7 +101,12 @@ public class ScreensController extends StackPane {
             } else {
                 setOpacity(0.0);
                 getChildren().add(screens.get(gameScreenType)); // no one else been
+<<<<<<< HEAD
                 Timeline fadeIn = new Timeline(new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
+=======
+                Timeline fadeIn =
+                        new Timeline(new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
+>>>>>>> 38e31749abd80f5cbea4c212fd4d6f58bfe05a4b
                         new KeyFrame(new Duration(80), new KeyValue(opacity, 1.0)));
                 fadeIn.play();
             }

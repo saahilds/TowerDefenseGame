@@ -1,7 +1,10 @@
 package com.main;
 
 import com.main.config.Config;
+<<<<<<< HEAD
 import com.main.game.DataController;
+=======
+>>>>>>> 38e31749abd80f5cbea4c212fd4d6f58bfe05a4b
 import com.main.game.GamePaneWrapper;
 import com.main.game.entity.EntityWithHealth;
 import com.main.game.path.PathBlock;
@@ -26,12 +29,26 @@ import java.util.ResourceBundle;
  *
  * @author Angie
  */
+<<<<<<< HEAD
 public class GameScreenController extends MainApplication implements Initializable, ControlledScreen {
+=======
+public class GameScreenController extends MainApplication
+        implements Initializable, ControlledScreen {
+>>>>>>> 38e31749abd80f5cbea4c212fd4d6f58bfe05a4b
 
     @FXML
     private Pane gamePane;
 
+<<<<<<< HEAD
     ScreensController screensController;
+=======
+    private ScreensController screensController;
+
+    public ScreensController getScreensController() {
+        return screensController;
+    }
+
+>>>>>>> 38e31749abd80f5cbea4c212fd4d6f58bfe05a4b
     private GamePaneWrapper gamePaneWrapper;
 
     private GameLevelType gameLevel;
@@ -55,6 +72,7 @@ public class GameScreenController extends MainApplication implements Initializab
 
         Rectangle b = new Rectangle(32, 32, Color.RED);
         Rectangle c = new Rectangle(32, 32, Color.RED);
+<<<<<<< HEAD
         System.out.println(gamePaneWrapper.widthCapacity + "|" + gamePaneWrapper.heightCapacity);
         int maxXidx = gamePaneWrapper.maxXidx;
         int maxYidx = gamePaneWrapper.maxYidx;
@@ -62,6 +80,16 @@ public class GameScreenController extends MainApplication implements Initializab
         this.generateSimplePath();
 
         int vCenterIdx = (int) Math.floor(gamePaneWrapper.maxYidx / 2);
+=======
+        System.out.println(gamePaneWrapper.getWidthCapacity()
+                + "|" + gamePaneWrapper.getHeightCapacity());
+        int maxXidx = gamePaneWrapper.getMaxXidx();
+        int maxYidx = gamePaneWrapper.getMaxYidx();
+
+        this.generateSimplePath();
+
+        int vCenterIdx = (int) Math.floor(gamePaneWrapper.getMaxYidx() / 2);
+>>>>>>> 38e31749abd80f5cbea4c212fd4d6f58bfe05a4b
 
         EntityWithHealth enemy = new EntityWithHealth(32, 32, 100, 50);
         Image enemyImage = new Image(
@@ -71,9 +99,14 @@ public class GameScreenController extends MainApplication implements Initializab
         enemy.setEntityImgPattern(enemyImgPattern);
 
         EntityWithHealth player = new EntityWithHealth(32, 32, 100, 80);
+<<<<<<< HEAD
         Image playerImage = new Image(
                 getClass().getResourceAsStream("/com/main/steve_01.jpeg")
         );
+=======
+        Image playerImage =
+                new Image(getClass().getResourceAsStream("/com/main/steve_01.jpeg"));
+>>>>>>> 38e31749abd80f5cbea4c212fd4d6f58bfe05a4b
         ImagePattern playerImgPattern = new ImagePattern(playerImage);
         player.setEntityImgPattern(playerImgPattern);
 
@@ -83,13 +116,23 @@ public class GameScreenController extends MainApplication implements Initializab
     }
 
     public void generateSimplePath() {
+<<<<<<< HEAD
         int vCenterIdx = (int) Math.floor(gamePaneWrapper.maxYidx / 2);
         for (int xIdx = 0; xIdx < gamePaneWrapper.maxXidx + 1; xIdx++) {
+=======
+        int vCenterIdx = (int) Math.floor(gamePaneWrapper.getMaxYidx() / 2);
+        for (int xIdx = 0; xIdx < gamePaneWrapper.getMaxXidx() + 1; xIdx++) {
+>>>>>>> 38e31749abd80f5cbea4c212fd4d6f58bfe05a4b
             Image textureImage = new Image(
                     getClass().getResourceAsStream("/com/main/grass_1.png")
             );
             ImagePattern textureImagePattern = new ImagePattern(textureImage);
+<<<<<<< HEAD
             PathBlock pathBlock = new TexturePathBlock(Config.UNIT, Config.UNIT, xIdx, textureImagePattern);
+=======
+            PathBlock pathBlock =
+                    new TexturePathBlock(Config.UNIT, Config.UNIT, xIdx, textureImagePattern);
+>>>>>>> 38e31749abd80f5cbea4c212fd4d6f58bfe05a4b
             this.gamePaneWrapper.addNodeWithXidxYidx(xIdx, vCenterIdx, pathBlock);
         }
     }

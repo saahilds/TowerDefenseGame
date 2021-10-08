@@ -18,7 +18,12 @@ import javafx.stage.Stage;
  *
  * @author Concentration 64
  */
+<<<<<<< HEAD
 public class InitialScreenController extends MainApplication implements Initializable, ControlledScreen {
+=======
+public class InitialScreenController
+        extends MainApplication implements Initializable, ControlledScreen {
+>>>>>>> 38e31749abd80f5cbea4c212fd4d6f58bfe05a4b
 
     @FXML
     private Text nameOut;
@@ -59,10 +64,17 @@ public class InitialScreenController extends MainApplication implements Initiali
     private void goToGameScreen(ActionEvent event) {
         if (getDataController().isAbleToGoGameScreen()) {
             screensController.setScreen(GameScreenType.GAME_SCREEN);
+<<<<<<< HEAD
         } else {
             // FIXME:
             // do something when user cannot proceed to the game screen
         }
+=======
+        } //else {
+        // FIXME:
+        // do something when user cannot proceed to the game screen
+        //}
+>>>>>>> 38e31749abd80f5cbea4c212fd4d6f58bfe05a4b
     }
 
     @FXML

@@ -24,6 +24,7 @@ public class GamePaneWrapper {
             }
         }
 
+<<<<<<< HEAD
         public PositionObject[][] map;
         public int width;
         public int height;
@@ -31,6 +32,15 @@ public class GamePaneWrapper {
         public int nodeHeight;
         public int widthCapacity;
         public int heightCapacity;
+=======
+        private PositionObject[][] map;
+        private int width;
+        private int height;
+        private int nodeWidth;
+        private int nodeHeight;
+        private int widthCapacity;
+        private int heightCapacity;
+>>>>>>> 38e31749abd80f5cbea4c212fd4d6f58bfe05a4b
 
         public PositionMap(
                 int width, int height,
@@ -71,6 +81,7 @@ public class GamePaneWrapper {
 
     private PositionMap posMap;
 
+<<<<<<< HEAD
     public int width;
     public int height;
     public int nodeWidth;
@@ -80,6 +91,36 @@ public class GamePaneWrapper {
     public int heightCapacity;
     public int maxXidx;
     public int maxYidx;
+=======
+    private int width;
+    private int height;
+    private int nodeWidth;
+    private int nodeHeight;
+
+    private int widthCapacity;
+
+    public int getWidthCapacity() {
+        return widthCapacity;
+    }
+
+    private int heightCapacity;
+
+    public int getHeightCapacity() {
+        return heightCapacity;
+    }
+
+    private int maxXidx;
+
+    public int getMaxXidx() {
+        return maxXidx;
+    }
+
+    private int maxYidx;
+
+    public int getMaxYidx() {
+        return maxYidx;
+    }
+>>>>>>> 38e31749abd80f5cbea4c212fd4d6f58bfe05a4b
 
     public GamePaneWrapper(
             Pane pane, int width, int height,

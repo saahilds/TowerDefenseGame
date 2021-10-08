@@ -41,6 +41,15 @@ public class GameScreenTest extends ApplicationTest {
     }
 
     @Test
+    public void testEnemyInitialization() {
+        GameLevelType level = GameLevelType.EASY;
+        EntityWithHealth enemyEntity = from(mainNode).lookup("#enemyEntity").query();
+        assertNotNull(enemyEntity);
+        assertSame(
+                (int) enemyEntity.getMaxHP(),
+                GameSettingDataMap.getStartingMonumentHealth(level)
+
+    @Test      
     public void testPlayerInitialization() {
         GameLevelType level = GameLevelType.EASY;
         EntityWithHealth playerEntity = from(mainNode).lookup("#playerEntity").query();

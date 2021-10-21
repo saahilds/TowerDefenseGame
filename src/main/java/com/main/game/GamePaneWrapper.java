@@ -1,5 +1,6 @@
 package com.main.game;
 
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
@@ -59,6 +60,21 @@ public class GamePaneWrapper {
         this.maxXidx = this.widthCapacity - 1;
         this.maxYidx = this.heightCapacity - 1;
         this.posMap = new PositionMap(this.width, this.height, this.nodeWidth, this.nodeHeight);
+
+        initMouseSetting();
+    }
+
+    private void initMouseSetting() {
+        pane.setOnMouseEntered(mouseEvent -> {
+            if (!mouseEvent.isPrimaryButtonDown()) {
+                pane.setCursor(Cursor.HAND);
+            }
+        });
+        pane.setOnMouseMoved(mouseEvent -> {
+            if (mouseEvent != null) {
+                System.out.println(mouseEvent);
+            }
+        });
     }
 
     public void addNodeWithXidxYidx(int xIdx, int yIdx, Node node) {
@@ -107,7 +123,6 @@ public class GamePaneWrapper {
         }
 
         private void setAtIdx(int xIdx, int yIdx, Node node) {
-
             this.map[yIdx][xIdx].node = node;
         }
 

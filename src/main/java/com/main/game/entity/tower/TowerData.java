@@ -1,6 +1,7 @@
 package com.main.game.entity.tower;
 
 public class TowerData {
+    private String towerDataId;
     private String name;
     private String description;
     private int cost;
@@ -8,13 +9,30 @@ public class TowerData {
     private double health;
     private String imageSource;
 
-    public TowerData(String name, String description, int cost, int dps, double health, String imageSource) {
+    public TowerData(
+            String towerDataId,
+            String name,
+            String description,
+            int cost,
+            int dps,
+            double health,
+            String imageSource
+    ) {
+        this.towerDataId = towerDataId;
         this.name = name;
         this.description = description;
         this.cost = cost;
         this.dps = dps;
         this.health = health;
         this.imageSource = imageSource;
+    }
+
+    public String getTowerDataId() {
+        return towerDataId;
+    }
+
+    public void setTowerDataId(String towerDataId) {
+        this.towerDataId = towerDataId;
     }
 
     public String getName() {

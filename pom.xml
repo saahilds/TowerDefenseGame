@@ -88,6 +88,11 @@
             <version>4.0.15-alpha</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-base</artifactId>
+            <version>11.0.1</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -8,7 +8,7 @@ import javafx.scene.shape.Rectangle;
 //import javafx.scene.text.TextBoundsType;
 //import org.w3c.dom.Text;
 
-public class EntityWithHealth extends StackPane {
+public class EntityWithHealth extends StackPane implements EntityWithBackground {
 
     private final float hpPXLRATIO = (100 / 32);
 

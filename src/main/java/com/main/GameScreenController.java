@@ -87,10 +87,13 @@ public class GameScreenController extends
 
         TowerEntity tower = new TowerEntity();
         tower.setFillWithImageSrc("/com/main/catapult.png");
+        player.setId("catapultEntity");
 
         this.gamePaneWrapper.addNodeWithXidxYidx(0, vCenterIdx, player);
         this.gamePaneWrapper.addNodeWithXidxYidx(maxXidx - 1, vCenterIdx, enemy);
         this.gamePaneWrapper.addNodeWithXidxYidx(0, maxYidx, c);
+
+        this.gamePaneWrapper.addNodeWithXidxYidx(1, 1, tower);
     }
 
     public void generateSimplePath() {

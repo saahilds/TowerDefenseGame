@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" minWidth="174.0" prefHeight="728.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.main.GameScreenController">
+<AnchorPane id="AnchorPane" minWidth="174.0" prefHeight="728.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.main.GameScreenController">
     <children>
       <BorderPane prefHeight="768.0" prefWidth="1024.0">
          <top>
@@ -48,6 +48,17 @@
                   <Text fx:id="playerNameText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="191.36815071105957" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Game Money" wrappingWidth="191.36815071105957" />
                   <Text fx:id="gameMoneyText" strokeWidth="0.0" text="Text" wrappingWidth="191.36815071105957" />
+                  <MenuBar>
+                     <menus>
+                        <Menu mnemonicParsing="false" text="Buy A Tower">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="Tech Tower" />
+                              <MenuItem mnemonicParsing="false" text="Pencil Building" />
+                              <MenuItem mnemonicParsing="false" text="Westin" />
+                          </items>
+                        </Menu>
+                     </menus>
+                  </MenuBar>
                </children>
             </VBox>
          </left>

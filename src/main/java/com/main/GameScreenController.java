@@ -120,6 +120,7 @@ public class GameScreenController extends
             setGameLevel(getDataController().getGameLevel());
             setPlayerName(getDataController().getPlayerName());
             setGameMoney(getDataController().getGameMoney());
+            //initialize Tower Menu here
             this.initGamePaneSetting();
         }
     }

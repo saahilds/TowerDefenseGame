@@ -14,26 +14,18 @@ public class EntityWithHealth extends EntityWithBackground {
     private float currHP;
     private int maxWidth;
 
-    private int width;
-    private int height;
-
-    private Rectangle entity;
     private HealthBar hpBar;
     private Label hpText;
 
     public EntityWithHealth() {
-        width = Config.UNIT;
-        height = Config.UNIT;
-        entity = new Rectangle(width, height);
+        super();
     }
 
     public EntityWithHealth(int w, int h, float maxHP, float currHP) {
-        this.width = w;
-        this.height = h;
+        super(w, h);
 
         this.maxHP = maxHP;
         this.currHP = currHP;
-        entity = new Rectangle(width, height);
 
         int hpBarTranslateY = (int) (h + 20) / 2;
         this.hpBar = new HealthBar(w, 10, maxHP, currHP);

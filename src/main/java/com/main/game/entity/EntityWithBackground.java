@@ -9,13 +9,19 @@ import javafx.scene.shape.Rectangle;
 
 
 public class EntityWithBackground extends StackPane {
-    private int width;
-    private int height;
-    private Rectangle entity;
+    int width;
+    int height;
+    Rectangle entity;
 
     public EntityWithBackground() {
         width = Config.UNIT;
         height = Config.UNIT;
+        entity = new Rectangle(width, height);
+    }
+
+    public EntityWithBackground(int w, int h) {
+        width = w;
+        height = h;
         entity = new Rectangle(width, height);
     }
 
@@ -47,6 +53,8 @@ public class EntityWithBackground extends StackPane {
     }
 
     public void setFillWithImagePattern(ImagePattern imgPattern) {
+        System.out.println(entity);
+        System.out.println(imgPattern);
         if (entity != null) {
             entity.setFill(imgPattern);
         }

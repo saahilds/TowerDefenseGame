@@ -78,23 +78,15 @@ public class GameScreenController extends
                 32,
                 startingMonumentHealth,
                 startingMonumentHealth);
-        Image enemyImage = new Image(
-                getClass().getResourceAsStream("/com/main/skeleton_01.png")
-        );
-        ImagePattern enemyImgPattern = new ImagePattern(enemyImage);
-        enemy.setFillWithImagePattern(enemyImgPattern);
-//        enemy.setFillWithImageSrc("/com/main/skeleton_01.png");
+        enemy.setFillWithImageSrc("/com/main/skeleton_01.png");
         enemy.setId("enemyEntity");
 
         EntityWithHealth player = new EntityWithHealth(32, 32, 100, 80);
-        Image playerImage = new Image(
-                getClass().getResourceAsStream("/com/main/steve_01.jpeg")
-        );
-        ImagePattern playerImgPattern = new ImagePattern(playerImage);
-        player.setFillWithImagePattern(playerImgPattern);
+        player.setFillWithImageSrc("/com/main/steve_01.jpeg");
         player.setId("playerEntity");
 
         TowerEntity tower = new TowerEntity();
+        tower.setFillWithImageSrc("/com/main/catapult.png");
 
         this.gamePaneWrapper.addNodeWithXidxYidx(0, vCenterIdx, player);
         this.gamePaneWrapper.addNodeWithXidxYidx(maxXidx - 1, vCenterIdx, enemy);

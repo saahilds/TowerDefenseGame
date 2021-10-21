@@ -5,6 +5,7 @@ import com.main.config.Config;
 import com.main.game.GamePaneWrapper;
 import com.main.game.data.GameSettingDataMap;
 import com.main.game.entity.EntityWithHealth;
+import com.main.game.entity.tower.TowerEntity;
 import com.main.game.path.PathBlock;
 import com.main.game.path.TexturePathBlock;
 import com.main.model.GameLevelType;
@@ -81,7 +82,8 @@ public class GameScreenController extends
                 getClass().getResourceAsStream("/com/main/skeleton_01.png")
         );
         ImagePattern enemyImgPattern = new ImagePattern(enemyImage);
-        enemy.setEntityImgPattern(enemyImgPattern);
+        enemy.setFillWithImagePattern(enemyImgPattern);
+//        enemy.setFillWithImageSrc("/com/main/skeleton_01.png");
         enemy.setId("enemyEntity");
 
         EntityWithHealth player = new EntityWithHealth(32, 32, 100, 80);
@@ -89,8 +91,10 @@ public class GameScreenController extends
                 getClass().getResourceAsStream("/com/main/steve_01.jpeg")
         );
         ImagePattern playerImgPattern = new ImagePattern(playerImage);
-        player.setEntityImgPattern(playerImgPattern);
+        player.setFillWithImagePattern(playerImgPattern);
         player.setId("playerEntity");
+
+        TowerEntity tower = new TowerEntity();
 
         this.gamePaneWrapper.addNodeWithXidxYidx(0, vCenterIdx, player);
         this.gamePaneWrapper.addNodeWithXidxYidx(maxXidx - 1, vCenterIdx, enemy);

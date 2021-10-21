@@ -1,14 +1,12 @@
 package com.main.game.entity;
 
+import com.main.config.Config;
 import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-//import javafx.scene.text.TextBoundsType;
-//import org.w3c.dom.Text;
 
-public class EntityWithHealth extends StackPane implements EntityWithBackground {
+public class EntityWithHealth extends EntityWithBackground {
 
     private final float hpPXLRATIO = (100 / 32);
 
@@ -16,17 +14,26 @@ public class EntityWithHealth extends StackPane implements EntityWithBackground 
     private float currHP;
     private int maxWidth;
 
+    private int width;
+    private int height;
 
     private Rectangle entity;
     private HealthBar hpBar;
     private Label hpText;
 
+    public EntityWithHealth() {
+        width = Config.UNIT;
+        height = Config.UNIT;
+        entity = new Rectangle(width, height);
+    }
 
     public EntityWithHealth(int w, int h, float maxHP, float currHP) {
+        this.width = w;
+        this.height = h;
+
         this.maxHP = maxHP;
         this.currHP = currHP;
-        this.entity = new Rectangle(w, h);
-
+        entity = new Rectangle(width, height);
 
         int hpBarTranslateY = (int) (h + 20) / 2;
         this.hpBar = new HealthBar(w, 10, maxHP, currHP);
@@ -45,12 +52,6 @@ public class EntityWithHealth extends StackPane implements EntityWithBackground 
 
     public float getPercentage() {
         return currHP / maxHP;
-    }
-
-    public void setEntityImgPattern(ImagePattern pattern) {
-        if (entity != null) {
-            entity.setFill(pattern);
-        }
     }
 
     public float getMaxHP() {

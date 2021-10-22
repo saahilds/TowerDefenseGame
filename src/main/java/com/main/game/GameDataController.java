@@ -10,6 +10,7 @@ import com.main.game.gamePane.PositionMap;
 import com.main.game.path.PathBlock;
 import com.main.game.path.TexturePathBlock;
 import com.main.model.GameLevelType;
+import com.main.model.TowerEntityStatusType;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -139,7 +140,7 @@ public class GameDataController {
                         && prevPos.getX() < gamePaneWrapper.getWidthCapacity()
                         && prevPos.getY() < gamePaneWrapper.getHeightCapacity()
         ) {
-            TowerEntity targetTowerEntity = new TowerEntity(selectedTower);
+            TowerEntity targetTowerEntity = new TowerEntity(selectedTower, TowerEntityStatusType.REGISTERED);
             gamePaneWrapper.removeAtPos(prevPos);
             gamePaneWrapper.addNodeWithIndexPosition(prevPos, targetTowerEntity);
             this.cursorTowerEntity = null;
@@ -176,7 +177,7 @@ public class GameDataController {
         ) {
             return;
         } else {
-            cursorTowerEntity = new TowerEntity(selectedTower);
+            cursorTowerEntity = new TowerEntity(selectedTower, TowerEntityStatusType.STAGED);
             cursorTowerEntity.setId("cursorTowerEntity");
             gamePaneWrapper.addNodeWithIndexPosition(currPos, cursorTowerEntity);
         }

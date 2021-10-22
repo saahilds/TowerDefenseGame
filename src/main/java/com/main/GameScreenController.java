@@ -15,6 +15,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.net.URL;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 
 /**
@@ -35,6 +37,7 @@ public class GameScreenController extends
     private GamePaneWrapper gamePaneWrapper;
     private GameDataController gameDataController;
     private TowerMenu towerMenu;
+    private GameMoneyObserber gameMoneyObserber = new GameMoneyObserber();
 
     private GameLevelType gameLevel = GameLevelType.EASY;
     private String playerName = "";
@@ -57,15 +60,18 @@ public class GameScreenController extends
 
         gameDataController = new GameDataController(
                 gamePaneWrapper,
+                getDataController(),
                 gameLevel
         );
 
-        System.out.println(towerMenuEl);
+        getDataController().getGameMoneyObservable().addObserver(gameMoneyObserber);
+
         towerMenu = new TowerMenu(
                 towerMenuEl,
-                gameLevel
+                getDataController().getGameLevel()
         );
         towerMenu.setGameDataController(gameDataController);
+
     }
 
     /**
@@ -112,5 +118,14 @@ public class GameScreenController extends
 
     public void setGameLevel(GameLevelType gameLevel) {
         this.gameLevel = gameLevel;
+    }
+
+    public class GameMoneyObserber implements Observer {
+        public void update(Observable o, Object arg) {
+            System.out.println("GM OBSERVer setGameMoney: " + arg);
+            if (arg instanceof Integer) {
+                setGameMoney((Integer) arg);
+            }
+        }
     }
 }

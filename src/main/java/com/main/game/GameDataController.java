@@ -23,6 +23,16 @@ public class GameDataController {
     private Integer gameMoney = 0;
     private GamePaneWrapper gamePaneWrapper;
 
+    public DataController getDataController() {
+        return dataController;
+    }
+
+    public void setDataController(DataController dataController) {
+        this.dataController = dataController;
+    }
+
+    private DataController dataController;
+
     private boolean skipDeletingCuror = false;
 
     public TowerData getSelectedTower() {
@@ -39,9 +49,11 @@ public class GameDataController {
 
     public GameDataController(
             GamePaneWrapper gamePaneWrapper,
+            DataController dataController,
             GameLevelType gameLevel
     ) {
         this.gamePaneWrapper = gamePaneWrapper;
+        this.dataController = dataController;
         this.gameLevel = gameLevel;
 
         this.generateSimplePath();
@@ -158,7 +170,14 @@ public class GameDataController {
             this.cursorTowerEntity = null;
             this.skipDeletingCuror = true;
             this.selectedTower = null;
+            onConfirmPurchase(targetTowerEntity.getTowerData());
         }
+    }
+
+    private void onConfirmPurchase(TowerData towerData) {
+        int currMoney = getDataController().getGameMoney();
+        int towerCose = towerData.getCost();
+        getDataController().setGameMoney(currMoney - towerCose);
     }
 
     private void handleOnMouseMovedHandler(MouseEvent mouseEvent) {
@@ -186,8 +205,10 @@ public class GameDataController {
         }
     }
 
-    private void registerTemporaryTowerEntity(PositionMap.IndexPosition prevPos,
-                                              PositionMap.IndexPosition currPos) {
+    private void registerTemporaryTowerEntity(
+            PositionMap.IndexPosition prevPos,
+            PositionMap.IndexPosition currPos
+    ) {
         if (
                 gamePaneWrapper == null
                         || gamePaneWrapper.getPane() == null

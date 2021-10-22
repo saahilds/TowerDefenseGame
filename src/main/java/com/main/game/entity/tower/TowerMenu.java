@@ -100,15 +100,19 @@ public class TowerMenu {
             SplitMenuButton splitMenuButton = new SplitMenuButton();
             splitMenuButton.setText(item.getName());
             MenuItem name = new MenuItem(item.getName());
+            MenuItem description = new MenuItem(item.getDescription());
+            MenuItem cost = new MenuItem("COST " + item.getCost());
+            MenuItem health = new MenuItem("HEALTH " + item.getHealth());
+            MenuItem purchase = new MenuItem("Buy Tower");
             System.out.println(0);
-            name.setOnAction(new EventHandler<ActionEvent>() {
+            purchase.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     System.out.println(item.getName() + "selected");
                     setSelectedTowerData(item);
                 }
             });
             System.out.println(1);
-            splitMenuButton.getItems().addAll(name);
+            splitMenuButton.getItems().addAll(name, cost, health, description, purchase);
             towerMenuEl.getChildren().add(splitMenuButton);
         }
     }
@@ -120,7 +124,16 @@ public class TowerMenu {
     public void setSelectedTowerData(TowerData selectedTowerData) {
         this.selectedTowerData = selectedTowerData;
         if (gameDataController != null) {
-            gameDataController.setSelectedTower(selectedTowerData);
+            stageTowerPurchase(selectedTowerData);
+        }
+    }
+
+    private void stageTowerPurchase(TowerData towerData) {
+        System.out.println(gameDataController.getDataController().getGameMoney());
+        if (gameDataController.getDataController().getGameMoney() - towerData.getCost() < 0) {
+            System.out.println("NOT ENOUGH MONEY");
+        } else {
+            gameDataController.setSelectedTower(towerData);
         }
     }
 

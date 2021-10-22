@@ -1,39 +1,71 @@
 package com.main.game.entity.tower;
 
+import com.main.game.data.GameSettingDataMap;
 import com.main.model.GameLevelType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TowerMenu {
+    private TowerData selectedTowerData;
+
     private ArrayList<TowerData> towerMenu;
-    private static HashMap<GameLevelType, Integer> towerInitialCostMap = new HashMap<>() {
-        {
-            put(GameLevelType.EASY, 25);
-            put(GameLevelType.NORMAL, 50);
-            put(GameLevelType.HARD, 100);
-        }
-    };
 
     public TowerMenu(GameLevelType gameLevelType) {
         towerMenu = new ArrayList<TowerData>();
-        TowerData techTower = new TowerData("Tech Tower", "Iconic Building of Georgia Tech",
-                towerInitialCostMap.get(gameLevelType), 50, 100.0, "/com/main/TechTower01.png");
-        TowerData westin = new TowerData("Westin", "Luxury Hotel with rotating Sun Dial Restaurant",
-                towerInitialCostMap.get(gameLevelType), 100, 200.0, "/com/main/Westin01.png");
-        TowerData pencilBuilding = new TowerData("Pencil Building",
-                "Skinny illuminated building owned by Bank of America", towerInitialCostMap.get(gameLevelType),
-                75,150.0, "/com/main/PencilBuilding01.png");
+        TowerData techTower = new TowerData(
+                "tech_tower",
+                "Tech Tower",
+                "Iconic Building of Georgia Tech",
+                GameSettingDataMap.getTowerInitialCost(gameLevelType),
+                50,
+                100.0,
+                "/com/main/TechTower01.png"
+        );
+        TowerData westin = new TowerData(
+                "westing_hotel",
+                "Westin",
+                "Luxury Hotel with rotating Sun Dial Restaurant",
+                GameSettingDataMap.getTowerInitialCost(gameLevelType),
+                100,
+                200.0,
+                "/com/main/Westin01.png"
+        );
+        TowerData pencilBuilding = new TowerData(
+                "pencil_building",
+                "Pencil Building",
+                "Skinny illuminated building owned by Bank of America",
+                GameSettingDataMap.getTowerInitialCost(gameLevelType),
+                75,
+                150.0,
+                "/com/main/PencilBuilding01.png"
+        );
+        TowerData catapultTower = new TowerData(
+                "catapult_tower",
+                "Catapult Tower",
+                "Catapult Tower Desc",
+                GameSettingDataMap.getTowerInitialCost(gameLevelType),
+                75,
+                150.0,
+                "/com/main/catapult.png"
+        );
         towerMenu.add(techTower);
         towerMenu.add(westin);
         towerMenu.add(pencilBuilding);
+        towerMenu.add(catapultTower);
+
+        setSelectedTowerData(catapultTower);
+    }
+
+    public TowerData getSelectedTowerData() {
+        return selectedTowerData;
+    }
+
+    public void setSelectedTowerData(TowerData selectedTowerData) {
+        this.selectedTowerData = selectedTowerData;
     }
 
     public ArrayList<TowerData> getTowerMenu() {
         return towerMenu;
-    }
-
-    public static HashMap<GameLevelType, Integer> getTowerInitialCostMap() {
-        return towerInitialCostMap;
     }
 }

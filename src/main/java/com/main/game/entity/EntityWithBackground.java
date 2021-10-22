@@ -53,7 +53,6 @@ public class EntityWithBackground extends StackPane {
     }
 
     public void setFillWithImagePattern(ImagePattern imgPattern) {
-        System.out.println(entity);
         System.out.println(imgPattern);
         if (entity != null) {
             entity.setFill(imgPattern);

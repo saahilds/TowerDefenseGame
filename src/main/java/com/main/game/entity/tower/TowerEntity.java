@@ -11,5 +11,10 @@ public class TowerEntity extends EntityWithBackground {
         super();
         this.getChildren().addAll(entity);
     }
+    public TowerEntity(TowerData towerData) {
+        this();
+        this.towerData = towerData;
+        this.setFillWithImageSrc(towerData.getImageSource());
+    }
 
 }

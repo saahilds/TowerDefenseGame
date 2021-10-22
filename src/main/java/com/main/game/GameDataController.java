@@ -21,7 +21,10 @@ public class GameDataController {
     private Integer gameMoney = 0;
     private GamePaneWrapper gamePaneWrapper;
 
+    private boolean skipDeletingCuror = false;
     private TowerData selectedTower;
+    private TowerEntity cursorTowerEntity;
+    private PositionMap.IndexPosition prevPos;
 
     public GameDataController(
             GamePaneWrapper gamePaneWrapper,
@@ -73,6 +76,16 @@ public class GameDataController {
         this.gamePaneWrapper.addNodeWithXidxYidx(maxXidx - 1, vCenterIdx, enemy);
         this.gamePaneWrapper.addNodeWithXidxYidx(0, maxYidx, c);
         this.gamePaneWrapper.addNodeWithXidxYidx(1, 1, tower);
+
+        selectedTower = new TowerData(
+                "catapult_tower",
+                "Catapult Tower",
+                "Catapult Tower Desc",
+                GameSettingDataMap.getTowerInitialCost(gameLevel),
+                75,
+                150.0,
+                "/com/main/catapult.png"
+        );
     }
 
 
@@ -89,6 +102,17 @@ public class GameDataController {
         }
     }
 
+    public boolean isCursorMovedIdx(PositionMap.IndexPosition position) {
+        boolean isCursorMovedIdx;
+        if (prevPos == null) {
+            isCursorMovedIdx = true;
+        } else {
+            isCursorMovedIdx = prevPos.getX() != position.getX() || prevPos.getY() != position.getY();
+        }
+        prevPos = position;
+        return isCursorMovedIdx;
+    }
+
     public void initMouseEventHandlerSetting() {
         gamePaneWrapper.setOnMouseClickedHandler(mouseEvent -> {
             handleOnMouseClicked(mouseEvent);
@@ -103,19 +127,58 @@ public class GameDataController {
             System.out.println("========== MOUSE CLICKED ==========");
             System.out.println(mouseEvent);
             System.out.println("========== MOUSE CLICKED ==========");
+            registerTowerEntity(mouseEvent);
+        }
+    }
+
+    private void registerTowerEntity(MouseEvent mouseEvent) {
+        if (
+                gamePaneWrapper != null
+                        && gamePaneWrapper.getPane() != null
+                        && selectedTower != null
+                        && prevPos.getX() < gamePaneWrapper.getWidthCapacity()
+                        && prevPos.getY() < gamePaneWrapper.getHeightCapacity()
+        ) {
+            TowerEntity targetTowerEntity = new TowerEntity(selectedTower);
+            gamePaneWrapper.removeAtPos(prevPos);
+            gamePaneWrapper.addNodeWithIndexPosition(prevPos, targetTowerEntity);
+            this.cursorTowerEntity = null;
+            this.skipDeletingCuror = true;
+            this.selectedTower = null;
         }
     }
 
     private void handleOnMouseMovedHandler(MouseEvent mouseEvent) {
         if (mouseEvent != null) {
-            currentXidxYidx(mouseEvent);
+            double x = mouseEvent.getX();
+            double y = mouseEvent.getY();
+            PositionMap.IndexPosition prevPos = this.prevPos;
+            PositionMap.IndexPosition currPos = gamePaneWrapper.getIdxWithPos(x, y);
+            if (isCursorMovedIdx(currPos)) {
+                if (skipDeletingCuror) {
+                    this.skipDeletingCuror = false;
+                } else {
+                    gamePaneWrapper.removeAtPos(prevPos);
+                    registerTemporaryTowerEntity(prevPos, currPos);
+                }
+            }
         }
     }
 
-    private void currentXidxYidx(MouseEvent mouseEvent) {
-        double x = mouseEvent.getX();
-        double y = mouseEvent.getY();
-        PositionMap.IndexPosition position = gamePaneWrapper.getIdxWithPos(x, y);
-        System.out.println("(xIdx, yIdx): " + position.getX() + " , " + position.getY());
+    private void registerTemporaryTowerEntity(PositionMap.IndexPosition prevPos, PositionMap.IndexPosition currPos) {
+        if (
+                gamePaneWrapper == null
+                        || gamePaneWrapper.getPane() == null
+                        || selectedTower == null
+                        || currPos.getX() >= gamePaneWrapper.getWidthCapacity()
+                        || currPos.getY() >= gamePaneWrapper.getHeightCapacity()
+                        || gamePaneWrapper.getNodeWithIndexPosition(currPos) != null
+        ) {
+            return;
+        } else {
+            cursorTowerEntity = new TowerEntity(selectedTower);
+            cursorTowerEntity.setId("cursorTowerEntity");
+            gamePaneWrapper.addNodeWithIndexPosition(currPos, cursorTowerEntity);
+        }
     }
 }

@@ -86,18 +86,30 @@ public class GamePaneWrapper {
     }
 
     public void addNodeWithXidxYidx(int xIdx, int yIdx, Node node) {
-        this.posMap.setAtIdx(xIdx, yIdx, getPosNodeWithIdx(xIdx, yIdx, node));
+        setAtIdx(xIdx, yIdx, getTranslatedNodeWithIdx(xIdx, yIdx, node));
     }
 
-    public void addNodeWithPosition(int xIdx, int yIdx, Node node) {
-        this.posMap.setAtIdx(xIdx, yIdx, getPosNodeWithIdx(xIdx, yIdx, node));
+    public void addNodeWithIndexPosition(PositionMap.IndexPosition position, Node node) {
+        int xIdx = position.getX();
+        int yIdx = position.getY();
+        addNodeWithXidxYidx(xIdx, yIdx, node);
     }
 
-    public Node getPosNodeWithIdx(int xIdx, int yIdx, Node node) {
-        this.getPane().getChildren().add(node);
+    private void setAtIdx(int xIdx, int yIdx, Node posTranslatedNode) {
+        // add onto ACTURAL screen
+        this.getPane().getChildren().add(posTranslatedNode);
+        // add into Virtual position map
+        this.posMap.setAtIdx(xIdx, yIdx, posTranslatedNode);
+    }
+
+    private Node getTranslatedNodeWithIdx(int xIdx, int yIdx, Node node) {
         node.setTranslateY(nodeHeight * yIdx);
         node.setTranslateX(nodeWidth * xIdx);
         return node;
+    }
+
+    public Node getNodeWithIndexPosition(PositionMap.IndexPosition position) {
+        return posMap.getAtPos(position);
     }
 
     public PositionMap.IndexPosition getIdxWithPos(double xPos, double yPos) {
@@ -105,6 +117,16 @@ public class GamePaneWrapper {
                 (int) xPos / nodeWidth,
                 (int) yPos / nodeHeight
         );
+    }
+
+    public Node removeAtPos(PositionMap.IndexPosition position) {
+        Node prevNode = getNodeWithIndexPosition(position);
+        if (prevNode == null) {
+            return null;
+        }
+        pane.getChildren().remove(prevNode);
+        posMap.setAtPos(position, null);
+        return prevNode;
     }
 
 }

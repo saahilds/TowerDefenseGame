@@ -11,6 +11,54 @@ public class PositionMap {
     private int widthCapacity;
     private int heightCapacity;
 
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getNodeWidth() {
+        return nodeWidth;
+    }
+
+    public void setNodeWidth(int nodeWidth) {
+        this.nodeWidth = nodeWidth;
+    }
+
+    public int getNodeHeight() {
+        return nodeHeight;
+    }
+
+    public void setNodeHeight(int nodeHeight) {
+        this.nodeHeight = nodeHeight;
+    }
+
+    public int getWidthCapacity() {
+        return widthCapacity;
+    }
+
+    public void setWidthCapacity(int widthCapacity) {
+        this.widthCapacity = widthCapacity;
+    }
+
+    public int getHeightCapacity() {
+        return heightCapacity;
+    }
+
+    public void setHeightCapacity(int heightCapacity) {
+        this.heightCapacity = heightCapacity;
+    }
+
     PositionMap(
             int width, int height,
             int nodeWidth, int nodeHeight
@@ -35,13 +83,46 @@ public class PositionMap {
         }
     }
 
+    public void setAtPos(IndexPosition position, Node node) {
+        setAtIdx(position.getX(), position.getY(), node);
+    }
+
     public void setAtIdx(int xIdx, int yIdx, Node node) {
-        this.map[yIdx][xIdx].node = node;
+        if (xIdx < widthCapacity && yIdx < heightCapacity) {
+            this.map[yIdx][xIdx].node = node;
+        }
+    }
+
+    public Node getAtPos(IndexPosition position) {
+        if (position != null) {
+            return getAtIdx(position.getX(), position.getY());
+        }
+        return null;
+    }
+
+    public Node getAtIdx(int xIdx, int yIdx) {
+        try {
+            if (xIdx < widthCapacity && yIdx < heightCapacity) {
+                return this.map[yIdx][xIdx].node;
+            }
+            return null;
+        } catch (Exception exception) {
+            System.out.println("ERR PositionMap getAtIdx" + exception);
+        }
+        return null;
     }
 
     public static class IndexPosition {
         private int x;
         private int y;
+
+        @Override
+        public String toString() {
+            return "IndexPosition{" +
+                    "x=" + x +
+                    ", y=" + y +
+                    '}';
+        }
 
         public IndexPosition(int x, int y) {
             this.x = x;

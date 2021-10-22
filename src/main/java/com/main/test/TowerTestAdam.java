@@ -73,7 +73,16 @@ public class TowerTestAdam extends ApplicationTest {
         TowerEntity techTowerEntity = new TowerEntity(techTower, TowerEntityStatusType.REGISTERED);
         assertEquals(techTowerEntity.getTowerEntityStatus(), TowerEntityStatusType.REGISTERED);
     }
-    
+
+    @Test
+    public void testNameValidity() {
+        TowerMenu towerMenu = new TowerMenu(GameLevelType.EASY);
+        for (int i = 0; i < towerMenu.getTowerDataItemList().size(); i++) {
+            TowerData testTower = towerMenu.getTowerDataItemList().get(i);
+            String[] nameArray = {"Tech Tower", "Westin", "Pencil Building", "Catapult Tower"};
+            assertSame(testTower.getName(), nameArray[i]);
+        }
+    }
 }
 
 

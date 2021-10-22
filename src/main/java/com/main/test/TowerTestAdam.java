@@ -1,39 +1,79 @@
 package com.main.test;
 
-import com.main.MainApplication;
 import com.main.game.DataController;
 import com.main.game.data.GameSettingDataMap;
-import com.main.game.entity.EntityWithHealth;
+import com.main.game.entity.tower.TowerData;
+import com.main.game.entity.tower.TowerEntity;
+import com.main.game.entity.tower.TowerMenu;
 import com.main.model.GameLevelType;
-import com.main.model.GameScreenType;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import com.main.model.TowerEntityStatusType;
 import javafx.stage.Stage;
 import org.junit.Before;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 public class TowerTestAdam extends ApplicationTest {
-    private MainApplication app;
     private DataController dataController;
-    private Parent mainNode;
-    private Stage mainstage;
 
     @Override
     public void start(Stage stage) throws Exception {
-        mainNode = (Parent) FXMLLoader.load(
-                MainApplication.class.getResource(
-                        GameSettingDataMap.getFileName(GameScreenType.GAME_SCREEN)
-                )
+    }
+
+    @Before
+    public void setUp() throws Exception {
+    }
+
+    @Test
+    public void testNecessaryFunds() {
+        dataController = new DataController();
+        dataController.setGameLevel(GameLevelType.EASY);
+        TowerMenu t = new TowerMenu(GameLevelType.EASY);
+
+        assertTrue(dataController.getGameMoney() > t.getTowerDataItemList().get(0).getCost());
+    }
+
+    @Test
+    public void testNotEnoughFunds() {
+        dataController = new DataController();
+        dataController.setGameLevel(GameLevelType.HARD);
+        TowerMenu t = new TowerMenu(GameLevelType.HARD);
+
+        assertFalse(dataController.getGameMoney() > t.getTowerDataItemList().get(0).getCost());
+    }
+
+    @Test
+    public void testTowerCreation() {
+        GameLevelType gameLevel = GameLevelType.EASY;
+        TowerData techTower = new TowerData(
+                "tech_tower",
+                "Tech Tower",
+                "Iconic Building of Georgia Tech",
+                GameSettingDataMap.getTowerInitialCost(gameLevel),
+                50,
+                100.0,
+                "/com/main/TechTower01.png"
         );
-        mainstage = stage;
-        stage.setScene(new Scene(mainNode));
-        stage.show();
-        stage.toFront();
+        assertTrue(techTower instanceof TowerData);
+    }
+
+    @Test
+    public void testTowerEntityOnMap() {
+        GameLevelType gameLevel = GameLevelType.EASY;
+        TowerData techTower = new TowerData(
+                "tech_tower",
+                "Tech Tower",
+                "Iconic Building of Georgia Tech",
+                GameSettingDataMap.getTowerInitialCost(gameLevel),
+                50,
+                100.0,
+                ""
+        );
+        TowerEntity techTowerEntity = new TowerEntity(techTower, TowerEntityStatusType.REGISTERED);
+        assertEquals(techTowerEntity.getTowerEntityStatus(), TowerEntityStatusType.REGISTERED);
     }
     
 }
+
+

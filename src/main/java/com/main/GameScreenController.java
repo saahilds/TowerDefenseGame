@@ -6,6 +6,7 @@ import com.main.game.GamePaneWrapper;
 import com.main.game.data.GameSettingDataMap;
 import com.main.game.entity.EntityWithHealth;
 import com.main.game.entity.tower.TowerEntity;
+import com.main.game.entity.tower.TowerMenu;
 import com.main.game.path.PathBlock;
 import com.main.game.path.TexturePathBlock;
 import com.main.model.GameLevelType;
@@ -33,6 +34,9 @@ public class GameScreenController extends
 
     @FXML
     private Pane gamePane;
+
+    @FXML
+    private VBox towerMenuEl;
 
     private ScreensController screensController;
     private GamePaneWrapper gamePaneWrapper;
@@ -120,7 +124,12 @@ public class GameScreenController extends
             setPlayerName(getDataController().getPlayerName());
             setGameMoney(getDataController().getGameMoney());
             this.initGamePaneSetting();
+            //
         }
+    }
+
+    public void initTowerMenu() {
+        towerMenu = new TowerMenu(towerMenuEl);
     }
 
     public void setScreenParent(ScreensController screenParent) {
@@ -154,4 +163,6 @@ public class GameScreenController extends
     public void setGameLevel(GameLevelType gameLevel) {
         this.gameLevel = gameLevel;
     }
+
+
 }

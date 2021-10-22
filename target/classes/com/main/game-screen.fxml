@@ -37,6 +37,7 @@
                   </MenuBar>
                </children>
               </VBox>
+              <VBox fx:id="towerMenuEl"></VBox>
          </top>
          <center>
             <Pane fx:id="gamePane" prefHeight="664.0" prefWidth="1024.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER" />

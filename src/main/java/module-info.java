@@ -14,6 +14,7 @@ module com.main {
     requires testfx.junit;
     requires javafx.swing;
     requires hamcrest.core;
+    //requires org.testfx.junit;
 
     opens com.main to javafx.fxml;
     exports com.main;

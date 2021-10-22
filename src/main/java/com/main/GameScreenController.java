@@ -2,24 +2,21 @@ package com.main;
 
 import com.main.config.Config;
 //import com.main.game.DataController;
-import com.main.game.GamePaneWrapper;
-import com.main.game.data.GameSettingDataMap;
-import com.main.game.entity.EntityWithHealth;
-import com.main.game.path.PathBlock;
-import com.main.game.path.TexturePathBlock;
+import com.main.game.GameDataController;
+import com.main.game.entity.tower.TowerMenu;
+import com.main.game.gamePane.GamePaneWrapper;
 import com.main.model.GameLevelType;
 import com.main.model.GameScreenType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.net.URL;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 
 /**
@@ -33,8 +30,14 @@ public class GameScreenController extends
     @FXML
     private Pane gamePane;
 
+    @FXML
+    private VBox towerMenuEl;
+
     private ScreensController screensController;
     private GamePaneWrapper gamePaneWrapper;
+    private GameDataController gameDataController;
+    private TowerMenu towerMenu;
+    private GameMoneyObserber gameMoneyObserber = new GameMoneyObserber();
 
     private GameLevelType gameLevel = GameLevelType.EASY;
     private String playerName = "";
@@ -49,65 +52,26 @@ public class GameScreenController extends
 
 
     public void initGamePaneSetting() {
-        this.gamePaneWrapper = new GamePaneWrapper(
+        gamePaneWrapper = new GamePaneWrapper(
                 this.gamePane, Config.STAGE_WIDTH - Config.LEFT_TOOLBAR_WIDTH,
                 Config.STAGE_HEIGHT - Config.GNB_TOP_HEIGHT,
                 Config.UNIT, Config.UNIT
         );
 
-        Rectangle b = new Rectangle(32, 32, Color.RED);
-        Rectangle c = new Rectangle(32, 32, Color.RED);
-        System.out.println(gamePaneWrapper.getWidthCapacity()
-                + "|" + gamePaneWrapper.getHeightCapacity());
-        int maxXidx = gamePaneWrapper.getMaxXidx();
-        int maxYidx = gamePaneWrapper.getMaxYidx();
-
-        this.generateSimplePath();
-
-        int vCenterIdx = (int) Math.floor(gamePaneWrapper.getMaxYidx() / 2);
-        Integer startingMonumentHealth;
-        if (this.gameLevel == null) {
-            startingMonumentHealth = 100;
-        } else {
-            startingMonumentHealth = GameSettingDataMap.getStartingMonumentHealth(this.gameLevel);
-        }
-
-        EntityWithHealth enemy = new EntityWithHealth(
-                32,
-                32,
-                startingMonumentHealth,
-                startingMonumentHealth);
-        Image enemyImage = new Image(
-                getClass().getResourceAsStream("/com/main/skeleton_01.png")
+        gameDataController = new GameDataController(
+                gamePaneWrapper,
+                getDataController(),
+                gameLevel
         );
-        ImagePattern enemyImgPattern = new ImagePattern(enemyImage);
-        enemy.setEntityImgPattern(enemyImgPattern);
-        enemy.setId("enemyEntity");
 
-        EntityWithHealth player = new EntityWithHealth(32, 32, 100, 80);
-        Image playerImage = new Image(
-                getClass().getResourceAsStream("/com/main/steve_01.jpeg")
+        getDataController().getGameMoneyObservable().addObserver(gameMoneyObserber);
+
+        towerMenu = new TowerMenu(
+                towerMenuEl,
+                getDataController().getGameLevel()
         );
-        ImagePattern playerImgPattern = new ImagePattern(playerImage);
-        player.setEntityImgPattern(playerImgPattern);
-        player.setId("playerEntity");
+        towerMenu.setGameDataController(gameDataController);
 
-        this.gamePaneWrapper.addNodeWithXidxYidx(0, vCenterIdx, player);
-        this.gamePaneWrapper.addNodeWithXidxYidx(maxXidx - 1, vCenterIdx, enemy);
-        this.gamePaneWrapper.addNodeWithXidxYidx(0, maxYidx, c);
-    }
-
-    public void generateSimplePath() {
-        int vCenterIdx = (int) Math.floor(gamePaneWrapper.getMaxYidx() / 2);
-        for (int xIdx = 0; xIdx < gamePaneWrapper.getMaxXidx() + 1; xIdx++) {
-            Image textureImage = new Image(
-                    getClass().getResourceAsStream("/com/main/grass_1.png")
-            );
-            ImagePattern textureImagePattern = new ImagePattern(textureImage);
-            PathBlock pathBlock =
-                    new TexturePathBlock(Config.UNIT, Config.UNIT, xIdx, textureImagePattern);
-            this.gamePaneWrapper.addNodeWithXidxYidx(xIdx, vCenterIdx, pathBlock);
-        }
     }
 
     /**
@@ -154,5 +118,14 @@ public class GameScreenController extends
 
     public void setGameLevel(GameLevelType gameLevel) {
         this.gameLevel = gameLevel;
+    }
+
+    public class GameMoneyObserber implements Observer {
+        public void update(Observable o, Object arg) {
+            System.out.println("GM OBSERVer setGameMoney: " + arg);
+            if (arg instanceof Integer) {
+                setGameMoney((Integer) arg);
+            }
+        }
     }
 }

@@ -60,4 +60,16 @@ public class GameSettingDataMap {
     public static Integer getStartingMonumentHealth(GameLevelType gameLevelType) {
         return startingMonumentHealthMap.get(gameLevelType);
     }
+
+    private static HashMap<GameLevelType, Integer> towerInitialCostMap = new HashMap<>() {
+        {
+            put(GameLevelType.EASY, 25);
+            put(GameLevelType.NORMAL, 50);
+            put(GameLevelType.HARD, 100);
+        }
+    };
+
+    public static Integer getTowerInitialCost(GameLevelType gameLevelType) {
+        return towerInitialCostMap.get(gameLevelType);
+    }
 }

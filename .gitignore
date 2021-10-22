@@ -25,6 +25,7 @@ hs_err_pid*
 #intelliJ files we don't want to worry about
 .idea
 /out
+/target
 /_MACOS
 desktop.ini
 .DS_Store

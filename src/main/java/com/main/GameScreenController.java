@@ -110,7 +110,9 @@ public class GameScreenController extends
 
     @FXML
     public void buyTechTower(MouseEvent event) {
-
+        if (gameDataController.checkSufficient()) {
+            gameDataController.updateGameMoney();
+        }
       //  if ()
 //If user money >= tower cost:
        // add tower to user field

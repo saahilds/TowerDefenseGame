@@ -10,11 +10,11 @@ module com.main {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires junit;
-    //requires testfx.core;
-    //requires testfx.junit;
+    requires testfx.core;
+    requires testfx.junit;
     requires javafx.swing;
     requires hamcrest.core;
-    requires org.testfx.junit;
+    //requires org.testfx.junit;
 
     opens com.main to javafx.fxml;
     exports com.main;

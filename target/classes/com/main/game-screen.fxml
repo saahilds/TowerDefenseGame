@@ -87,7 +87,7 @@
                               <SeparatorMenuItem mnemonicParsing="false" />
                               <CustomMenuItem mnemonicParsing="false" text="Buy">
                                  <content>
-                                    <Button mnemonicParsing="false" text="Buy Now" />
+                                    <Button id="buyTechTower" mnemonicParsing="false" text="Buy Now" />
                                  </content>
                               </CustomMenuItem>
                           </items>
@@ -106,7 +106,7 @@
                               <SeparatorMenuItem mnemonicParsing="false" />
                               <CustomMenuItem mnemonicParsing="false" text="Buy">
                                  <content>
-                                    <Button mnemonicParsing="false" text="Buy Now" />
+                                    <Button id="buyWestin" mnemonicParsing="false" text="Buy Now" />
                                  </content>
                               </CustomMenuItem>
                            </items>
@@ -125,7 +125,7 @@
                               <SeparatorMenuItem mnemonicParsing="false" />
                               <CustomMenuItem mnemonicParsing="false" text="Buy">
                                  <content>
-                                    <Button mnemonicParsing="false" text="Buy Now" />
+                                    <Button id="buyPencilBuilding" mnemonicParsing="false" text="Buy Now" />
                                  </content>
                               </CustomMenuItem>
                            </items>

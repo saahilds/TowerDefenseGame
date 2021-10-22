@@ -10,11 +10,13 @@ import com.main.game.gamePane.PositionMap;
 import com.main.game.path.PathBlock;
 import com.main.game.path.TexturePathBlock;
 import com.main.model.GameLevelType;
+import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 public class GameDataController {
     private GameLevelType gameLevel = GameLevelType.EASY;
@@ -22,6 +24,13 @@ public class GameDataController {
     private GamePaneWrapper gamePaneWrapper;
 
     private TowerData selectedTower;
+    @FXML
+    private Text errorText;
+    private DataController dataController;
+
+    public void setDataController(DataController dataController) {
+        this.dataController = dataController;
+    }
 
     public GameDataController(
             GamePaneWrapper gamePaneWrapper,
@@ -103,13 +112,28 @@ public class GameDataController {
             System.out.println("========== MOUSE CLICKED ==========");
             System.out.println(mouseEvent);
             System.out.println("========== MOUSE CLICKED ==========");
+            if (selectedTower != null) {
+                if (checkSufficient()) {
+                    updateGameMoney();
+                } else {
+                    this.errorText.setText("Insufficient funds!");
+                }
+            }
         }
+    }
+
+    public boolean checkSufficient() {
+        return (gameMoney >= selectedTower.getCost());
     }
 
     private void handleOnMouseMovedHandler(MouseEvent mouseEvent) {
         if (mouseEvent != null) {
             currentXidxYidx(mouseEvent);
         }
+    }
+
+    public void updateGameMoney() {
+        gameMoney = gameMoney - selectedTower.getCost();
     }
 
     private void currentXidxYidx(MouseEvent mouseEvent) {

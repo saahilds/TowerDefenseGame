@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -107,7 +108,16 @@ public class GameScreenController extends
         screensController.setScreen(GameScreenType.CONFIG_SCREEN);
     }
 
-    public void setPlayerName(String playerName) {
+    @FXML
+    public void buyTechTower(MouseEvent event) {
+
+      //  if ()
+//If user money >= tower cost:
+       // add tower to user field
+        //
+    }
+
+        public void setPlayerName(String playerName) {
         if (this.playerNameText != null) {
             this.playerNameText.setText(playerName);
         }

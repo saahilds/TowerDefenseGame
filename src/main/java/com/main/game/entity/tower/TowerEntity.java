@@ -1,9 +1,9 @@
 package com.main.game.entity.tower;
 
-import com.main.config.Config;
+//import com.main.config.Config;
 import com.main.game.entity.EntityWithBackground;
 import com.main.model.TowerEntityStatusType;
-import javafx.scene.shape.Rectangle;
+//import javafx.scene.shape.Rectangle;
 
 public class TowerEntity extends EntityWithBackground {
     private TowerData towerData;

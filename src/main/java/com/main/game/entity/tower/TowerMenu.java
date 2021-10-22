@@ -1,6 +1,6 @@
 package com.main.game.entity.tower;
 
-import com.main.game.DataController;
+//import com.main.game.DataController;
 import com.main.game.GameDataController;
 import com.main.game.data.GameSettingDataMap;
 import com.main.model.GameLevelType;
@@ -8,7 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
-import javafx.scene.layout.Pane;
+//import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;

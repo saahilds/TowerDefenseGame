@@ -117,7 +117,8 @@ public class GameDataController {
         if (prevPos == null) {
             isCursorMovedIdx = true;
         } else {
-            isCursorMovedIdx = prevPos.getX() != position.getX() || prevPos.getY() != position.getY();
+            isCursorMovedIdx = prevPos.getX() != position.getX()
+                    || prevPos.getY() != position.getY();
         }
         prevPos = position;
         return isCursorMovedIdx;
@@ -149,7 +150,8 @@ public class GameDataController {
                         && prevPos.getX() < gamePaneWrapper.getWidthCapacity()
                         && prevPos.getY() < gamePaneWrapper.getHeightCapacity()
         ) {
-            TowerEntity targetTowerEntity = new TowerEntity(selectedTower, TowerEntityStatusType.REGISTERED);
+            TowerEntity targetTowerEntity = new TowerEntity(selectedTower,
+                    TowerEntityStatusType.REGISTERED);
             gamePaneWrapper.removeAtPos(prevPos);
             gamePaneWrapper.addNodeWithIndexPosition(prevPos, targetTowerEntity);
             this.cursorTowerEntity = null;
@@ -175,7 +177,8 @@ public class GameDataController {
         }
     }
 
-    private void registerTemporaryTowerEntity(PositionMap.IndexPosition prevPos, PositionMap.IndexPosition currPos) {
+    private void registerTemporaryTowerEntity(PositionMap.IndexPosition prevPos,
+                                              PositionMap.IndexPosition currPos) {
         if (
                 gamePaneWrapper == null
                         || gamePaneWrapper.getPane() == null

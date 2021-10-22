@@ -33,7 +33,7 @@ public class EntityWithHealth extends EntityWithBackground {
         int hpTextTranslateY = hpBarTranslateY + 15;
         this.hpText.setTranslateY(-hpTextTranslateY);
 
-        this.getChildren().addAll(entity, hpBar, hpText);
+        this.getChildren().addAll(getEntity(), hpBar, hpText);
     }
 
     public void initHealthBar() {

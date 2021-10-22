@@ -10,6 +10,15 @@ import javafx.scene.shape.Rectangle;
 public class EntityWithBackground extends StackPane {
     private int width;
     private int height;
+
+    public Rectangle getEntity() {
+        return entity;
+    }
+
+    public void setEntity(Rectangle entity) {
+        this.entity = entity;
+    }
+
     private Rectangle entity;
 
     public EntityWithBackground() {

@@ -28,7 +28,7 @@ public class TowerEntity extends EntityWithBackground {
 
     public TowerEntity() {
         super();
-        this.getChildren().addAll(entity);
+        this.getChildren().addAll(getEntity());
     }
     public TowerEntity(TowerData towerData) {
         this();

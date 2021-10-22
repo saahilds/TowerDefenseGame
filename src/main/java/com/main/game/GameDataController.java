@@ -11,6 +11,7 @@ import com.main.game.path.PathBlock;
 import com.main.game.path.TexturePathBlock;
 import com.main.model.GameLevelType;
 import com.main.model.TowerEntityStatusType;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -168,7 +169,14 @@ public class GameDataController {
                 if (skipDeletingCuror) {
                     this.skipDeletingCuror = false;
                 } else {
-                    gamePaneWrapper.removeAtPos(prevPos);
+                    Node node = gamePaneWrapper.getNodeWithIndexPosition(prevPos);
+                    if (
+                            node != null
+                            && node instanceof TowerEntity
+                            && ((TowerEntity) node).getTowerEntityStatus() == TowerEntityStatusType.STAGED
+                    ) {
+                        gamePaneWrapper.removeAtPos(prevPos);
+                    }
                     registerTemporaryTowerEntity(prevPos, currPos);
                 }
             }

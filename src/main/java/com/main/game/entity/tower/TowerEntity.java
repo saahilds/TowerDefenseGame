@@ -7,6 +7,23 @@ import javafx.scene.shape.Rectangle;
 
 public class TowerEntity extends EntityWithBackground {
     private TowerData towerData;
+
+    public TowerData getTowerData() {
+        return towerData;
+    }
+
+    public void setTowerData(TowerData towerData) {
+        this.towerData = towerData;
+    }
+
+    public TowerEntityStatusType getTowerEntityStatus() {
+        return towerEntityStatus;
+    }
+
+    public void setTowerEntityStatus(TowerEntityStatusType towerEntityStatus) {
+        this.towerEntityStatus = towerEntityStatus;
+    }
+
     private TowerEntityStatusType towerEntityStatus;
 
     public TowerEntity() {

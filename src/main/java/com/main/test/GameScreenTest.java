@@ -1,15 +1,13 @@
 package com.main.test;
 
 import com.main.MainApplication;
-import com.main.game.DataController;
 import com.main.game.data.GameSettingDataMap;
-import com.main.game.entity.EntityWithHealth;
 import com.main.model.GameLevelType;
 import com.main.model.GameScreenType;
+import com.main.game.entity.EntityWithHealth;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +18,6 @@ import static org.junit.Assert.assertSame;
 
 public class GameScreenTest extends ApplicationTest {
     private MainApplication app;
-//    private DataController dataController;
     private Parent mainNode;
     private Stage mainstage;
 
@@ -48,6 +45,7 @@ public class GameScreenTest extends ApplicationTest {
     @Test
     public void testEnemyInitialization() {
         GameLevelType level = GameLevelType.EASY;
+
         EntityWithHealth enemyEntity = from(mainNode).lookup("#enemyEntity").query();
         assertNotNull(enemyEntity);
         assertSame(
@@ -55,14 +53,4 @@ public class GameScreenTest extends ApplicationTest {
                 GameSettingDataMap.getStartingMonumentHealth(level)
         );
     }
-
-//    @Test
-//    public void testPlayerInitialization() {
-//        EntityWithHealth playerEntity = from(mainNode).lookup("#playerEntity").query();
-//        assertNotNull(playerEntity);
-//        assertSame(
-//                (int) playerEntity.getMaxHP(),
-//                100
-//        );
-//    }
 }

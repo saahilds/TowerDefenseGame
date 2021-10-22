@@ -14,6 +14,14 @@ public class GamePaneWrapper {
         return pane;
     }
 
+    public PositionMap getPosMap() {
+        return posMap;
+    }
+
+    public void setPosMap(PositionMap posMap) {
+        this.posMap = posMap;
+    }
+
     private PositionMap posMap;
 
     private int width;
@@ -95,14 +103,14 @@ public class GamePaneWrapper {
         addNodeWithXidxYidx(xIdx, yIdx, node);
     }
 
-    private void setAtIdx(int xIdx, int yIdx, Node posTranslatedNode) {
+    public void setAtIdx(int xIdx, int yIdx, Node posTranslatedNode) {
         // add onto ACTURAL screen
-        this.getPane().getChildren().add(posTranslatedNode);
+        getPane().getChildren().add(posTranslatedNode);
         // add into Virtual position map
         this.posMap.setAtIdx(xIdx, yIdx, posTranslatedNode);
     }
 
-    private Node getTranslatedNodeWithIdx(int xIdx, int yIdx, Node node) {
+    public Node getTranslatedNodeWithIdx(int xIdx, int yIdx, Node node) {
         node.setTranslateY(nodeHeight * yIdx);
         node.setTranslateX(nodeWidth * xIdx);
         return node;

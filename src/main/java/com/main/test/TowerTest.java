@@ -14,8 +14,10 @@ import org.testfx.framework.junit.ApplicationTest;
 
 import static org.junit.Assert.*;
 
-public class TowerTestAdam extends ApplicationTest {
+public class TowerTest extends ApplicationTest {
     private DataController dataController;
+
+    private int diff = 0;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -83,6 +85,33 @@ public class TowerTestAdam extends ApplicationTest {
             assertSame(testTower.getName(), nameArray[i]);
         }
     }
+
+    @Test
+    public void testCostForGameLevelEasy() {
+        if ((GameSettingDataMap.getTowerInitialCost(GameLevelType.EASY))
+                != GameSettingDataMap.getTowerInitialCost(GameLevelType.NORMAL)) {
+            diff = 1;
+        }
+        assertSame(1, diff);
+    }
+
+    @Test
+    public void testCostForGameLevelNormal() {
+        if ((GameSettingDataMap.getTowerInitialCost(GameLevelType.NORMAL))
+                != GameSettingDataMap.getTowerInitialCost(GameLevelType.HARD)) {
+            diff = 1;
+        }
+        assertSame(1, diff);
+    }
+    @Test
+    public void testCostForGameLevelHard() {
+        if ((GameSettingDataMap.getTowerInitialCost(GameLevelType.EASY))
+                != GameSettingDataMap.getTowerInitialCost(GameLevelType.HARD)) {
+            diff = 1;
+        }
+        assertSame(1, diff);
+    }
+
 }
 
 

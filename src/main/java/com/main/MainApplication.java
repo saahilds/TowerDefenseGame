@@ -15,9 +15,6 @@ public class MainApplication extends Application {
 
     private static DataController dataController = new DataController();
     //GETTER
-    public static void setDataController(DataController dataController) {
-        MainApplication.dataController = dataController;
-    }
 
     @Override
     public void start(Stage primaryStage) {

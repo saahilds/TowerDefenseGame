@@ -2,6 +2,7 @@ package com.main;
 
 import com.main.config.Config;
 import com.main.game.GameDataController;
+import com.main.game.entity.tower.TowerMenu;
 import com.main.game.gamePane.GamePaneWrapper;
 import com.main.model.GameLevelType;
 import com.main.model.GameScreenType;
@@ -52,6 +53,8 @@ public class GameScreenController extends
                 gamePaneWrapper,
                 gameLevel
         );
+
+        gameDataController.setDataController(getDataController());
 //        gameDataController.generateSimplePath();
 //        gameDataController.initGameScenario();
     }
@@ -66,6 +69,7 @@ public class GameScreenController extends
             setGameLevel(getDataController().getGameLevel());
             setPlayerName(getDataController().getPlayerName());
             setGameMoney(getDataController().getGameMoney());
+            TowerMenu towerMenu = new TowerMenu(gameLevel);
             this.initGamePaneSetting();
         }
     }

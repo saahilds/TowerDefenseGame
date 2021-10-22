@@ -5,6 +5,7 @@ import com.main.game.data.GameSettingDataMap;
 import com.main.game.entity.tower.TowerData;
 import com.main.game.entity.tower.TowerEntity;
 import com.main.game.entity.EntityWithHealth;
+import com.main.game.entity.tower.TowerMenu;
 import com.main.game.gamePane.GamePaneWrapper;
 import com.main.game.gamePane.PositionMap;
 import com.main.game.path.PathBlock;
@@ -17,8 +18,14 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 public class GameDataController {
+    DataController dataController;
+
+    public void setDataController(DataController dataController) {
+        this.dataController = dataController;
+    }
+
     private GameLevelType gameLevel = GameLevelType.EASY;
-    private Integer gameMoney = 0;
+    private Integer gameMoney = dataController.getGameMoney();
     private GamePaneWrapper gamePaneWrapper;
 
     private TowerData selectedTower;
@@ -103,7 +110,22 @@ public class GameDataController {
             System.out.println("========== MOUSE CLICKED ==========");
             System.out.println(mouseEvent);
             System.out.println("========== MOUSE CLICKED ==========");
+            if (selectedTower != null) { //if tower is selected]
+                if (checkSufficient()) {
+                    updateGameMoney();
+                }
+            }
         }
+    }
+
+    public boolean checkSufficient() {
+        return (gameMoney >= selectedTower.getCost());
+    }
+
+    //as soon as clicked, check for sufficinet fund first -> then place -> update money
+    public void updateGameMoney() {
+        gameMoney = gameMoney - selectedTower.getCost();
+        //System.out.println(gameMoney);
     }
 
     private void handleOnMouseMovedHandler(MouseEvent mouseEvent) {

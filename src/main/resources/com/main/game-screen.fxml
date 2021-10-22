@@ -79,30 +79,11 @@
                               <Font name="Arial" size="13.0" />
                            </font>
                         </Text>
-                        <SplitMenuButton mnemonicParsing="false" prefHeight="25.0" prefWidth="186.0" text="Pencil Building">
-                           <items>
-                              <MenuItem disable="true" mnemonicParsing="false" text="Skinny illuminated building owned by Bank of America" />
-                              <MenuItem disable="true" mnemonicParsing="false" text="Damage: " />
-                              <MenuItem disable="true" mnemonicParsing="false" text="Cost:  " />
-                              <SeparatorMenuItem mnemonicParsing="false" />
-                              <CustomMenuItem mnemonicParsing="false" text="Buy">
-                                 <content>
-                                    <Button mnemonicParsing="false" text="Buy Now" />
-                                 </content>
-                              </CustomMenuItem>
-                           </items>
-                           <VBox.margin>
-                              <Insets bottom="10.0" top="10.0" />
-                           </VBox.margin>
-                           <font>
-                              <Font name="Arial" size="13.0" />
-                           </font>
-                        </SplitMenuButton>
                         <SplitMenuButton mnemonicParsing="false" prefHeight="25.0" prefWidth="184.0" text="Tech Tower">
                           <items>
                             <MenuItem disable="true" mnemonicParsing="false" text="Iconic Building of Georgia Tech" />
-                            <MenuItem disable="true" mnemonicParsing="false" text="Damage: " />
-                              <MenuItem disable="true" mnemonicParsing="false" text="Cost:" />
+                            <MenuItem disable="true" mnemonicParsing="false" text="Damage: 50" />
+                              <MenuItem fx:id="techCost" disable="true" mnemonicParsing="false" text="Cost:" />
                               <SeparatorMenuItem mnemonicParsing="false" />
                               <CustomMenuItem mnemonicParsing="false" text="Buy">
                                  <content>
@@ -120,8 +101,27 @@
                         <SplitMenuButton layoutX="10.0" layoutY="27.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="184.0" text="Westin">
                            <items>
                               <MenuItem disable="true" mnemonicParsing="false" text="Luxury Hotel with rotating Sun Dial Restaurant" />
-                              <MenuItem disable="true" mnemonicParsing="false" text="Damage: " />
-                              <MenuItem disable="true" mnemonicParsing="false" text="Cost:" />
+                              <MenuItem disable="true" mnemonicParsing="false" text="Damage:  100" />
+                              <MenuItem fx:id="westCost" disable="true" mnemonicParsing="false" text="Cost:" />
+                              <SeparatorMenuItem mnemonicParsing="false" />
+                              <CustomMenuItem mnemonicParsing="false" text="Buy">
+                                 <content>
+                                    <Button mnemonicParsing="false" text="Buy Now" />
+                                 </content>
+                              </CustomMenuItem>
+                           </items>
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="Arial" size="13.0" />
+                           </font>
+                        </SplitMenuButton>
+                        <SplitMenuButton mnemonicParsing="false" prefHeight="25.0" prefWidth="186.0" text="Pencil Building">
+                           <items>
+                              <MenuItem disable="true" mnemonicParsing="false" text="Skinny illuminated building owned by Bank of America" />
+                              <MenuItem disable="true" mnemonicParsing="false" text="Damage:  75" />
+                              <MenuItem fx:id="pencilCost" disable="true" mnemonicParsing="false" text="Cost:  " />
                               <SeparatorMenuItem mnemonicParsing="false" />
                               <CustomMenuItem mnemonicParsing="false" text="Buy">
                                  <content>

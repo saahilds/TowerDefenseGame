@@ -1,7 +1,6 @@
 package com.main.game;
 
 import javafx.event.EventHandler;
-import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -22,15 +21,26 @@ public class GamePaneWrapper {
     private int nodeWidth;
     private int nodeHeight;
 
-    private EventHandler<? super MouseEvent> onClickMouseEventHandler;
+    private EventHandler<? super MouseEvent> onMouseClickedHandler;
 
-    public void setOnClickMouseEventHandler(EventHandler<? super MouseEvent> onClickMouseEventHandler) {
-        this.onClickMouseEventHandler = onClickMouseEventHandler;
-        pane.setOnMouseClicked(onClickMouseEventHandler);
+    public void setOnMouseClickedHandler(EventHandler<? super MouseEvent> onMouseClickedHandler) {
+        this.onMouseClickedHandler = onMouseClickedHandler;
+        pane.setOnMouseClicked(onMouseClickedHandler);
     }
 
-    public EventHandler<? super MouseEvent> getOnClickMouseEventHandler() {
-        return onClickMouseEventHandler;
+    public EventHandler<? super MouseEvent> getOnMouseClickedHandler() {
+        return onMouseClickedHandler;
+    }
+
+    private EventHandler<? super MouseEvent> onMouseMovedHandler;
+
+    public void setOnMouseMovedHandler(EventHandler<? super MouseEvent> onMouseMovedHandler) {
+        this.onMouseMovedHandler = onMouseMovedHandler;
+        pane.setOnMouseMoved(onMouseMovedHandler);
+    }
+
+    public EventHandler<? super MouseEvent> getOnMouseMovedHandler() {
+        return onMouseMovedHandler;
     }
 
     private int widthCapacity;
@@ -79,6 +89,10 @@ public class GamePaneWrapper {
         this.posMap.setAtIdx(xIdx, yIdx, getPosNodeWithIdx(xIdx, yIdx, node));
     }
 
+    public void addNodeWithPosition(int xIdx, int yIdx, Node node) {
+        this.posMap.setAtIdx(xIdx, yIdx, getPosNodeWithIdx(xIdx, yIdx, node));
+    }
+
     public Node getPosNodeWithIdx(int xIdx, int yIdx, Node node) {
         this.getPane().getChildren().add(node);
         node.setTranslateY(nodeHeight * yIdx);
@@ -86,9 +100,15 @@ public class GamePaneWrapper {
         return node;
     }
 
+    public PositionMap.IndexPosition getIdxWithPos(double xPos, double yPos) {
+        return new PositionMap.IndexPosition(
+                (int) xPos / nodeWidth,
+                (int) yPos / nodeHeight
+        );
+    }
 
     public static class PositionMap {
-        private PositionObject[][] map;
+        private IndexPositionObject[][] map;
         private int width;
         private int height;
         private int nodeWidth;
@@ -106,12 +126,12 @@ public class GamePaneWrapper {
             this.nodeHeight = nodeHeight;
             this.widthCapacity = (int) Math.floor(this.width / this.nodeWidth);
             this.heightCapacity = (int) Math.floor(this.height / this.nodeHeight);
-            this.map = new PositionObject[heightCapacity][widthCapacity];
+            this.map = new IndexPositionObject[heightCapacity][widthCapacity];
             System.out.println(widthCapacity + "|" + heightCapacity);
             for (int yIdx = 0; yIdx < heightCapacity; yIdx++) {
                 int yPos = yIdx * nodeHeight;
                 for (int xIdx = 0; xIdx < widthCapacity; xIdx++) {
-                    PositionObject posObj = new PositionObject(
+                    IndexPositionObject posObj = new IndexPositionObject(
                             xIdx * nodeWidth,
                             yPos
                     );
@@ -124,17 +144,42 @@ public class GamePaneWrapper {
             this.map[yIdx][xIdx].node = node;
         }
 
-        public static class PositionObject {
+        public static class IndexPosition {
             private int x;
             private int y;
-            private Node node;
 
-            PositionObject(int x, int y) {
+            public IndexPosition(int x, int y) {
                 this.x = x;
                 this.y = y;
             }
 
-            PositionObject(int x, int y, Node node) {
+            public int getX() {
+                return x;
+            }
+
+            public void setX(int x) {
+                this.x = x;
+            }
+
+            public int getY() {
+                return y;
+            }
+
+            public void setY(int y) {
+                this.y = y;
+            }
+        }
+
+        public static class IndexPositionObject extends IndexPosition {
+            private int x;
+            private int y;
+            private Node node;
+
+            IndexPositionObject(int x, int y) {
+                super(x, y);
+            }
+
+            IndexPositionObject(int x, int y, Node node) {
                 this(x, y);
                 this.node = node;
             }

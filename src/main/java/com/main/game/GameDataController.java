@@ -88,18 +88,33 @@ public class GameDataController {
     }
 
     public void initMouseEventHandlerSetting() {
-        gamePaneWrapper.setOnClickMouseEventHandler(mouseEvent -> {
-            System.out.println(mouseEvent);
-            handleClickMouseEvent(mouseEvent);
+        gamePaneWrapper.setOnMouseClickedHandler(mouseEvent -> {
+            handleOnMouseClicked(mouseEvent);
+        });
+        gamePaneWrapper.setOnMouseMovedHandler(mouseEvent -> {
+            handleOnMouseMovedHandler(mouseEvent);
         });
     }
 
-    private void handleClickMouseEvent(MouseEvent mouseEvent) {
+    private void handleOnMouseClicked(MouseEvent mouseEvent) {
         if (mouseEvent != null) {
             System.out.println("========== MOUSE CLICKED ==========");
             System.out.println(mouseEvent);
             System.out.println("========== MOUSE CLICKED ==========");
         }
+    }
+
+    private void handleOnMouseMovedHandler(MouseEvent mouseEvent) {
+        if (mouseEvent != null) {
+            currentXidxYidx(mouseEvent);
+        }
+    }
+
+    private void currentXidxYidx(MouseEvent mouseEvent) {
+        double x = mouseEvent.getX();
+        double y = mouseEvent.getY();
+        GamePaneWrapper.PositionMap.IndexPosition position = gamePaneWrapper.getIdxWithPos(x, y);
+        System.out.println("(xIdx, yIdx): " + position.getX() + " , " + position.getY());
     }
 
 }

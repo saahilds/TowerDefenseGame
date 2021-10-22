@@ -12,7 +12,7 @@ import org.testfx.framework.junit.ApplicationTest;
 
 import static org.junit.Assert.*;
 
-public class SieunTest extends ApplicationTest{
+public class SieunTest extends ApplicationTest {
     private MainApplication app;
     private DataController dataController;
     private Parent mainNode;
@@ -23,15 +23,7 @@ public class SieunTest extends ApplicationTest{
     //private GameLevelType gameLevelType;
     @Override
     public void start(Stage stage) throws Exception {
-//        mainNode = (Parent) FXMLLoader.load(
-//                MainApplication.class.getResource(
-//                        GameSettingDataMap.getFileName(GameScreenType.GAME_SCREEN)
-//                )
-//        );
-//        mainstage = stage;
-//        stage.setScene(new Scene(mainNode));
-//        stage.show();
-//        stage.toFront();
+        
     }
 
     @Before

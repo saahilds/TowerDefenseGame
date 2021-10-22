@@ -2,7 +2,7 @@ package com.main;
 
 import com.main.config.Config;
 import com.main.game.GameDataController;
-import com.main.game.GamePaneWrapper;
+import com.main.game.gamePane.GamePaneWrapper;
 import com.main.model.GameLevelType;
 import com.main.model.GameScreenType;
 import javafx.event.ActionEvent;

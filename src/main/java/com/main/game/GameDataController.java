@@ -5,6 +5,8 @@ import com.main.game.data.GameSettingDataMap;
 import com.main.game.entity.tower.TowerData;
 import com.main.game.entity.tower.TowerEntity;
 import com.main.game.entity.EntityWithHealth;
+import com.main.game.gamePane.GamePaneWrapper;
+import com.main.game.gamePane.PositionMap;
 import com.main.game.path.PathBlock;
 import com.main.game.path.TexturePathBlock;
 import com.main.model.GameLevelType;
@@ -113,8 +115,7 @@ public class GameDataController {
     private void currentXidxYidx(MouseEvent mouseEvent) {
         double x = mouseEvent.getX();
         double y = mouseEvent.getY();
-        GamePaneWrapper.PositionMap.IndexPosition position = gamePaneWrapper.getIdxWithPos(x, y);
+        PositionMap.IndexPosition position = gamePaneWrapper.getIdxWithPos(x, y);
         System.out.println("(xIdx, yIdx): " + position.getX() + " , " + position.getY());
     }
-
 }

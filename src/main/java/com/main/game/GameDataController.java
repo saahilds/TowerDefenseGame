@@ -23,6 +23,15 @@ public class GameDataController {
     private GamePaneWrapper gamePaneWrapper;
 
     private boolean skipDeletingCuror = false;
+
+    public TowerData getSelectedTower() {
+        return selectedTower;
+    }
+
+    public void setSelectedTower(TowerData selectedTower) {
+        this.selectedTower = selectedTower;
+    }
+
     private TowerData selectedTower;
     private TowerEntity cursorTowerEntity;
     private PositionMap.IndexPosition prevPos;

@@ -1,7 +1,9 @@
 package com.main;
 
 import com.main.config.Config;
+import com.main.game.DataController;
 import com.main.game.GameDataController;
+import com.main.game.entity.tower.TowerMenu;
 import com.main.game.gamePane.GamePaneWrapper;
 import com.main.model.GameLevelType;
 import com.main.model.GameScreenType;
@@ -9,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.net.URL;
@@ -25,9 +28,13 @@ public class GameScreenController extends
     @FXML
     private Pane gamePane;
 
+    @FXML
+    private VBox towerMenuEl;
+
     private ScreensController screensController;
     private GamePaneWrapper gamePaneWrapper;
     private GameDataController gameDataController;
+    private TowerMenu towerMenu;
 
     private GameLevelType gameLevel = GameLevelType.EASY;
     private String playerName = "";
@@ -42,7 +49,7 @@ public class GameScreenController extends
 
 
     public void initGamePaneSetting() {
-        this.gamePaneWrapper = new GamePaneWrapper(
+        gamePaneWrapper = new GamePaneWrapper(
                 this.gamePane, Config.STAGE_WIDTH - Config.LEFT_TOOLBAR_WIDTH,
                 Config.STAGE_HEIGHT - Config.GNB_TOP_HEIGHT,
                 Config.UNIT, Config.UNIT
@@ -52,8 +59,13 @@ public class GameScreenController extends
                 gamePaneWrapper,
                 gameLevel
         );
-//        gameDataController.generateSimplePath();
-//        gameDataController.initGameScenario();
+
+        System.out.println(towerMenuEl);
+        towerMenu = new TowerMenu(
+                towerMenuEl,
+                gameLevel
+        );
+        towerMenu.setGameDataController(gameDataController);
     }
 
     /**

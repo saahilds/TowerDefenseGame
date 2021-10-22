@@ -18,6 +18,7 @@ public class TowerData {
             double health,
             String imageSource
     ) {
+        System.out.println("TowerData const 1");
         this.towerDataId = towerDataId;
         this.name = name;
         this.description = description;
@@ -25,6 +26,7 @@ public class TowerData {
         this.dps = dps;
         this.health = health;
         this.imageSource = imageSource;
+        System.out.println("TowerData const 99");
     }
 
     public String getTowerDataId() {

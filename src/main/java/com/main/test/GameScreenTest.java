@@ -9,6 +9,7 @@ import com.main.model.GameScreenType;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +20,7 @@ import static org.junit.Assert.assertSame;
 
 public class GameScreenTest extends ApplicationTest {
     private MainApplication app;
-    private DataController dataController;
+//    private DataController dataController;
     private Parent mainNode;
     private Stage mainstage;
 
@@ -55,14 +56,13 @@ public class GameScreenTest extends ApplicationTest {
         );
     }
 
-    @Test      
-    public void testPlayerInitialization() {
-        GameLevelType level = GameLevelType.EASY;
-        EntityWithHealth playerEntity = from(mainNode).lookup("#playerEntity").query();
-        assertNotNull(playerEntity);
-        assertSame(
-                (int) playerEntity.getMaxHP(),
-                100
-        );
-    }
+//    @Test
+//    public void testPlayerInitialization() {
+//        EntityWithHealth playerEntity = from(mainNode).lookup("#playerEntity").query();
+//        assertNotNull(playerEntity);
+//        assertSame(
+//                (int) playerEntity.getMaxHP(),
+//                100
+//        );
+//    }
 }

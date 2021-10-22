@@ -39,16 +39,21 @@ public class TowerMenu {
     private ArrayList<TowerData> towerDataItemList;
 
     public TowerMenu(GameLevelType gameLevel) {
+        System.out.println("TowerMenu constructor(single) 0");
+        System.out.println("TowerMenu constructor(single) GL" + gameLevel);
+        GameLevelType TEST = GameLevelType.HARD;
         towerDataItemList = new ArrayList<>();
+        System.out.println("TowerMenu constructor(single) 1");
         TowerData techTower = new TowerData(
                 "tech_tower",
                 "Tech Tower",
                 "Iconic Building of Georgia Tech",
-                GameSettingDataMap.getTowerInitialCost(gameLevel),
+                GameSettingDataMap.getTowerInitialCost(TEST),
                 50,
                 100.0,
                 "/com/main/TechTower01.png"
         );
+        System.out.println("TowerMenu constructor(single) 1.1");
         TowerData westin = new TowerData(
                 "westing_hotel",
                 "Westin",
@@ -58,6 +63,7 @@ public class TowerMenu {
                 200.0,
                 "/com/main/Westin01.png"
         );
+        System.out.println("TowerMenu constructor(single) 1.2");
         TowerData pencilBuilding = new TowerData(
                 "pencil_building",
                 "Pencil Building",
@@ -67,6 +73,7 @@ public class TowerMenu {
                 150.0,
                 "/com/main/PencilBuilding01.png"
         );
+        System.out.println("TowerMenu constructor(single) 1.3");
         TowerData catapultTower = new TowerData(
                 "catapult_tower",
                 "Catapult Tower",
@@ -76,19 +83,25 @@ public class TowerMenu {
                 150.0,
                 "/com/main/catapult.png"
         );
+        System.out.println("TowerMenu constructor(single) 10");
         towerDataItemList.add(techTower);
         towerDataItemList.add(westin);
         towerDataItemList.add(pencilBuilding);
         towerDataItemList.add(catapultTower);
-
+        System.out.println("TowerMenu constructor(single) 30");
         setSelectedTowerData(catapultTower);
+        System.out.println("TowerMenu constructor(single) 99");
     }
 
     public TowerMenu(VBox towerMenuEl, GameLevelType gameLevel) {
         this(gameLevel);
+        System.out.println("TowerMenu constructor 1");
         this.towerMenuEl = towerMenuEl;
+        System.out.println("TowerMenu constructor 2");
         System.out.println(123);
+        System.out.println("TowerMenu constructor 3");
         initMenuItemList();
+        System.out.println("TowerMenu constructor 99");
     }
 
     private void initMenuItemList() {

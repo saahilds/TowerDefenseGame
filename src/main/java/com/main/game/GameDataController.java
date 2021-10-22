@@ -52,24 +52,28 @@ public class GameDataController {
             DataController dataController,
             GameLevelType gameLevel
     ) {
+        System.out.println("GDC constructor 0");
         this.gamePaneWrapper = gamePaneWrapper;
         this.dataController = dataController;
         this.gameLevel = gameLevel;
-
+        System.out.println("GDC constructor 10");
         this.generateSimplePath();
+        System.out.println("GDC constructor 11");
         this.initGameScenario();
+        System.out.println("GDC constructor 12");
         this.initMouseEventHandlerSetting();
+        System.out.println("GDC constructor 99");
     }
 
     public void initGameScenario() {
-        Rectangle b = new Rectangle(32, 32, Color.RED);
+        System.out.println("GDC initGameScenario 0");
         Rectangle c = new Rectangle(32, 32, Color.RED);
         System.out.println(gamePaneWrapper.getWidthCapacity()
                 + "|" + gamePaneWrapper.getHeightCapacity());
         int maxXidx = gamePaneWrapper.getMaxXidx();
         int maxYidx = gamePaneWrapper.getMaxYidx();
 
-        this.generateSimplePath();
+        System.out.println("GDC initGameScenario 10");
 
         int vCenterIdx = (int) Math.floor(gamePaneWrapper.getMaxYidx() / 2);
         Integer startingMonumentHealth;
@@ -79,6 +83,8 @@ public class GameDataController {
             startingMonumentHealth = GameSettingDataMap.getStartingMonumentHealth(this.gameLevel);
         }
 
+        System.out.println("GDC initGameScenario 20");
+
         EntityWithHealth enemy = new EntityWithHealth(
                 32,
                 32,
@@ -87,28 +93,29 @@ public class GameDataController {
         enemy.setFillWithImageSrc("/com/main/skeleton_01.png");
         enemy.setId("enemyEntity");
 
-        EntityWithHealth player = new EntityWithHealth(32, 32, 100, 80);
+        EntityWithHealth player = new EntityWithHealth(
+                32, 32,
+                startingMonumentHealth,
+                startingMonumentHealth
+        );
         player.setFillWithImageSrc("/com/main/steve_01.jpeg");
         player.setId("playerEntity");
+        System.out.println("Player");
+        System.out.println(player);
 
         TowerEntity tower = new TowerEntity();
         tower.setFillWithImageSrc("/com/main/catapult.png");
         player.setId("catapultEntity");
+
+        System.out.println("GDC initGameScenario 30");
 
         this.gamePaneWrapper.addNodeWithXidxYidx(0, vCenterIdx, player);
         this.gamePaneWrapper.addNodeWithXidxYidx(maxXidx - 1, vCenterIdx, enemy);
         this.gamePaneWrapper.addNodeWithXidxYidx(0, maxYidx, c);
         this.gamePaneWrapper.addNodeWithXidxYidx(1, 1, tower);
 
-        selectedTower = new TowerData(
-                "catapult_tower",
-                "Catapult Tower",
-                "Catapult Tower Desc",
-                GameSettingDataMap.getTowerInitialCost(gameLevel),
-                75,
-                150.0,
-                "/com/main/catapult.png"
-        );
+        System.out.println("GDC initGameScenario 40");
+        System.out.println("GDC initGameScenario 99");
     }
 
 

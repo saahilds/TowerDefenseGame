@@ -49,7 +49,7 @@
             <Pane fx:id="gamePane" prefHeight="664.0" prefWidth="1024.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER" />
          </center>
          <left>
-            <VBox fx:id="towerMenuEl" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Player Name:" wrappingWidth="191.36815071105957">
                      <font>
@@ -72,17 +72,36 @@
                         <Insets top="20.0" />
                      </padding>
                   </Separator>
-                  <VBox prefHeight="219.0" prefWidth="192.0">
+                  <VBox prefHeight="161.0" prefWidth="192.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Buy A Tower">
                            <font>
                               <Font name="Arial" size="13.0" />
                            </font>
                         </Text>
+                        <SplitMenuButton mnemonicParsing="false" prefHeight="25.0" prefWidth="186.0" text="Pencil Building">
+                           <items>
+                              <MenuItem disable="true" mnemonicParsing="false" text="Skinny illuminated building owned by Bank of America" />
+                              <MenuItem disable="true" mnemonicParsing="false" text="Damage: " />
+                              <MenuItem disable="true" mnemonicParsing="false" text="Cost:  " />
+                              <SeparatorMenuItem mnemonicParsing="false" />
+                              <CustomMenuItem mnemonicParsing="false" text="Buy">
+                                 <content>
+                                    <Button mnemonicParsing="false" text="Buy Now" />
+                                 </content>
+                              </CustomMenuItem>
+                           </items>
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="Arial" size="13.0" />
+                           </font>
+                        </SplitMenuButton>
                         <SplitMenuButton mnemonicParsing="false" prefHeight="25.0" prefWidth="184.0" text="Tech Tower">
                           <items>
                             <MenuItem disable="true" mnemonicParsing="false" text="Iconic Building of Georgia Tech" />
-                            <MenuItem disable="true" mnemonicParsing="false" text="Damage: 50" />
+                            <MenuItem disable="true" mnemonicParsing="false" text="Damage: " />
                               <MenuItem disable="true" mnemonicParsing="false" text="Cost:" />
                               <SeparatorMenuItem mnemonicParsing="false" />
                               <CustomMenuItem mnemonicParsing="false" text="Buy">
@@ -101,7 +120,7 @@
                         <SplitMenuButton layoutX="10.0" layoutY="27.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="184.0" text="Westin">
                            <items>
                               <MenuItem disable="true" mnemonicParsing="false" text="Luxury Hotel with rotating Sun Dial Restaurant" />
-                              <MenuItem disable="true" mnemonicParsing="false" text="Damage: 100" />
+                              <MenuItem disable="true" mnemonicParsing="false" text="Damage: " />
                               <MenuItem disable="true" mnemonicParsing="false" text="Cost:" />
                               <SeparatorMenuItem mnemonicParsing="false" />
                               <CustomMenuItem mnemonicParsing="false" text="Buy">
@@ -116,44 +135,6 @@
                            <font>
                               <Font name="Arial" size="13.0" />
                            </font>
-                        </SplitMenuButton>
-                        <SplitMenuButton mnemonicParsing="false" prefHeight="25.0" prefWidth="186.0" text="Pencil Building">
-                           <items>
-                              <MenuItem disable="true" mnemonicParsing="false" text="Skinny illuminated building owned by Bank of America" />
-                              <MenuItem fx:id="pencilDamage" disable="true" mnemonicParsing="false" text="Damage: 75" />
-                              <MenuItem fx:id="pencilCost" disable="true" mnemonicParsing="false" text="Cost: " />
-                              <SeparatorMenuItem mnemonicParsing="false" />
-                              <CustomMenuItem mnemonicParsing="false" text="Buy">
-                                 <content>
-                                    <Button fx:id="buyPencil" mnemonicParsing="false" text="Buy Now" />
-                                 </content>
-                              </CustomMenuItem>
-                           </items>
-                           <VBox.margin>
-                              <Insets bottom="10.0" top="10.0" />
-                           </VBox.margin>
-                           <font>
-                              <Font name="Arial" size="13.0" />
-                           </font>
-                        </SplitMenuButton>
-                        <SplitMenuButton layoutX="10.0" layoutY="125.0" mnemonicParsing="false" prefHeight="5.0" prefWidth="186.0" text="Catapult Tower">
-                           <items>
-                              <MenuItem disable="true" mnemonicParsing="false" text="A basic catapult" />
-                              <MenuItem fx:id="pencilDamage1" disable="true" mnemonicParsing="false" text="Damage: 75" />
-                              <MenuItem fx:id="pencilCost1" disable="true" mnemonicParsing="false" text="Cost: " />
-                              <SeparatorMenuItem mnemonicParsing="false" />
-                              <CustomMenuItem mnemonicParsing="false" text="Buy">
-                                 <content>
-                                    <Button fx:id="buyPencil1" mnemonicParsing="false" text="Buy Now" />
-                                 </content>
-                              </CustomMenuItem>
-                           </items>
-                           <font>
-                              <Font name="Arial" size="13.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
                         </SplitMenuButton>
                      </children>
                   </VBox>

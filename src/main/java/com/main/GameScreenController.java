@@ -2,19 +2,13 @@ package com.main;
 
 import com.main.config.Config;
 import com.main.game.GameDataController;
-import com.main.game.entity.tower.TowerMenu;
 import com.main.game.gamePane.GamePaneWrapper;
 import com.main.model.GameLevelType;
 import com.main.model.GameScreenType;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuItem;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.net.URL;
@@ -32,13 +26,7 @@ public class GameScreenController extends
     private Pane gamePane;
 
     @FXML
-    private MenuItem pencilCost;
-    @FXML
-    private MenuItem westinCost;
-    @FXML
-    private MenuItem techCost;
-    @FXML
-    private MenuItem catCost;
+    private VBox towerMenuEl;
 
     private ScreensController screensController;
     private GamePaneWrapper gamePaneWrapper;
@@ -82,17 +70,12 @@ public class GameScreenController extends
             setPlayerName(getDataController().getPlayerName());
             setGameMoney(getDataController().getGameMoney());
             this.initGamePaneSetting();
-            this.initTowerMenu();
             //
         }
     }
 
     public void initTowerMenu() {
-        TowerMenu menu = new TowerMenu(gameLevel);
-        techCost.setText("Cost: " + menu.getTowerMenu().get(0).getCost());
-        westinCost.setText("Cost: " + menu.getTowerMenu().get(1).getCost());
-        pencilCost.setText("Cost: " + menu.getTowerMenu().get(2).getCost());
-        catCost.setText("Cost: " + menu.getTowerMenu().get(3).getCost());
+        towerMenu = new TowerMenu(towerMenuEl);
     }
 
     public void setScreenParent(ScreensController screenParent) {

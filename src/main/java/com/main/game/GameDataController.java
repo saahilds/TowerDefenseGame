@@ -175,8 +175,8 @@ public class GameDataController {
                     if (
                             node != null
                             && node instanceof TowerEntity
-                            && ((TowerEntity) node).getTowerEntityStatus() ==
-                                    TowerEntityStatusType.STAGED
+                            && ((TowerEntity) node).getTowerEntityStatus()
+                                    == TowerEntityStatusType.STAGED
                     ) {
                         gamePaneWrapper.removeAtPos(prevPos);
                     }

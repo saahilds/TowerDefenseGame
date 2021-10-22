@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" minWidth="174.0" prefHeight="728.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.main.GameScreenController">
+<AnchorPane id="AnchorPane" minWidth="174.0" prefHeight="728.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.main.GameScreenController">
     <children>
       <BorderPane prefHeight="768.0" prefWidth="1024.0">
          <top>
@@ -48,6 +51,40 @@
                   <Text fx:id="playerNameText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="191.36815071105957" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Game Money" wrappingWidth="191.36815071105957" />
                   <Text fx:id="gameMoneyText" strokeWidth="0.0" text="Text" wrappingWidth="191.36815071105957" />
+                  <Separator prefWidth="200.0">
+                     <padding>
+                        <Insets top="20.0" />
+                     </padding>
+                  </Separator>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Buy A Tower" />
+                        <SplitMenuButton mnemonicParsing="false" text="Pencil Building">
+                           <items>
+                              <MenuItem disable="true" mnemonicParsing="false" text="Skinny illuminated building owned by Bank of America" />
+                              <MenuItem disable="true" mnemonicParsing="false" text="Damage: " />
+                              <MenuItem disable="true" mnemonicParsing="false" text="Cost:" />
+                              <MenuItem mnemonicParsing="false" text="Buy Now" />
+                           </items>
+                        </SplitMenuButton>
+                        <SplitMenuButton mnemonicParsing="false" text="Tech Tower">
+                          <items>
+                            <MenuItem disable="true" mnemonicParsing="false" text="Iconic Building of Georgia Tech" />
+                            <MenuItem disable="true" mnemonicParsing="false" text="Damage: " />
+                              <MenuItem disable="true" mnemonicParsing="false" text="Cost:" />
+                              <MenuItem mnemonicParsing="false" text="Buy Now" />
+                          </items>
+                        </SplitMenuButton>
+                        <SplitMenuButton layoutX="10.0" layoutY="27.0" mnemonicParsing="false" text="Westin">
+                           <items>
+                              <MenuItem disable="true" mnemonicParsing="false" text="Luxury Hotel with rotating Sun Dial Restaurant" />
+                              <MenuItem disable="true" mnemonicParsing="false" text="Damage: " />
+                              <MenuItem disable="true" mnemonicParsing="false" text="Cost:" />
+                              <MenuItem mnemonicParsing="false" text="Buy Now" />
+                           </items>
+                        </SplitMenuButton>
+                     </children>
+                  </VBox>
                </children>
             </VBox>
          </left>

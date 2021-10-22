@@ -27,13 +27,10 @@ public class GameScreenController extends
 
     @FXML
     private Pane gamePane;
-
     @FXML
     private MenuItem techCost;
-
     @FXML
     private MenuItem westCost;
-
     @FXML
     private MenuItem pencilCost;
 

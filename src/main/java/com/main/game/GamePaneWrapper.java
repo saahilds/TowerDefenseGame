@@ -1,7 +1,9 @@
 package com.main.game;
 
+import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
 
@@ -19,6 +21,17 @@ public class GamePaneWrapper {
     private int height;
     private int nodeWidth;
     private int nodeHeight;
+
+    private EventHandler<? super MouseEvent> onClickMouseEventHandler;
+
+    public void setOnClickMouseEventHandler(EventHandler<? super MouseEvent> onClickMouseEventHandler) {
+        this.onClickMouseEventHandler = onClickMouseEventHandler;
+        pane.setOnMouseClicked(onClickMouseEventHandler);
+    }
+
+    public EventHandler<? super MouseEvent> getOnClickMouseEventHandler() {
+        return onClickMouseEventHandler;
+    }
 
     private int widthCapacity;
 
@@ -60,21 +73,6 @@ public class GamePaneWrapper {
         this.maxXidx = this.widthCapacity - 1;
         this.maxYidx = this.heightCapacity - 1;
         this.posMap = new PositionMap(this.width, this.height, this.nodeWidth, this.nodeHeight);
-
-        initMouseSetting();
-    }
-
-    private void initMouseSetting() {
-        pane.setOnMouseEntered(mouseEvent -> {
-            if (!mouseEvent.isPrimaryButtonDown()) {
-                pane.setCursor(Cursor.HAND);
-            }
-        });
-        pane.setOnMouseMoved(mouseEvent -> {
-            if (mouseEvent != null) {
-                System.out.println(mouseEvent);
-            }
-        });
     }
 
     public void addNodeWithXidxYidx(int xIdx, int yIdx, Node node) {

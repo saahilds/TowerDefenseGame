@@ -52,8 +52,8 @@ public class GameScreenController extends
                 gamePaneWrapper,
                 gameLevel
         );
-        gameDataController.generateSimplePath();
-        gameDataController.initGameScenario();
+//        gameDataController.generateSimplePath();
+//        gameDataController.initGameScenario();
     }
 
     /**

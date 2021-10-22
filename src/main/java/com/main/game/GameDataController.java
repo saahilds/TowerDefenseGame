@@ -9,6 +9,7 @@ import com.main.game.path.PathBlock;
 import com.main.game.path.TexturePathBlock;
 import com.main.model.GameLevelType;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -26,6 +27,10 @@ public class GameDataController {
     ) {
         this.gamePaneWrapper = gamePaneWrapper;
         this.gameLevel = gameLevel;
+
+        this.generateSimplePath();
+        this.initGameScenario();
+        this.initMouseEventHandlerSetting();
     }
 
     public void initGameScenario() {
@@ -66,7 +71,8 @@ public class GameDataController {
         this.gamePaneWrapper.addNodeWithXidxYidx(maxXidx - 1, vCenterIdx, enemy);
         this.gamePaneWrapper.addNodeWithXidxYidx(0, maxYidx, c);
         this.gamePaneWrapper.addNodeWithXidxYidx(1, 1, tower);
-    };
+    }
+
 
     public void generateSimplePath() {
         int vCenterIdx = (int) Math.floor(gamePaneWrapper.getMaxYidx() / 2);
@@ -78,6 +84,21 @@ public class GameDataController {
             PathBlock pathBlock =
                     new TexturePathBlock(Config.UNIT, Config.UNIT, xIdx, textureImagePattern);
             this.gamePaneWrapper.addNodeWithXidxYidx(xIdx, vCenterIdx, pathBlock);
+        }
+    }
+
+    public void initMouseEventHandlerSetting() {
+        gamePaneWrapper.setOnClickMouseEventHandler(mouseEvent -> {
+            System.out.println(mouseEvent);
+            handleClickMouseEvent(mouseEvent);
+        });
+    }
+
+    private void handleClickMouseEvent(MouseEvent mouseEvent) {
+        if (mouseEvent != null) {
+            System.out.println("========== MOUSE CLICKED ==========");
+            System.out.println(mouseEvent);
+            System.out.println("========== MOUSE CLICKED ==========");
         }
     }
 

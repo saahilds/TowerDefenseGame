@@ -8,9 +8,18 @@ import javafx.scene.shape.Rectangle;
 
 
 public class EntityWithBackground extends StackPane {
-    public int width;
-    public int height;
-    public Rectangle entity;
+    private int width;
+    private int height;
+
+    public Rectangle getEntity() {
+        return entity;
+    }
+
+    public void setEntity(Rectangle entity) {
+        this.entity = entity;
+    }
+
+    private Rectangle entity;
 
     public EntityWithBackground() {
         width = Config.UNIT;

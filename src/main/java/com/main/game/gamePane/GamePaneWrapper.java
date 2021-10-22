@@ -96,7 +96,7 @@ public class GamePaneWrapper {
     }
 
     private void setAtIdx(int xIdx, int yIdx, Node posTranslatedNode) {
-        // add onto ACTURAL screen
+        // add onto ACTUAL screen
         this.getPane().getChildren().add(posTranslatedNode);
         // add into Virtual position map
         this.posMap.setAtIdx(xIdx, yIdx, posTranslatedNode);

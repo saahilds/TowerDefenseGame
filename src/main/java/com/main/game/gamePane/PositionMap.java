@@ -118,10 +118,10 @@ public class PositionMap {
 
         @Override
         public String toString() {
-            return "IndexPosition{" +
-                    "x=" + x +
-                    ", y=" + y +
-                    '}';
+            return "IndexPosition{"
+                    + "x=" + x
+                    + ", y=" + y
+                    + '}';
         }
 
         public IndexPosition(int x, int y) {

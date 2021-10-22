@@ -41,14 +41,13 @@ public class TowerMenu {
     public TowerMenu(GameLevelType gameLevel) {
         System.out.println("TowerMenu constructor(single) 0");
         System.out.println("TowerMenu constructor(single) GL" + gameLevel);
-        GameLevelType TEST = GameLevelType.HARD;
         towerDataItemList = new ArrayList<>();
         System.out.println("TowerMenu constructor(single) 1");
         TowerData techTower = new TowerData(
                 "tech_tower",
                 "Tech Tower",
                 "Iconic Building of Georgia Tech",
-                GameSettingDataMap.getTowerInitialCost(TEST),
+                GameSettingDataMap.getTowerInitialCost(gameLevel),
                 50,
                 100.0,
                 "/com/main/TechTower01.png"

@@ -2,6 +2,7 @@ package com.main.game;
 
 import com.main.config.Config;
 import com.main.game.data.GameSettingDataMap;
+import com.main.game.entity.EnemyEntity;
 import com.main.game.entity.tower.TowerData;
 import com.main.game.entity.tower.TowerEntity;
 import com.main.game.entity.EntityWithHealth;
@@ -85,7 +86,7 @@ public class GameDataController {
 
         System.out.println("GDC initGameScenario 20");
 
-        EntityWithHealth enemy = new EntityWithHealth(
+        EntityWithHealth enemy = new EnemyEntity(
                 startingMonumentHealth,
                 startingMonumentHealth);
         enemy.setFillWithImageSrc("/com/main/skeleton_01.png");

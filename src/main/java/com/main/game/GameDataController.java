@@ -67,7 +67,6 @@ public class GameDataController {
 
     public void initGameScenario() {
         System.out.println("GDC initGameScenario 0");
-        Rectangle c = new Rectangle(32, 32, Color.RED);
         System.out.println(gamePaneWrapper.getWidthCapacity()
                 + "|" + gamePaneWrapper.getHeightCapacity());
         int maxXidx = gamePaneWrapper.getMaxXidx();
@@ -108,7 +107,6 @@ public class GameDataController {
 
         this.gamePaneWrapper.addNodeWithXidxYidx(0, vCenterIdx, player);
         this.gamePaneWrapper.addNodeWithXidxYidx(maxXidx, vCenterIdx, enemy);
-        this.gamePaneWrapper.addNodeWithXidxYidx(0, maxYidx, c);
         this.gamePaneWrapper.addNodeWithXidxYidx(1, 1, tower);
 
         System.out.println("GDC initGameScenario 40");
@@ -125,7 +123,10 @@ public class GameDataController {
             ImagePattern textureImagePattern = new ImagePattern(textureImage);
             PathBlock pathBlock =
                     new TexturePathBlock(Config.UNIT, Config.UNIT, xIdx, textureImagePattern);
-            this.gamePaneWrapper.addNodeWithXidxYidx(xIdx, vCenterIdx, pathBlock);
+//            this.gamePaneWrapper.addNodeWithXidxYidx(xIdx, vCenterIdx, pathBlock);
+            pathBlock.setTranslateX(Config.UNIT * xIdx);
+            pathBlock.setTranslateY(Config.UNIT * vCenterIdx);
+            this.gamePaneWrapper.addNode(pathBlock);
         }
     }
 

@@ -2,6 +2,7 @@ package com.main.game.gamePane;
 
 import com.main.game.common.IndexPosition;
 import com.main.game.common.IndexPositionObject;
+import com.main.game.entity.Entity;
 import javafx.scene.Node;
 
 public class PositionMap {
@@ -85,24 +86,24 @@ public class PositionMap {
         }
     }
 
-    public void setAtPos(IndexPosition position, Node node) {
+    public void setAtPos(IndexPosition position, Entity node) {
         setAtIdx(position.getX(), position.getY(), node);
     }
 
-    public void setAtIdx(int xIdx, int yIdx, Node node) {
+    public void setAtIdx(int xIdx, int yIdx, Entity node) {
         if (xIdx < widthCapacity && yIdx < heightCapacity) {
             this.map[yIdx][xIdx].setNode(node);
         }
     }
 
-    public Node getAtPos(IndexPosition position) {
+    public Entity getAtPos(IndexPosition position) {
         if (position != null) {
             return getAtIdx(position.getX(), position.getY());
         }
         return null;
     }
 
-    public Node getAtIdx(int xIdx, int yIdx) {
+    public Entity getAtIdx(int xIdx, int yIdx) {
         try {
             if (xIdx < widthCapacity && yIdx < heightCapacity) {
                 return this.map[yIdx][xIdx].getNode();

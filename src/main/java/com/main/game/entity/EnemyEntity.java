@@ -7,6 +7,8 @@ public class EnemyEntity extends EntityWithHealth {
     }
 
     private void movementTest() {
-//        System.out.println();
+        System.out.println("=====================");
+        System.out.println(getxIdx() + "|" + getyIdx());
+        System.out.println("=====================");
     }
 }

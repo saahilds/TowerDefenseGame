@@ -1,6 +1,7 @@
 package com.main.game.gamePane;
 
 import com.main.game.common.IndexPosition;
+import com.main.game.entity.Entity;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
@@ -94,30 +95,37 @@ public class GamePaneWrapper {
         this.posMap = new PositionMap(this.width, this.height, this.nodeWidth, this.nodeHeight);
     }
 
-    public void addNodeWithXidxYidx(int xIdx, int yIdx, Node node) {
+//    public void addFreeNodeWithXidxYidx(int xIdx, int yIdx, Entity node) {
+//
+//    }
+    public void addNode(Node node) {
+        getPane().getChildren().add(node);
+    }
+
+    public void addNodeWithXidxYidx(int xIdx, int yIdx, Entity node) {
         setAtIdx(xIdx, yIdx, getTranslatedNodeWithIdx(xIdx, yIdx, node));
     }
 
-    public void addNodeWithIndexPosition(IndexPosition position, Node node) {
+    public void addNodeWithIndexPosition(IndexPosition position, Entity node) {
         int xIdx = position.getX();
         int yIdx = position.getY();
         addNodeWithXidxYidx(xIdx, yIdx, node);
     }
 
-    public void setAtIdx(int xIdx, int yIdx, Node posTranslatedNode) {
+    public void setAtIdx(int xIdx, int yIdx, Entity posTranslatedNode) {
         // add onto ACTURAL screen
-        getPane().getChildren().add(posTranslatedNode);
+        addNode(posTranslatedNode);
         // add into Virtual position map
         this.posMap.setAtIdx(xIdx, yIdx, posTranslatedNode);
     }
 
-    public Node getTranslatedNodeWithIdx(int xIdx, int yIdx, Node node) {
+    public Entity getTranslatedNodeWithIdx(int xIdx, int yIdx, Entity node) {
         node.setTranslateY(nodeHeight * yIdx);
         node.setTranslateX(nodeWidth * xIdx);
         return node;
     }
 
-    public Node getNodeWithIndexPosition(IndexPosition position) {
+    public Entity getNodeWithIndexPosition(IndexPosition position) {
         return posMap.getAtPos(position);
     }
 
@@ -128,8 +136,8 @@ public class GamePaneWrapper {
         );
     }
 
-    public Node removeAtPos(IndexPosition position) {
-        Node prevNode = getNodeWithIndexPosition(position);
+    public Entity removeAtPos(IndexPosition position) {
+        Entity prevNode = getNodeWithIndexPosition(position);
         if (prevNode == null) {
             return null;
         }

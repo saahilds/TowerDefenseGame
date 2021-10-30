@@ -86,15 +86,12 @@ public class GameDataController {
         System.out.println("GDC initGameScenario 20");
 
         EntityWithHealth enemy = new EntityWithHealth(
-                32,
-                32,
                 startingMonumentHealth,
                 startingMonumentHealth);
         enemy.setFillWithImageSrc("/com/main/skeleton_01.png");
         enemy.setId("enemyEntity");
 
         EntityWithHealth player = new EntityWithHealth(
-                32, 32,
                 startingMonumentHealth,
                 startingMonumentHealth
         );
@@ -110,7 +107,7 @@ public class GameDataController {
         System.out.println("GDC initGameScenario 30");
 
         this.gamePaneWrapper.addNodeWithXidxYidx(0, vCenterIdx, player);
-        this.gamePaneWrapper.addNodeWithXidxYidx(maxXidx - 1, vCenterIdx, enemy);
+        this.gamePaneWrapper.addNodeWithXidxYidx(maxXidx, vCenterIdx, enemy);
         this.gamePaneWrapper.addNodeWithXidxYidx(0, maxYidx, c);
         this.gamePaneWrapper.addNodeWithXidxYidx(1, 1, tower);
 

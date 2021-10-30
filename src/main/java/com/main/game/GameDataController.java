@@ -1,13 +1,13 @@
 package com.main.game;
 
 import com.main.config.Config;
+import com.main.game.common.IndexPosition;
 import com.main.game.data.GameSettingDataMap;
 import com.main.game.entity.EnemyEntity;
 import com.main.game.entity.tower.TowerData;
 import com.main.game.entity.tower.TowerEntity;
 import com.main.game.entity.EntityWithHealth;
 import com.main.game.gamePane.GamePaneWrapper;
-import com.main.game.gamePane.PositionMap;
 import com.main.game.path.PathBlock;
 import com.main.game.path.TexturePathBlock;
 import com.main.model.GameLevelType;
@@ -21,7 +21,6 @@ import javafx.scene.shape.Rectangle;
 
 public class GameDataController {
     private GameLevelType gameLevel = GameLevelType.EASY;
-    private Integer gameMoney = 0;
     private GamePaneWrapper gamePaneWrapper;
 
     public DataController getDataController() {
@@ -46,7 +45,7 @@ public class GameDataController {
 
     private TowerData selectedTower;
     private TowerEntity cursorTowerEntity;
-    private PositionMap.IndexPosition prevPos;
+    private IndexPosition prevPos;
 
     public GameDataController(
             GamePaneWrapper gamePaneWrapper,
@@ -130,7 +129,7 @@ public class GameDataController {
         }
     }
 
-    public boolean isCursorMovedIdx(PositionMap.IndexPosition position) {
+    public boolean isCursorMovedIdx(IndexPosition position) {
         boolean isCursorMovedIdx;
         if (prevPos == null) {
             isCursorMovedIdx = true;
@@ -189,8 +188,8 @@ public class GameDataController {
         if (mouseEvent != null) {
             double x = mouseEvent.getX();
             double y = mouseEvent.getY();
-            PositionMap.IndexPosition prevPos = this.prevPos;
-            PositionMap.IndexPosition currPos = gamePaneWrapper.getIdxWithPos(x, y);
+            IndexPosition prevPos = this.prevPos;
+            IndexPosition currPos = gamePaneWrapper.getIdxWithPos(x, y);
             if (isCursorMovedIdx(currPos)) {
                 if (skipDeletingCuror) {
                     this.skipDeletingCuror = false;
@@ -211,8 +210,8 @@ public class GameDataController {
     }
 
     private void registerTemporaryTowerEntity(
-            PositionMap.IndexPosition prevPos,
-            PositionMap.IndexPosition currPos
+            IndexPosition prevPos,
+            IndexPosition currPos
     ) {
         if (
                 gamePaneWrapper == null

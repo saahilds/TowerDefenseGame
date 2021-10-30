@@ -7,7 +7,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 
-public class EntityWithBackground extends StackPane {
+public class EntityWithBackground extends Entity {
     private int width;
     private int height;
 

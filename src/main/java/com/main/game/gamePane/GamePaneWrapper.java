@@ -1,5 +1,6 @@
 package com.main.game.gamePane;
 
+import com.main.game.common.IndexPosition;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
@@ -97,7 +98,7 @@ public class GamePaneWrapper {
         setAtIdx(xIdx, yIdx, getTranslatedNodeWithIdx(xIdx, yIdx, node));
     }
 
-    public void addNodeWithIndexPosition(PositionMap.IndexPosition position, Node node) {
+    public void addNodeWithIndexPosition(IndexPosition position, Node node) {
         int xIdx = position.getX();
         int yIdx = position.getY();
         addNodeWithXidxYidx(xIdx, yIdx, node);
@@ -116,18 +117,18 @@ public class GamePaneWrapper {
         return node;
     }
 
-    public Node getNodeWithIndexPosition(PositionMap.IndexPosition position) {
+    public Node getNodeWithIndexPosition(IndexPosition position) {
         return posMap.getAtPos(position);
     }
 
-    public PositionMap.IndexPosition getIdxWithPos(double xPos, double yPos) {
-        return new PositionMap.IndexPosition(
+    public IndexPosition getIdxWithPos(double xPos, double yPos) {
+        return new IndexPosition(
                 (int) xPos / nodeWidth,
                 (int) yPos / nodeHeight
         );
     }
 
-    public Node removeAtPos(PositionMap.IndexPosition position) {
+    public Node removeAtPos(IndexPosition position) {
         Node prevNode = getNodeWithIndexPosition(position);
         if (prevNode == null) {
             return null;

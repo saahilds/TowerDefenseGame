@@ -30,21 +30,21 @@ public class GameDataControllerTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws Exception {
-        pane = new Pane();
-        gamePaneWrapper = new GamePaneWrapper(
-                pane, Config.STAGE_WIDTH - Config.LEFT_TOOLBAR_WIDTH,
-                Config.STAGE_HEIGHT - Config.GNB_TOP_HEIGHT,
-                Config.UNIT, Config.UNIT
-        );
-        gameDataController = new GameDataController(
-                gamePaneWrapper,
-                dataController,
-                GameLevelType.EASY
-        );
-        dataController = new DataController();
-        mainstage = stage;
-        Scene scene = new Scene(pane, Config.STAGE_WIDTH, Config.STAGE_HEIGHT);
-        stage.setScene(scene);
+//        pane = new Pane();
+//        gamePaneWrapper = new GamePaneWrapper(
+//                pane, Config.STAGE_WIDTH - Config.LEFT_TOOLBAR_WIDTH,
+//                Config.STAGE_HEIGHT - Config.GNB_TOP_HEIGHT,
+//                Config.UNIT, Config.UNIT
+//        );
+//        gameDataController = new GameDataController(
+//                gamePaneWrapper,
+//                dataController,
+//                GameLevelType.EASY
+//        );
+//        dataController = new DataController();
+//        mainstage = stage;
+//        Scene scene = new Scene(pane, Config.STAGE_WIDTH, Config.STAGE_HEIGHT);
+//        stage.setScene(scene);
         stage.show();
         stage.toFront();
     }

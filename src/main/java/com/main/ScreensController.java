@@ -45,13 +45,21 @@ public class ScreensController extends StackPane {
 
     // finally injects the screenPane to the controller.
     public boolean loadScreen(GameScreenType gameScreenType, String resource) {
+//        Stage primaryStage = new Stage();
+//        FXMLLoader myLoader = new FXMLLoader(getClass().getResource(resource));
+//        Parent loadScreen = (Parent) myLoader.load();
+//        Scene scene = new Scene(loadScreen, Config.STAGE_WIDTH, Config.STAGE_HEIGHT);
+//
+//        primaryStage.setScene(scene);
+//        ControlledScreen myScreenControler = ((ControlledScreen) myLoader.getController());
+//        myScreenControler.setScreenParent(this);
+//        addScreen(gameScreenType, loadScreen);
+//        return true;
         try {
             Stage primaryStage = new Stage();
             FXMLLoader myLoader = new FXMLLoader(getClass().getResource(resource));
             Parent loadScreen = (Parent) myLoader.load();
             Scene scene = new Scene(loadScreen, Config.STAGE_WIDTH, Config.STAGE_HEIGHT);
-            // Twitter Bootstrap
-//            scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
 
             primaryStage.setScene(scene);
             ControlledScreen myScreenControler = ((ControlledScreen) myLoader.getController());
@@ -59,8 +67,9 @@ public class ScreensController extends StackPane {
             addScreen(gameScreenType, loadScreen);
             return true;
         } catch (Exception e) {
-            System.out.println("} catch (Exception e) {");
+            System.out.println("==========ERR==========");
             System.out.println(e.getMessage());
+            System.out.println("==========ERR==========");
             return false;
         }
     }
@@ -77,7 +86,7 @@ public class ScreensController extends StackPane {
         // force the method if the new screen is the game screen
         if (
                 screens.get(gameScreenType) == null
-                || gameScreenType == GameScreenType.GAME_SCREEN
+                        || gameScreenType == GameScreenType.GAME_SCREEN
         ) {
             loadScreen(gameScreenType, GameSettingDataMap.getFileName(gameScreenType));
         }

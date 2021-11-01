@@ -13,6 +13,7 @@ import com.main.game.path.TexturePathBlock;
 import com.main.model.GameLevelType;
 import com.main.model.TowerEntityStatusType;
 import io.reactivex.Observable;
+import io.reactivex.observables.ConnectableObservable;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -23,8 +24,7 @@ import javafx.scene.shape.Rectangle;
 import java.util.concurrent.TimeUnit;
 
 public class GameDataController {
-    private GameLevelType gameLevel = GameLevelType.EASY;
-    private GamePaneWrapper gamePaneWrapper;
+
 
     public DataController getDataController() {
         return dataController;
@@ -34,9 +34,6 @@ public class GameDataController {
         this.dataController = dataController;
     }
 
-    private DataController dataController;
-
-    private boolean skipDeletingCuror = false;
 
     public TowerData getSelectedTower() {
         return selectedTower;
@@ -46,37 +43,42 @@ public class GameDataController {
         this.selectedTower = selectedTower;
     }
 
+
+    private GameLevelType gameLevel = GameLevelType.EASY;
+
     private TowerData selectedTower;
     private TowerEntity cursorTowerEntity;
     private IndexPosition prevPos;
-    private Observable<Long> timer;
+    private boolean skipDeletingCuror = false;
+
+    private GamePaneWrapper gamePaneWrapper;
+
+    private DataController dataController;
+    private GameFlowController gameFlowController;
+
+    public EnemyEntity enemy;
 
     public GameDataController(
             GamePaneWrapper gamePaneWrapper,
             DataController dataController,
+            GameFlowController gameFlowController,
             GameLevelType gameLevel
     ) {
-        System.out.println("GDC constructor 0");
         this.gamePaneWrapper = gamePaneWrapper;
         this.dataController = dataController;
+        this.gameFlowController = gameFlowController;
         this.gameLevel = gameLevel;
-        System.out.println("GDC constructor 10");
         this.generateSimplePath();
-        System.out.println("GDC constructor 11");
         this.initGameScenario();
-        System.out.println("GDC constructor 12");
         this.initMouseEventHandlerSetting();
-        System.out.println("GDC constructor 99");
+        this.initClockSubscription();
     }
 
     public void initGameScenario() {
-        System.out.println("GDC initGameScenario 0");
         System.out.println(gamePaneWrapper.getWidthCapacity()
                 + "|" + gamePaneWrapper.getHeightCapacity());
         int maxXidx = gamePaneWrapper.getMaxXidx();
         int maxYidx = gamePaneWrapper.getMaxYidx();
-
-        System.out.println("GDC initGameScenario 10");
 
         int vCenterIdx = (int) Math.floor(gamePaneWrapper.getMaxYidx() / 2);
         Integer startingMonumentHealth;
@@ -86,9 +88,7 @@ public class GameDataController {
             startingMonumentHealth = GameSettingDataMap.getStartingMonumentHealth(this.gameLevel);
         }
 
-        System.out.println("GDC initGameScenario 20");
-
-        EntityWithHealth enemy = new EnemyEntity(
+        enemy = new EnemyEntity(
                 startingMonumentHealth,
                 startingMonumentHealth);
         enemy.setFillWithImageSrc("/com/main/skeleton_01.png");
@@ -112,9 +112,18 @@ public class GameDataController {
         this.gamePaneWrapper.addNodeWithXidxYidx(0, vCenterIdx, player);
         this.gamePaneWrapper.addNodeWithXidxYidx(maxXidx, vCenterIdx, enemy);
         this.gamePaneWrapper.addNodeWithXidxYidx(1, 1, tower);
+    }
 
-        System.out.println("GDC initGameScenario 40");
-        System.out.println("GDC initGameScenario 99");
+    private void initClockSubscription() {
+        ConnectableObservable<Long> connectableObservable$ = gameFlowController.getIntervalObservable$();
+        connectableObservable$.subscribe(this::onClockInterval);
+    }
+
+    public void onClockInterval(Long tick) {
+        System.out.println("=====GDC=====" + tick);
+        if (tick > (long) 1) {
+            enemy.movementTest();
+        }
     }
 
 

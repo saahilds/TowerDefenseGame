@@ -108,7 +108,6 @@ public class TowerMenuComponent {
         if (towerMenuEl == null) {
             return;
         }
-        System.out.println(towerMenuEl);
         for (TowerData item: towerDataItemList) {
             SplitMenuButton splitMenuButton = new SplitMenuButton();
             splitMenuButton.setText(item.getName());
@@ -117,14 +116,12 @@ public class TowerMenuComponent {
             MenuItem cost = new MenuItem("COST " + item.getCost());
             MenuItem health = new MenuItem("HEALTH " + item.getHealth());
             MenuItem purchase = new MenuItem("Buy Tower");
-            System.out.println(0);
             purchase.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     System.out.println(item.getName() + "selected");
                     setSelectedTowerData(item);
                 }
             });
-            System.out.println(1);
             splitMenuButton.getItems().addAll(name, cost, health, description, purchase);
             towerMenuEl.getChildren().add(splitMenuButton);
         }

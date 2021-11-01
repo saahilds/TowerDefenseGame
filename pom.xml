@@ -26,6 +26,12 @@
             <artifactId>bootstrapfx-core</artifactId>
             <version>0.4.0</version>
         </dependency>
+        <dependency>
+            <groupId>io.reactivex</groupId>
+            <artifactId>rxjavafx</artifactId>
+            <version>2.0.2</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>

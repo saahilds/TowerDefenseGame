@@ -5,6 +5,8 @@ module com.main {
     requires testfx.core;
     requires testfx.junit;
     requires io.reactivex.rxjava2;
+    requires org.kordamp.bootstrapfx.core;
+//    requires org.kordamp.bootstrapfx;
 
     opens com.main to javafx.fxml;
     exports com.main;

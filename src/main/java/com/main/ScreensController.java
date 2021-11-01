@@ -19,6 +19,8 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import org.kordamp.bootstrapfx.BootstrapFX;
+
 /**
  * @author Angie
  */
@@ -48,6 +50,9 @@ public class ScreensController extends StackPane {
             FXMLLoader myLoader = new FXMLLoader(getClass().getResource(resource));
             Parent loadScreen = (Parent) myLoader.load();
             Scene scene = new Scene(loadScreen, Config.STAGE_WIDTH, Config.STAGE_HEIGHT);
+            // Twitter Bootstrap
+//            scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+
             primaryStage.setScene(scene);
             ControlledScreen myScreenControler = ((ControlledScreen) myLoader.getController());
             myScreenControler.setScreenParent(this);

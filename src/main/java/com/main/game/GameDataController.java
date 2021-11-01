@@ -12,12 +12,15 @@ import com.main.game.path.PathBlock;
 import com.main.game.path.TexturePathBlock;
 import com.main.model.GameLevelType;
 import com.main.model.TowerEntityStatusType;
+import io.reactivex.Observable;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+
+import java.util.concurrent.TimeUnit;
 
 public class GameDataController {
     private GameLevelType gameLevel = GameLevelType.EASY;
@@ -46,6 +49,7 @@ public class GameDataController {
     private TowerData selectedTower;
     private TowerEntity cursorTowerEntity;
     private IndexPosition prevPos;
+    private Observable<Long> timer;
 
     public GameDataController(
             GamePaneWrapper gamePaneWrapper,
@@ -123,7 +127,6 @@ public class GameDataController {
             ImagePattern textureImagePattern = new ImagePattern(textureImage);
             PathBlock pathBlock =
                     new TexturePathBlock(Config.UNIT, Config.UNIT, xIdx, textureImagePattern);
-//            this.gamePaneWrapper.addNodeWithXidxYidx(xIdx, vCenterIdx, pathBlock);
             pathBlock.setTranslateX(Config.UNIT * xIdx);
             pathBlock.setTranslateY(Config.UNIT * vCenterIdx);
             this.gamePaneWrapper.addNode(pathBlock);

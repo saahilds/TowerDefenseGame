@@ -120,6 +120,7 @@ public class GamePaneWrapper {
     }
 
     public Entity getTranslatedNodeWithIdx(int xIdx, int yIdx, Entity node) {
+        node.setPosIdx(xIdx, yIdx);
         node.setTranslateY(nodeHeight * yIdx);
         node.setTranslateX(nodeWidth * xIdx);
         return node;

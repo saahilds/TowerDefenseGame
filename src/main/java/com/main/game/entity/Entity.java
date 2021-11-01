@@ -1,8 +1,9 @@
 package com.main.game.entity;
 
+import javafx.scene.Group;
 import javafx.scene.layout.StackPane;
 
-public class Entity extends StackPane {
+public class Entity extends Group {
     public int getxIdx() {
         return xIdx;
     }

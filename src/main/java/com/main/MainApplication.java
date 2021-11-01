@@ -8,6 +8,8 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.kordamp.bootstrapfx.BootstrapFX;
+//import org.kordamp.bootstrapfx.BootstrapFX;
 
 
 public class MainApplication extends Application {
@@ -32,10 +34,13 @@ public class MainApplication extends Application {
 
         MainApplication.primaryStage = primaryStage;
         Group root = new Group();
+        // Twitter Bootstrap
+        root.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
         root.getChildren().addAll(mainContainer);
         Scene scene = new Scene(root, Config.STAGE_WIDTH, Config.STAGE_HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.show();
+
     }
 
     public static void main(String[] args) {

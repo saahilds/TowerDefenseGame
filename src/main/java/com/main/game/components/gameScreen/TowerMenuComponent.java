@@ -1,8 +1,9 @@
-package com.main.game.entity.tower;
+package com.main.game.components.gameScreen;
 
 //import com.main.game.DataController;
 import com.main.game.GameDataController;
 import com.main.game.data.GameSettingDataMap;
+import com.main.game.entity.tower.TowerData;
 import com.main.model.GameLevelType;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,7 +14,7 @@ import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 
-public class TowerMenu {
+public class TowerMenuComponent {
     private VBox towerMenuEl;
 
     public VBox getTowerMenuEl() {
@@ -38,7 +39,7 @@ public class TowerMenu {
 
     private ArrayList<TowerData> towerDataItemList;
 
-    public TowerMenu(GameLevelType gameLevel) {
+    public TowerMenuComponent(GameLevelType gameLevel) {
         System.out.println("TowerMenu constructor(single) 0");
         System.out.println("TowerMenu constructor(single) GL" + gameLevel);
         towerDataItemList = new ArrayList<>();
@@ -92,7 +93,7 @@ public class TowerMenu {
         System.out.println("TowerMenu constructor(single) 99");
     }
 
-    public TowerMenu(VBox towerMenuEl, GameLevelType gameLevel) {
+    public TowerMenuComponent(VBox towerMenuEl, GameLevelType gameLevel) {
         this(gameLevel);
         System.out.println("TowerMenu constructor 1");
         this.towerMenuEl = towerMenuEl;

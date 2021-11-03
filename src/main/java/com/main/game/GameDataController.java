@@ -69,7 +69,6 @@ public class GameDataController {
         this.pathPositionArray = this.getPathPositionArray();
         this.generatePathBlock(this.pathPositionArray);
         this.initMouseEventHandlerSetting();
-        this.initClockSubscription();
         // game scenario
         this.initGameScenario();
     }
@@ -88,12 +87,6 @@ public class GameDataController {
             startingMonumentHealth = GameSettingDataMap.getStartingMonumentHealth(this.gameLevel);
         }
 
-        enemy = new EnemyEntity(
-                startingMonumentHealth,
-                startingMonumentHealth);
-        enemy.setFillWithImageSrc("/com/main/skeleton_01.png");
-        enemy.setId("enemyEntity");
-
         EntityWithHealth player = new EntityWithHealth(
                 startingMonumentHealth,
                 startingMonumentHealth
@@ -107,24 +100,30 @@ public class GameDataController {
         tower.setFillWithImageSrc("/com/main/catapult.png");
         player.setId("catapultEntity");
 
-        System.out.println("GDC initGameScenario 30");
-
         this.gamePaneWrapper.addNodeWithXidxYidx(0, vCenterIdx, player);
-//        this.gamePaneWrapper.addNodeWithXidxYidx(maxXidx, vCenterIdx, enemy);
         this.gamePaneWrapper.addNodeWithXidxYidx(1, 1, tower);
+        this.gameFlowController.getIntervalObservable$().subscribe(time -> {
+            if (time % 5 == 0) {
+                addEnemy();
+            }
+        });
+    }
+
+    private void addEnemy() {
+        Integer startingMonumentHealth;
+        if (this.gameLevel == null) {
+            startingMonumentHealth = 100;
+        } else {
+            startingMonumentHealth = GameSettingDataMap.getStartingMonumentHealth(this.gameLevel);
+        }
+        enemy = new EnemyEntity(
+                startingMonumentHealth,
+                startingMonumentHealth);
+        enemy.setFillWithImageSrc("/com/main/skeleton_01.png");
+        enemy.setId("enemyEntity");
         this.gamePaneWrapper.addEntityWithDesginatedPath(enemy, pathPositionArray);
     }
 
-    private void initClockSubscription() {
-        ConnectableObservable<Long> connectableObservable$ = gameFlowController.getIntervalObservable$();
-        connectableObservable$.subscribe(this::onClockInterval);
-    }
-
-    public void onClockInterval(Long tick) {
-        if (tick > (long) 1) {
-            enemy.movementTest();
-        }
-    }
 
     public ArrayList<IndexPosition> getPathPositionArray() {
         ArrayList<IndexPosition> pathPositionArray = new ArrayList<>();
@@ -137,7 +136,7 @@ public class GameDataController {
 
     public void generatePathBlock(ArrayList<IndexPosition> pathPositionArray) {
         int cnt = 0;
-        for (IndexPosition pos: pathPositionArray) {
+        for (IndexPosition pos : pathPositionArray) {
             Image textureImage = new Image(
                     getClass().getResourceAsStream("/com/main/grass_1.png")
             );
@@ -218,8 +217,8 @@ public class GameDataController {
                     Node node = gamePaneWrapper.getNodeWithIndexPosition(prevPos);
                     if (
                             node != null
-                            && node instanceof TowerEntity
-                            && ((TowerEntity) node).getTowerEntityStatus()
+                                    && node instanceof TowerEntity
+                                    && ((TowerEntity) node).getTowerEntityStatus()
                                     == TowerEntityStatusType.STAGED
                     ) {
                         gamePaneWrapper.removeAtPos(prevPos);

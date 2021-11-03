@@ -6,6 +6,7 @@ import com.main.game.common.IndexPosition;
 import com.main.game.entity.Entity;
 import io.reactivex.observables.ConnectableObservable;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
@@ -113,7 +114,11 @@ public class GamePaneWrapper {
     }
 
     public void addNode(Node node) {
-        getPane().getChildren().add(node);
+        Platform.runLater(new Runnable() {
+            @Override public void run() {
+                getPane().getChildren().add(node);
+            }
+        });
     }
 
     public void addNodeWithXidxYidx(int xIdx, int yIdx, Entity node) {
@@ -175,7 +180,6 @@ public class GamePaneWrapper {
         Stack<IndexPosition> pathPositionStack = new Stack<>();
         Stack<IndexPosition> pathIndexDeltaStack = new Stack<>();
         IndexPosition prevIndexPosition = null;
-//        for (int i = pathPositionArray.size() - 1; i > -1; i--) {
         for (int i = 0; i < pathPositionArray.size(); i++) {
             IndexPosition idxPos = pathPositionArray.get(i);
             pathPositionStack.push(idxPos);
@@ -189,7 +193,7 @@ public class GamePaneWrapper {
         IndexPosition currPos = pathPositionArray.get(cnt);
         addNodeWithIndexPosition(currPos, entity);
         EntityTransitionController entityTransitionController = new EntityTransitionController(
-                entity, pathIndexDeltaStack
+                entity, pathIndexDeltaStack, pane
         );
         intervalHotObservable.subscribe(time -> {
             translateOnClock(entityTransitionController);
@@ -200,39 +204,60 @@ public class GamePaneWrapper {
         entityTransitionController.onTick();
     }
 
+    /**
+     * class that controls the transition of the entity
+     */
     public class EntityTransitionController {
         public int clock = -1;
         Entity entity;
         Stack<IndexPosition> pathIndexDeltaStack;
+        Pane pane;
 
         public EntityTransitionController(
                 Entity entity,
-                Stack<IndexPosition> pathIndexDeltaStack
+                Stack<IndexPosition> pathIndexDeltaStack,
+                Pane pane
         ) {
             this.entity = entity;
             this.pathIndexDeltaStack = pathIndexDeltaStack;
+            this.pane = pane;
         }
 
         public void onTick() {
             clock += 1;
-            if (pathIndexDeltaStack.empty()) {
-                System.out.println("END");
+            if (entity == null) {
                 return;
             }
-            IndexPosition deltaIdxPos = pathIndexDeltaStack.pop();
-            move(entity, deltaIdxPos.getX(), deltaIdxPos.getY());
+            // if the entity arrives at its destination
+            if (pathIndexDeltaStack.empty()) {
+                remove(entity);
+                return;
+            } else {
+                IndexPosition deltaIdxPos = pathIndexDeltaStack.pop();
+                move(entity, deltaIdxPos.getX(), deltaIdxPos.getY());
+                return;
+            }
         }
 
-        private void move(Entity entity, int deltaX, int deltaY) {
+        public void move(Entity entity, int deltaX, int deltaY) {
             //Instantiating TranslateTransition class
             TranslateTransition translate = new TranslateTransition();
             //shifting the X coordinate of the centre of the circle by 400
             translate.setByX(deltaX * Config.UNIT);
             translate.setByY(deltaY * Config.UNIT);
             //setting the duration for the Translate transition
-            translate.setDuration(Duration.millis(1000));
+            translate.setDuration(Duration.millis(Config.TICK));
             translate.setNode(entity);
             translate.play();
+        }
+
+        public void remove(Entity entity) {
+            Platform.runLater(new Runnable() {
+                @Override public void run() {
+                    getPane().getChildren().remove(entity);
+                }
+            });
+            this.entity = null;
         }
     }
 

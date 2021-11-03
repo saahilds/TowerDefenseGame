@@ -3,7 +3,10 @@ package com.main.game.gamePane;
 import com.main.config.Config;
 import com.main.game.GameFlowController;
 import com.main.game.common.IndexPosition;
+import com.main.game.common.UpdateData;
+import com.main.game.entity.EnemyEntity;
 import com.main.game.entity.Entity;
+import com.main.model.UpdateDataTypeType;
 import io.reactivex.observables.ConnectableObservable;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
@@ -169,11 +172,11 @@ public class GamePaneWrapper {
     /**
      * Add Entity that moves along the input path
      *
-     * @param entity
+     * @param enemyEntity
      * @param pathPositionArray
      */
-    public void addEntityWithDesginatedPath(
-            Entity entity,
+    public void addEnemyEntityWithDesginatedPath(
+            EnemyEntity enemyEntity,
             ArrayList<IndexPosition> pathPositionArray
     ) {
         int cnt = 0;
@@ -191,17 +194,31 @@ public class GamePaneWrapper {
             prevIndexPosition = idxPos;
         }
         IndexPosition currPos = pathPositionArray.get(cnt);
-        addNodeWithIndexPosition(currPos, entity);
+        addNodeWithIndexPosition(currPos, enemyEntity);
         EntityTransitionController entityTransitionController = new EntityTransitionController(
-                entity, pathIndexDeltaStack, pane
+                enemyEntity, pathIndexDeltaStack, pane
         );
         intervalHotObservable.subscribe(time -> {
-            translateOnClock(entityTransitionController);
+            translateOnClock(entityTransitionController, enemyEntity);
         });
     }
 
-    private void translateOnClock(EntityTransitionController entityTransitionController) {
-        entityTransitionController.onTick();
+    private void translateOnClock(
+            EntityTransitionController entityTransitionController,
+            EnemyEntity enemyEntity
+    ) {
+        EntityActionType action = entityTransitionController.onTick();
+        if (action == EntityActionType.ARRIVE_DESTINATION) {
+            gameFlowController.getGameUpdateDataSubject().onNext(
+                    new UpdateData(UpdateDataTypeType.PLAYER_DAMAGE, (float) -10)
+            );
+        }
+    }
+
+    enum EntityActionType {
+        NONE,
+        MOVE,
+        ARRIVE_DESTINATION
     }
 
     /**
@@ -223,32 +240,36 @@ public class GamePaneWrapper {
             this.pane = pane;
         }
 
-        public void onTick() {
+        public EntityActionType onTick() {
             clock += 1;
             if (entity == null) {
-                return;
+                return EntityActionType.NONE;
             }
             // if the entity arrives at its destination
             if (pathIndexDeltaStack.empty()) {
                 remove(entity);
-                return;
+                return EntityActionType.ARRIVE_DESTINATION;
             } else {
                 IndexPosition deltaIdxPos = pathIndexDeltaStack.pop();
                 move(entity, deltaIdxPos.getX(), deltaIdxPos.getY());
-                return;
+                return EntityActionType.MOVE;
             }
         }
 
         public void move(Entity entity, int deltaX, int deltaY) {
-            //Instantiating TranslateTransition class
-            TranslateTransition translate = new TranslateTransition();
-            //shifting the X coordinate of the centre of the circle by 400
-            translate.setByX(deltaX * Config.UNIT);
-            translate.setByY(deltaY * Config.UNIT);
-            //setting the duration for the Translate transition
-            translate.setDuration(Duration.millis(Config.TICK));
-            translate.setNode(entity);
-            translate.play();
+            Platform.runLater(new Runnable() {
+                @Override public void run() {
+                    //Instantiating TranslateTransition class
+                    TranslateTransition translate = new TranslateTransition();
+                    //shifting the X coordinate of the centre of the circle by 400
+                    translate.setByX(deltaX * Config.UNIT);
+                    translate.setByY(deltaY * Config.UNIT);
+                    //setting the duration for the Translate transition
+                    translate.setDuration(Duration.millis(Config.TICK));
+                    translate.setNode(entity);
+                    translate.play();
+                }
+            });
         }
 
         public void remove(Entity entity) {

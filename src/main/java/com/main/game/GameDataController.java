@@ -2,8 +2,10 @@ package com.main.game;
 
 import com.main.config.Config;
 import com.main.game.common.IndexPosition;
+import com.main.game.common.UpdateData;
 import com.main.game.data.GameSettingDataMap;
 import com.main.game.entity.EnemyEntity;
+import com.main.game.entity.PlayerEntity;
 import com.main.game.entity.tower.TowerData;
 import com.main.game.entity.tower.TowerEntity;
 import com.main.game.entity.EntityWithHealth;
@@ -12,12 +14,14 @@ import com.main.game.path.PathBlock;
 import com.main.game.path.TexturePathBlock;
 import com.main.model.GameLevelType;
 import com.main.model.TowerEntityStatusType;
-import io.reactivex.observables.ConnectableObservable;
+import com.main.model.UpdateDataTypeType;
+import io.reactivex.subjects.PublishSubject;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.ImagePattern;
 
+import javax.security.auth.Subject;
 import java.util.ArrayList;
 
 public class GameDataController {
@@ -53,7 +57,7 @@ public class GameDataController {
     private DataController dataController;
     private GameFlowController gameFlowController;
 
-    private EnemyEntity enemy;
+    private PlayerEntity player;
     private ArrayList<IndexPosition> pathPositionArray;
 
     public GameDataController(
@@ -71,6 +75,22 @@ public class GameDataController {
         this.initMouseEventHandlerSetting();
         // game scenario
         this.initGameScenario();
+
+        //
+        this.gameFlowController.getGameUpdateDataSubject().subscribe(data -> {
+            onGameUpdateData(data);
+        });
+    }
+
+    private void onGameUpdateData(UpdateData data) {
+        if (data.type == UpdateDataTypeType.PLAYER_DAMAGE) {
+            float newHp = ((EntityWithHealth) player).applyHpChange(data.damage);
+            onPlayerHpChange(newHp);
+        }
+    }
+
+    private void onPlayerHpChange(float newHp) {
+        
     }
 
     public void initGameScenario() {
@@ -87,14 +107,12 @@ public class GameDataController {
             startingMonumentHealth = GameSettingDataMap.getStartingMonumentHealth(this.gameLevel);
         }
 
-        EntityWithHealth player = new EntityWithHealth(
+        player = new PlayerEntity(
                 startingMonumentHealth,
                 startingMonumentHealth
         );
         player.setFillWithImageSrc("/com/main/steve_01.jpeg");
         player.setId("playerEntity");
-        System.out.println("Player");
-        System.out.println(player);
 
         TowerEntity tower = new TowerEntity();
         tower.setFillWithImageSrc("/com/main/catapult.png");
@@ -116,12 +134,12 @@ public class GameDataController {
         } else {
             startingMonumentHealth = GameSettingDataMap.getStartingMonumentHealth(this.gameLevel);
         }
-        enemy = new EnemyEntity(
+        EnemyEntity newEnemy = new EnemyEntity(
                 startingMonumentHealth,
                 startingMonumentHealth);
-        enemy.setFillWithImageSrc("/com/main/skeleton_01.png");
-        enemy.setId("enemyEntity");
-        this.gamePaneWrapper.addEntityWithDesginatedPath(enemy, pathPositionArray);
+        newEnemy.setFillWithImageSrc("/com/main/skeleton_01.png");
+        newEnemy.setId("enemyEntity");
+        this.gamePaneWrapper.addEnemyEntityWithDesginatedPath(newEnemy, pathPositionArray);
     }
 
 

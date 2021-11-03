@@ -1,20 +1,17 @@
 package com.main.game.common;
 
+import com.main.model.UpdateDataTypeType;
+
 public class UpdateData {
     public UpdateDataTypeType type;
-    public int damage;
+    public float damage;
 
     public UpdateData(
             UpdateDataTypeType type,
-            int damage
+            float damage
     ) {
         this.type = type;
         this.damage = damage;
     }
 
-    enum UpdateDataTypeType {
-        NONE,
-        PLAYER_DAMAGE,
-        END_GAME
-    }
 }

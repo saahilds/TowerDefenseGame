@@ -35,14 +35,14 @@ public class EntityWithHealth extends EntityWithBackground {
         hpBar.setTranslateY(-hpBarTranslateY);
 
         this.hpText = new Label(currHP + " / " + maxHP);
-        int hpTextTranslateY = hpBarTranslateY + 15;
+//        int hpTextTranslateY = hpBarTranslateY + 15;
 //        this.hpText.setTranslateY(-hpTextTranslateY);
 //        this.getChildren().addAll(getEntity(), hpBar, hpText);
         this.getChildren().addAll(getEntity(), hpBar);
     }
 
-    public void initHealthBar() {
-        Rectangle hpBar = new Rectangle(200.0, 50.0, Color.RED);
+    public float applyHpChange(float hpDelta) {
+        return hpBar.applyHpChange(hpDelta);
     }
 
     public float getPercentage() {

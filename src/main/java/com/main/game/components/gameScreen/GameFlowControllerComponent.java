@@ -46,6 +46,6 @@ public class GameFlowControllerComponent {
     }
 
     public void onClockInterval(Long tick) {
-        System.out.println("=====CONT=====" + tick);
+
     }
 }

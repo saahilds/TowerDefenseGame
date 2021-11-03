@@ -1,8 +1,9 @@
-package com.main.game.entity.tower;
+package com.main.game.components.gameScreen;
 
 //import com.main.game.DataController;
 import com.main.game.GameDataController;
 import com.main.game.data.GameSettingDataMap;
+import com.main.game.entity.tower.TowerData;
 import com.main.model.GameLevelType;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,7 +14,7 @@ import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 
-public class TowerMenu {
+public class TowerMenuComponent {
     private VBox towerMenuEl;
 
     public VBox getTowerMenuEl() {
@@ -38,11 +39,8 @@ public class TowerMenu {
 
     private ArrayList<TowerData> towerDataItemList;
 
-    public TowerMenu(GameLevelType gameLevel) {
-        System.out.println("TowerMenu constructor(single) 0");
-        System.out.println("TowerMenu constructor(single) GL" + gameLevel);
+    public TowerMenuComponent(GameLevelType gameLevel) {
         towerDataItemList = new ArrayList<>();
-        System.out.println("TowerMenu constructor(single) 1");
         TowerData techTower = new TowerData(
                 "tech_tower",
                 "Tech Tower",
@@ -52,7 +50,6 @@ public class TowerMenu {
                 100.0,
                 "/com/main/TechTower01.png"
         );
-        System.out.println("TowerMenu constructor(single) 1.1");
         TowerData westin = new TowerData(
                 "westing_hotel",
                 "Westin",
@@ -62,7 +59,6 @@ public class TowerMenu {
                 200.0,
                 "/com/main/Westin01.png"
         );
-        System.out.println("TowerMenu constructor(single) 1.2");
         TowerData pencilBuilding = new TowerData(
                 "pencil_building",
                 "Pencil Building",
@@ -72,7 +68,6 @@ public class TowerMenu {
                 150.0,
                 "/com/main/PencilBuilding01.png"
         );
-        System.out.println("TowerMenu constructor(single) 1.3");
         TowerData catapultTower = new TowerData(
                 "catapult_tower",
                 "Catapult Tower",
@@ -82,32 +77,23 @@ public class TowerMenu {
                 150.0,
                 "/com/main/catapult.png"
         );
-        System.out.println("TowerMenu constructor(single) 10");
         towerDataItemList.add(techTower);
         towerDataItemList.add(westin);
         towerDataItemList.add(pencilBuilding);
         towerDataItemList.add(catapultTower);
-        System.out.println("TowerMenu constructor(single) 30");
         setSelectedTowerData(catapultTower);
-        System.out.println("TowerMenu constructor(single) 99");
     }
 
-    public TowerMenu(VBox towerMenuEl, GameLevelType gameLevel) {
+    public TowerMenuComponent(VBox towerMenuEl, GameLevelType gameLevel) {
         this(gameLevel);
-        System.out.println("TowerMenu constructor 1");
         this.towerMenuEl = towerMenuEl;
-        System.out.println("TowerMenu constructor 2");
-        System.out.println(123);
-        System.out.println("TowerMenu constructor 3");
         initMenuItemList();
-        System.out.println("TowerMenu constructor 99");
     }
 
     private void initMenuItemList() {
         if (towerMenuEl == null) {
             return;
         }
-        System.out.println(towerMenuEl);
         for (TowerData item: towerDataItemList) {
             SplitMenuButton splitMenuButton = new SplitMenuButton();
             splitMenuButton.setText(item.getName());
@@ -116,14 +102,12 @@ public class TowerMenu {
             MenuItem cost = new MenuItem("COST " + item.getCost());
             MenuItem health = new MenuItem("HEALTH " + item.getHealth());
             MenuItem purchase = new MenuItem("Buy Tower");
-            System.out.println(0);
             purchase.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     System.out.println(item.getName() + "selected");
                     setSelectedTowerData(item);
                 }
             });
-            System.out.println(1);
             splitMenuButton.getItems().addAll(name, cost, health, description, purchase);
             towerMenuEl.getChildren().add(splitMenuButton);
         }

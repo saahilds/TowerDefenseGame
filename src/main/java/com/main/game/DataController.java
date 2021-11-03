@@ -9,8 +9,9 @@ import java.util.Observable;
 public class DataController {
     private GameLevelType gameLevel = GameLevelType.EASY;
     private String playerName = "";
-    private Integer gameMoney = 0;
-    private Integer enemyMonumentHealth = 0;
+    // FIXME
+    private Integer gameMoney = 100;
+    private Integer enemyMonumentHealth = 100;
 
     public GameMoneyObservable getGameMoneyObservable() {
         return gameMoneyObservable;

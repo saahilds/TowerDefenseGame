@@ -8,6 +8,8 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.kordamp.bootstrapfx.BootstrapFX;
+//import org.kordamp.bootstrapfx.BootstrapFX;
 
 
 public class MainApplication extends Application {
@@ -22,15 +24,23 @@ public class MainApplication extends Application {
     @Override
     public void start(Stage primaryStage) {
         ScreensController mainContainer = new ScreensController();
-        mainContainer.loadScreen(GameScreenType.WELCOME_SCREEN,
-                GameSettingDataMap.getFileName(GameScreenType.WELCOME_SCREEN));
-        mainContainer.setScreen(GameScreenType.WELCOME_SCREEN);
+// FIXME: GAME TEST SHORTCUT
+//        mainContainer.loadScreen(GameScreenType.WELCOME_SCREEN,
+//                GameSettingDataMap.getFileName(GameScreenType.WELCOME_SCREEN));
+//        mainContainer.setScreen(GameScreenType.WELCOME_SCREEN);
+        mainContainer.loadScreen(GameScreenType.GAME_SCREEN,
+                GameSettingDataMap.getFileName(GameScreenType.GAME_SCREEN));
+        mainContainer.setScreen(GameScreenType.GAME_SCREEN);
+
         MainApplication.primaryStage = primaryStage;
         Group root = new Group();
+        // Twitter Bootstrap
+        root.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
         root.getChildren().addAll(mainContainer);
         Scene scene = new Scene(root, Config.STAGE_WIDTH, Config.STAGE_HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.show();
+
     }
 
     public static void main(String[] args) {

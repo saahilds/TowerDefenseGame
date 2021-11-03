@@ -4,7 +4,7 @@ import com.main.game.DataController;
 import com.main.game.data.GameSettingDataMap;
 import com.main.game.entity.tower.TowerData;
 import com.main.game.entity.tower.TowerEntity;
-import com.main.game.entity.tower.TowerMenu;
+import com.main.game.components.gameScreen.TowerMenuComponent;
 import com.main.model.GameLevelType;
 import com.main.model.TowerEntityStatusType;
 import javafx.stage.Stage;
@@ -31,7 +31,7 @@ public class TowerTest extends ApplicationTest {
     public void testNecessaryFunds() {
         dataController = new DataController();
         dataController.setGameLevel(GameLevelType.EASY);
-        TowerMenu t = new TowerMenu(GameLevelType.EASY);
+        TowerMenuComponent t = new TowerMenuComponent(GameLevelType.EASY);
 
         assertTrue(dataController.getGameMoney() > t.getTowerDataItemList().get(0).getCost());
     }
@@ -40,7 +40,7 @@ public class TowerTest extends ApplicationTest {
     public void testNotEnoughFunds() {
         dataController = new DataController();
         dataController.setGameLevel(GameLevelType.HARD);
-        TowerMenu t = new TowerMenu(GameLevelType.HARD);
+        TowerMenuComponent t = new TowerMenuComponent(GameLevelType.HARD);
 
         assertFalse(dataController.getGameMoney() > t.getTowerDataItemList().get(0).getCost());
     }
@@ -78,7 +78,7 @@ public class TowerTest extends ApplicationTest {
 
     @Test
     public void testNameValidity() {
-        TowerMenu towerMenu = new TowerMenu(GameLevelType.EASY);
+        TowerMenuComponent towerMenu = new TowerMenuComponent(GameLevelType.EASY);
         for (int i = 0; i < towerMenu.getTowerDataItemList().size(); i++) {
             TowerData testTower = towerMenu.getTowerDataItemList().get(i);
             String[] nameArray = {"Tech Tower", "Westin", "Pencil Building", "Catapult Tower"};

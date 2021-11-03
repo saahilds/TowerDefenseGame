@@ -1,5 +1,8 @@
 package com.main.game.gamePane;
 
+import com.main.game.common.IndexPosition;
+import com.main.game.common.IndexPositionObject;
+import com.main.game.entity.Entity;
 import javafx.scene.Node;
 
 public class PositionMap {
@@ -83,27 +86,27 @@ public class PositionMap {
         }
     }
 
-    public void setAtPos(IndexPosition position, Node node) {
+    public void setAtPos(IndexPosition position, Entity node) {
         setAtIdx(position.getX(), position.getY(), node);
     }
 
-    public void setAtIdx(int xIdx, int yIdx, Node node) {
+    public void setAtIdx(int xIdx, int yIdx, Entity node) {
         if (xIdx < widthCapacity && yIdx < heightCapacity) {
-            this.map[yIdx][xIdx].node = node;
+            this.map[yIdx][xIdx].setNode(node);
         }
     }
 
-    public Node getAtPos(IndexPosition position) {
+    public Entity getAtPos(IndexPosition position) {
         if (position != null) {
             return getAtIdx(position.getX(), position.getY());
         }
         return null;
     }
 
-    public Node getAtIdx(int xIdx, int yIdx) {
+    public Entity getAtIdx(int xIdx, int yIdx) {
         try {
             if (xIdx < widthCapacity && yIdx < heightCapacity) {
-                return this.map[yIdx][xIdx].node;
+                return this.map[yIdx][xIdx].getNode();
             }
             return null;
         } catch (Exception exception) {
@@ -112,52 +115,4 @@ public class PositionMap {
         return null;
     }
 
-    public static class IndexPosition {
-        private int x;
-        private int y;
-
-        @Override
-        public String toString() {
-            return "IndexPosition{"
-                    + "x=" + x
-                    + ", y=" + y
-                    + '}';
-        }
-
-        public IndexPosition(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        public int getX() {
-            return x;
-        }
-
-        public void setX(int x) {
-            this.x = x;
-        }
-
-        public int getY() {
-            return y;
-        }
-
-        public void setY(int y) {
-            this.y = y;
-        }
-    }
-
-    public static class IndexPositionObject extends IndexPosition {
-        private int x;
-        private int y;
-        private Node node;
-
-        IndexPositionObject(int x, int y) {
-            super(x, y);
-        }
-
-        IndexPositionObject(int x, int y, Node node) {
-            this(x, y);
-            this.node = node;
-        }
-    }
 }

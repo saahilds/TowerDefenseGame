@@ -3,7 +3,9 @@ package com.main;
 import com.main.config.Config;
 //import com.main.game.DataController;
 import com.main.game.GameDataController;
-import com.main.game.entity.tower.TowerMenu;
+import com.main.game.GameFlowController;
+import com.main.game.components.gameScreen.GameFlowControllerComponent;
+import com.main.game.components.gameScreen.TowerMenuComponent;
 import com.main.game.gamePane.GamePaneWrapper;
 import com.main.model.GameLevelType;
 import com.main.model.GameScreenType;
@@ -33,10 +35,15 @@ public class GameScreenController extends
     @FXML
     private VBox towerMenuEl;
 
+    @FXML
+    private VBox gameFlowControllerEl;
+
     private ScreensController screensController;
     private GamePaneWrapper gamePaneWrapper;
     private GameDataController gameDataController;
-    private TowerMenu towerMenu;
+    private TowerMenuComponent towerMenu;
+    private GameFlowControllerComponent gameFlowControllerComponent;
+    private GameFlowController gameFlowController = new GameFlowController();
     private GameMoneyObserber gameMoneyObserber = new GameMoneyObserber();
 
     private GameLevelType gameLevel = GameLevelType.EASY;
@@ -51,29 +58,28 @@ public class GameScreenController extends
     private Text gameMoneyText;
 
     public void initGamePaneSetting() {
-        System.out.println("GSC initGamePaneSetting 1");
         gamePaneWrapper = new GamePaneWrapper(
                 this.gamePane, Config.STAGE_WIDTH - Config.LEFT_TOOLBAR_WIDTH,
                 Config.STAGE_HEIGHT - Config.GNB_TOP_HEIGHT,
-                Config.UNIT, Config.UNIT
+                Config.UNIT, Config.UNIT,
+                gameFlowController
         );
-        System.out.println("GSC initGamePaneSetting 2");
         gameDataController = new GameDataController(
                 gamePaneWrapper,
                 getDataController(),
+                gameFlowController,
                 gameLevel
         );
-        System.out.println("GSC initGamePaneSetting 3");
         getDataController().getGameMoneyObservable().addObserver(gameMoneyObserber);
-        System.out.println("GSC initGamePaneSetting 4");
-        System.out.println("GSC initGamePaneSetting 4 GL" + getDataController().getGameLevel());
-        towerMenu = new TowerMenu(
+        towerMenu = new TowerMenuComponent(
                 towerMenuEl,
                 getDataController().getGameLevel()
         );
-        System.out.println("GSC initGamePaneSetting 4.5");
         towerMenu.setGameDataController(gameDataController);
-        System.out.println("GSC initGamePaneSetting 5");
+        gameFlowControllerComponent = new GameFlowControllerComponent(
+                gameFlowControllerEl,
+                gameFlowController
+        );
     }
 
     /**

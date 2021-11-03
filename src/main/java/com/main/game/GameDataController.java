@@ -12,16 +12,13 @@ import com.main.game.path.PathBlock;
 import com.main.game.path.TexturePathBlock;
 import com.main.model.GameLevelType;
 import com.main.model.TowerEntityStatusType;
-import io.reactivex.Observable;
 import io.reactivex.observables.ConnectableObservable;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
 
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
 
 public class GameDataController {
 
@@ -56,7 +53,8 @@ public class GameDataController {
     private DataController dataController;
     private GameFlowController gameFlowController;
 
-    public EnemyEntity enemy;
+    private EnemyEntity enemy;
+    private ArrayList<IndexPosition> pathPositionArray;
 
     public GameDataController(
             GamePaneWrapper gamePaneWrapper,
@@ -68,10 +66,12 @@ public class GameDataController {
         this.dataController = dataController;
         this.gameFlowController = gameFlowController;
         this.gameLevel = gameLevel;
-        this.generateSimplePath();
-        this.initGameScenario();
+        this.pathPositionArray = this.getPathPositionArray();
+        this.generatePathBlock(this.pathPositionArray);
         this.initMouseEventHandlerSetting();
         this.initClockSubscription();
+        // game scenario
+        this.initGameScenario();
     }
 
     public void initGameScenario() {
@@ -110,8 +110,9 @@ public class GameDataController {
         System.out.println("GDC initGameScenario 30");
 
         this.gamePaneWrapper.addNodeWithXidxYidx(0, vCenterIdx, player);
-        this.gamePaneWrapper.addNodeWithXidxYidx(maxXidx, vCenterIdx, enemy);
+//        this.gamePaneWrapper.addNodeWithXidxYidx(maxXidx, vCenterIdx, enemy);
         this.gamePaneWrapper.addNodeWithXidxYidx(1, 1, tower);
+        this.gamePaneWrapper.addEntityWithDesginatedPath(enemy, pathPositionArray);
     }
 
     private void initClockSubscription() {
@@ -120,24 +121,31 @@ public class GameDataController {
     }
 
     public void onClockInterval(Long tick) {
-        System.out.println("=====GDC=====" + tick);
         if (tick > (long) 1) {
             enemy.movementTest();
         }
     }
 
-
-    public void generateSimplePath() {
+    public ArrayList<IndexPosition> getPathPositionArray() {
+        ArrayList<IndexPosition> pathPositionArray = new ArrayList<>();
         int vCenterIdx = (int) Math.floor(gamePaneWrapper.getMaxYidx() / 2);
-        for (int xIdx = 0; xIdx < gamePaneWrapper.getMaxXidx() + 1; xIdx++) {
+        for (int xIdx = gamePaneWrapper.getMaxXidx(); xIdx > 0; xIdx--) {
+            pathPositionArray.add(new IndexPosition(xIdx, vCenterIdx));
+        }
+        return pathPositionArray;
+    }
+
+    public void generatePathBlock(ArrayList<IndexPosition> pathPositionArray) {
+        int cnt = 0;
+        for (IndexPosition pos: pathPositionArray) {
             Image textureImage = new Image(
                     getClass().getResourceAsStream("/com/main/grass_1.png")
             );
             ImagePattern textureImagePattern = new ImagePattern(textureImage);
             PathBlock pathBlock =
-                    new TexturePathBlock(Config.UNIT, Config.UNIT, xIdx, textureImagePattern);
-            pathBlock.setTranslateX(Config.UNIT * xIdx);
-            pathBlock.setTranslateY(Config.UNIT * vCenterIdx);
+                    new TexturePathBlock(Config.UNIT, Config.UNIT, cnt++, textureImagePattern);
+            pathBlock.setTranslateX(Config.UNIT * pos.getX());
+            pathBlock.setTranslateY(Config.UNIT * pos.getY());
             this.gamePaneWrapper.addNode(pathBlock);
         }
     }

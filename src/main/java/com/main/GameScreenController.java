@@ -61,7 +61,8 @@ public class GameScreenController extends
         gamePaneWrapper = new GamePaneWrapper(
                 this.gamePane, Config.STAGE_WIDTH - Config.LEFT_TOOLBAR_WIDTH,
                 Config.STAGE_HEIGHT - Config.GNB_TOP_HEIGHT,
-                Config.UNIT, Config.UNIT
+                Config.UNIT, Config.UNIT,
+                gameFlowController
         );
         gameDataController = new GameDataController(
                 gamePaneWrapper,

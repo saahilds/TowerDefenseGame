@@ -1,11 +1,21 @@
 package com.main.game.gamePane;
 
+import com.main.config.Config;
+import com.main.game.GameFlowController;
 import com.main.game.common.IndexPosition;
 import com.main.game.entity.Entity;
+import io.reactivex.observables.ConnectableObservable;
+import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Stack;
+import java.util.concurrent.Flow;
 
 
 public class GamePaneWrapper {
@@ -77,9 +87,13 @@ public class GamePaneWrapper {
         return maxYidx;
     }
 
+    public GameFlowController gameFlowController;
+    public ConnectableObservable<Long> intervalHotObservable;
+
     public GamePaneWrapper(
             Pane pane, int width, int height,
-            int nodeWidth, int nodeHeight
+            int nodeWidth, int nodeHeight,
+            GameFlowController gameFlowController
     ) {
         this.pane = pane;
         this.width = width;
@@ -93,11 +107,11 @@ public class GamePaneWrapper {
         this.maxXidx = this.widthCapacity - 1;
         this.maxYidx = this.heightCapacity - 1;
         this.posMap = new PositionMap(this.width, this.height, this.nodeWidth, this.nodeHeight);
+
+        this.gameFlowController = gameFlowController;
+        this.intervalHotObservable = this.gameFlowController.getIntervalObservable$();
     }
 
-//    public void addFreeNodeWithXidxYidx(int xIdx, int yIdx, Entity node) {
-//
-//    }
     public void addNode(Node node) {
         getPane().getChildren().add(node);
     }
@@ -145,6 +159,81 @@ public class GamePaneWrapper {
         pane.getChildren().remove(prevNode);
         posMap.setAtPos(position, null);
         return prevNode;
+    }
+
+    /**
+     * Add Entity that moves along the input path
+     *
+     * @param entity
+     * @param pathPositionArray
+     */
+    public void addEntityWithDesginatedPath(
+            Entity entity,
+            ArrayList<IndexPosition> pathPositionArray
+    ) {
+        int cnt = 0;
+        Stack<IndexPosition> pathPositionStack = new Stack<>();
+        Stack<IndexPosition> pathIndexDeltaStack = new Stack<>();
+        IndexPosition prevIndexPosition = null;
+//        for (int i = pathPositionArray.size() - 1; i > -1; i--) {
+        for (int i = 0; i < pathPositionArray.size(); i++) {
+            IndexPosition idxPos = pathPositionArray.get(i);
+            pathPositionStack.push(idxPos);
+            if (prevIndexPosition != null) {
+                int deltaX = idxPos.getX() - prevIndexPosition.getX();
+                int deltaY = idxPos.getY() - prevIndexPosition.getY();
+                pathIndexDeltaStack.push(new IndexPosition(deltaX, deltaY));
+            }
+            prevIndexPosition = idxPos;
+        }
+        IndexPosition currPos = pathPositionArray.get(cnt);
+        addNodeWithIndexPosition(currPos, entity);
+        EntityTransitionController entityTransitionController = new EntityTransitionController(
+                entity, pathIndexDeltaStack
+        );
+        intervalHotObservable.subscribe(time -> {
+            translateOnClock(entityTransitionController);
+        });
+    }
+
+    private void translateOnClock(EntityTransitionController entityTransitionController) {
+        entityTransitionController.onTick();
+    }
+
+    public class EntityTransitionController {
+        public int clock = -1;
+        Entity entity;
+        Stack<IndexPosition> pathIndexDeltaStack;
+
+        public EntityTransitionController(
+                Entity entity,
+                Stack<IndexPosition> pathIndexDeltaStack
+        ) {
+            this.entity = entity;
+            this.pathIndexDeltaStack = pathIndexDeltaStack;
+        }
+
+        public void onTick() {
+            clock += 1;
+            if (pathIndexDeltaStack.empty()) {
+                System.out.println("END");
+                return;
+            }
+            IndexPosition deltaIdxPos = pathIndexDeltaStack.pop();
+            move(entity, deltaIdxPos.getX(), deltaIdxPos.getY());
+        }
+
+        private void move(Entity entity, int deltaX, int deltaY) {
+            //Instantiating TranslateTransition class
+            TranslateTransition translate = new TranslateTransition();
+            //shifting the X coordinate of the centre of the circle by 400
+            translate.setByX(deltaX * Config.UNIT);
+            translate.setByY(deltaY * Config.UNIT);
+            //setting the duration for the Translate transition
+            translate.setDuration(Duration.millis(1000));
+            translate.setNode(entity);
+            translate.play();
+        }
     }
 
 }

@@ -36,7 +36,6 @@ public class GameFlowControllerComponent {
     }
 
     private void onClickGameStart(Button button) {
-        System.out.println("onClickGameStart");
         if (!isGameStarted) {
             ConnectableObservable<Long> connectableObservable$ = gameFlowController.initClock();
             connectableObservable$.subscribe(this::onClockInterval);

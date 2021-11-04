@@ -32,6 +32,9 @@ public class MainApplication extends Application {
                 GameSettingDataMap.getFileName(GameScreenType.GAME_SCREEN));
         mainContainer.setScreen(GameScreenType.GAME_SCREEN);
 
+        mainContainer.loadScreen(GameScreenType.GAME_OVER_SCREEN,
+                GameSettingDataMap.getFileName(GameScreenType.GAME_OVER_SCREEN));
+
         MainApplication.primaryStage = primaryStage;
         Group root = new Group();
         // Twitter Bootstrap

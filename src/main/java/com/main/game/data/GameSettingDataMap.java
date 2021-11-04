@@ -24,6 +24,10 @@ public class GameSettingDataMap {
         return gameScreenFile;
     }
 
+    private static String gameOverScreenFile = "game-over-screen.fxml";
+
+    public static String getGaveOverScreenFile() {return gameOverScreenFile; }
+
     private static HashMap<GameScreenType, String> screenFileMap = new HashMap<>() {
         {
             put(GameScreenType.WELCOME_SCREEN, welcomeFile);

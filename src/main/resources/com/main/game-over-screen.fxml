@@ -7,11 +7,9 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.effect.ColorAdjust?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane id="AnchorPane" prefHeight="728.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.main.GameOverScreenController">
     <children>
@@ -48,15 +46,6 @@
                     <items>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="331.0" prefWidth="1022.0">
                             <children>
-                                <ImageView fitHeight="92.0" fitWidth="144.0" layoutX="466.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
-                                </ImageView>
-                                <Button layoutX="413.0" layoutY="300.0" mnemonicParsing="false" onMouseClicked="#playEasy" text="Easy" />
-                                <Button layoutX="470.0" layoutY="300.0" mnemonicParsing="false" onMouseClicked="#playNormal" text="Normal" />
-                                <Button layoutX="545.0" layoutY="300.0" mnemonicParsing="false" onMouseClicked="#playHard" text="Hard" />
-                                <Text layoutX="352.0" layoutY="318.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Level:" />
-                                <Text fx:id="errorText" fill="#fc0303" layoutX="352.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-                                <Text fx:id="levelOut" fill="#0501f2" layoutX="352.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="106.45065647396143" />
-                                <Text fx:id="nameOut" fill="#0911f5" layoutX="352.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" />
                             <Label layoutX="308.0" layoutY="99.0" text="GAME OVER ">
                                 <font>
                                     <Font size="72.0" />

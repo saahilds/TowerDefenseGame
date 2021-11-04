@@ -16,6 +16,7 @@ import com.main.model.GameLevelType;
 import com.main.model.TowerEntityStatusType;
 import com.main.model.UpdateDataTypeType;
 import io.reactivex.subjects.PublishSubject;
+import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -87,10 +88,16 @@ public class GameDataController {
             float newHp = ((EntityWithHealth) player).applyHpChange(data.damage);
             onPlayerHpChange(newHp);
         }
+        else if (data.type == UpdateDataTypeType.END_GAME) {
+            ActionEvent endGame = new ActionEvent();
+        }
     }
 
     private void onPlayerHpChange(float newHp) {
-        
+        if (newHp <= 0) {
+            gameFlowController.getGameUpdateDataSubject().onNext(
+                    new UpdateData(UpdateDataTypeType.END_GAME, newHp));
+        }
     }
 
     public void initGameScenario() {

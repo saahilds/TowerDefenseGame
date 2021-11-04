@@ -33,6 +33,7 @@ public class GameSettingDataMap {
             put(GameScreenType.WELCOME_SCREEN, welcomeFile);
             put(GameScreenType.CONFIG_SCREEN, configScreenFile);
             put(GameScreenType.GAME_SCREEN, gameScreenFile);
+            put(GameScreenType.GAME_OVER_SCREEN, gameOverScreenFile);
         }
     };
 

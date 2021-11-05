@@ -64,6 +64,7 @@ public class GameDataController {
 
     private PlayerEntity player;
     private ArrayList<IndexPosition> pathPositionArray;
+    private ArrayList<TowerEntity> temporaryTowerEntityArray = new ArrayList<>();
 
     public GameDataController(
             GamePaneWrapper gamePaneWrapper,
@@ -216,6 +217,11 @@ public class GameDataController {
                         && prevPos.getX() < gamePaneWrapper.getWidthCapacity()
                         && prevPos.getY() < gamePaneWrapper.getHeightCapacity()
         ) {
+            for (IndexPosition path: pathPositionArray) {
+                if (path.equals(prevPos)) {
+                    return;
+                }
+            }
             TowerEntity targetTowerEntity = new TowerEntity(selectedTower,
                     TowerEntityStatusType.REGISTERED);
             gamePaneWrapper.removeAtPos(prevPos);
@@ -272,6 +278,11 @@ public class GameDataController {
         ) {
             return;
         } else {
+            for (IndexPosition path: pathPositionArray) {
+                if (path.equals(currPos)) {
+                    return;
+                }
+            }
             cursorTowerEntity = new TowerEntity(selectedTower, TowerEntityStatusType.STAGED);
             cursorTowerEntity.setId("cursorTowerEntity");
             gamePaneWrapper.addNodeWithIndexPosition(currPos, cursorTowerEntity);

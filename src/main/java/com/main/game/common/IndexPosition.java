@@ -32,5 +32,19 @@ public class IndexPosition {
     public void setY(int y) {
         this.y = y;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        try {
+            if (o instanceof IndexPosition) {
+                boolean x = getX() == ((IndexPosition) o).getX();
+                boolean y = getY() == ((IndexPosition) o).getY();
+                return (x && y);
+            }
+            return false;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
 

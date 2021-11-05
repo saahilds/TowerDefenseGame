@@ -26,7 +26,9 @@ public class GameSettingDataMap {
 
     private static String gameOverScreenFile = "game-over-screen.fxml";
 
-    public static String getGaveOverScreenFile() { return gameOverScreenFile; }
+    public static String getGaveOverScreenFile() {
+        return gameOverScreenFile;
+    }
 
     private static HashMap<GameScreenType, String> screenFileMap = new HashMap<>() {
         {

@@ -33,15 +33,15 @@ public class GameFlowController {
 
     private Long currTime = (long) 0;
 
-    private ConnectableObservable<Long> intervalObservable$;
+    private ConnectableObservable<Long> intervalObservable;
 
-    public ConnectableObservable<Long> getIntervalObservable$() {
-        return intervalObservable$;
+    public ConnectableObservable<Long> getIntervalObservable() {
+        return intervalObservable;
     }
 
     public ConnectableObservable<Long> initClock() {
         clockStarted = true;
-        return intervalObservable$;
+        return intervalObservable;
     }
 
     public BehaviorSubject<UpdateData> getGameUpdateDataSubject() {
@@ -55,19 +55,20 @@ public class GameFlowController {
     private BehaviorSubject<UpdateData> gameUpdateDataSubject;
 
     public GameFlowController() {
-        intervalObservable$ = Observable.interval(0, Config.TICK, TimeUnit.MILLISECONDS)
+        intervalObservable = Observable.interval(0, Config.TICK, TimeUnit.MILLISECONDS)
                 .map(time -> this.clockStarted ? this.currTime++ : this.currTime)
                 .distinctUntilChanged()
                 .publish();
-        intervalObservable$.connect();
+        intervalObservable.connect();
         gameUpdateDataSubject = BehaviorSubject.create();
         gameUpdateDataSubject.subscribe(data -> onGameUpdateDate(data));
     }
 
     private void onGameUpdateDate(UpdateData data) {
-        if (data.getType() == UpdateDataTypeType.END_GAME || data.getType() == UpdateDataTypeType.RESET) {
-//            intervalObservable$ = null;
-//            gameUpdateDataSubject = null;
+        if (
+                data.getType() == UpdateDataTypeType.END_GAME
+                        || data.getType() == UpdateDataTypeType.RESET
+        ) {
             clockStarted = false;
         }
     }

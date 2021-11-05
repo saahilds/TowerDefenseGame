@@ -3,8 +3,8 @@ package com.main.game.common;
 import com.main.model.UpdateDataTypeType;
 
 public class UpdateData {
-    public UpdateDataTypeType type;
-    public float damage;
+    private UpdateDataTypeType type;
+    private float damage;
 
     public UpdateDataTypeType getType() {
         return type;

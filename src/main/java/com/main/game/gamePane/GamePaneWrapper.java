@@ -129,7 +129,7 @@ public class GamePaneWrapper {
         this.posMap = new PositionMap(this.width, this.height, this.nodeWidth, this.nodeHeight);
 
         this.gameFlowController = gameFlowController;
-        this.intervalHotObservable = this.gameFlowController.getIntervalObservable$();
+        this.intervalHotObservable = this.gameFlowController.getIntervalObservable();
     }
 
     public void addNode(Node node) {

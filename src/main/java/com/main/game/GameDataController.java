@@ -127,7 +127,7 @@ public class GameDataController {
 
         this.gamePaneWrapper.addNodeWithXidxYidx(0, vCenterIdx, player);
         this.gamePaneWrapper.addNodeWithXidxYidx(1, 1, tower);
-        this.gameFlowController.getIntervalObservable$().subscribe(time -> {
+        this.gameFlowController.getIntervalObservable().subscribe(time -> {
             if (time % 5 == 0) {
                 addEnemy();
             }

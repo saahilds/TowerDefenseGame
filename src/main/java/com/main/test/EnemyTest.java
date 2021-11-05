@@ -67,5 +67,14 @@ public class EnemyTest extends ApplicationTest {
         
 
     }
+    
+    @Test
+    public void testClockStart() {
+        GameFlowController gameFlowController = new GameFlowController();
+        assertFalse(gameFlowController.isClockStarted());
+        gameFlowController.setClockStarted(true);
+        assertTrue(gameFlowController.isClockStarted());
+    }
+
 
 }

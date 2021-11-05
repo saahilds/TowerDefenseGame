@@ -48,4 +48,8 @@ public class GameFlowControllerComponent {
     public void onClockInterval(Long tick) {
 
     }
+
+    public boolean getIsGameStarted() {
+        return isGameStarted;
+    }
 }

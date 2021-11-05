@@ -75,6 +75,17 @@ public class EnemyTest extends ApplicationTest {
         gameFlowController.setClockStarted(true);
         assertTrue(gameFlowController.isClockStarted());
     }
+    
+    @Test
+    public void testGameOverScreen() {
+        ScreensController screensController = new ScreensController();
+        Node screen = new Node() {
+        };
+        screensController.addScreen(GameScreenType.GAME_OVER_SCREEN, screen);
+        screensController.setScreen(GameScreenType.GAME_OVER_SCREEN);
+
+        assertNotNull(screensController.getScreen(GameScreenType.GAME_OVER_SCREEN));
+    }
 
 
 }

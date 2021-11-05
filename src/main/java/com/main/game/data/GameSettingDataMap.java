@@ -26,7 +26,9 @@ public class GameSettingDataMap {
 
     private static String gameOverScreenFile = "game-over-screen.fxml";
 
-    public static String getGaveOverScreenFile() {return gameOverScreenFile; }
+    public static String getGaveOverScreenFile() {
+        return gameOverScreenFile;
+    }
 
     private static HashMap<GameScreenType, String> screenFileMap = new HashMap<>() {
         {
@@ -56,9 +58,9 @@ public class GameSettingDataMap {
 
     private static HashMap<GameLevelType, Integer> startingMonumentHealthMap  = new HashMap<>() {
         {
-            put(GameLevelType.EASY, 100);
+            put(GameLevelType.EASY, 1000);
             put(GameLevelType.NORMAL, 500);
-            put(GameLevelType.HARD, 1000);
+            put(GameLevelType.HARD, 100);
         }
     };
 

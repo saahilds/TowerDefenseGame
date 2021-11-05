@@ -2,9 +2,9 @@ package com.main.test;
 
 import com.main.MainApplication;
 import com.main.game.data.GameSettingDataMap;
-import com.main.model.GameLevelType;
+//import com.main.model.GameLevelType;
 import com.main.model.GameScreenType;
-import com.main.game.entity.EntityWithHealth;
+//import com.main.game.entity.EntityWithHealth;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,7 +14,7 @@ import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
+//import static org.junit.Assert.assertSame;
 
 public class GameScreenTest extends ApplicationTest {
     private MainApplication app;
@@ -42,15 +42,16 @@ public class GameScreenTest extends ApplicationTest {
     public void testGameScreenInitialization() {
         assertNotNull(mainNode);
     }
-//    @Test
-//    public void testEnemyInitialization() {
-//        GameLevelType level = GameLevelType.EASY;
-//
-//        EntityWithHealth enemyEntity = from(mainNode).lookup("#enemyEntity").query();
-//        assertNotNull(enemyEntity);
-//        assertSame(
-//                (int) enemyEntity.getMaxHP(),
-//                GameSettingDataMap.getStartingMonumentHealth(level)
-//        );
-//    }
+    //        @Test
+    //        public void testEnemyInitialization() {
+    //            GameLevelType level = GameLevelType.EASY;
+    //
+    //            EntityWithHealth enemyEntity = from(mainNode)
+    //            .lookup("#enemyEntity").query();
+    //            assertNotNull(enemyEntity);
+    //            assertSame(
+    //                    (int) enemyEntity.getMaxHP(),
+    //                    GameSettingDataMap.getStartingMonumentHealth(level)
+    //            );
+    //        }
 }

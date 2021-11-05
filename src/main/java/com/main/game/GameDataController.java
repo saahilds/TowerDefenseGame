@@ -15,14 +15,14 @@ import com.main.game.path.TexturePathBlock;
 import com.main.model.GameLevelType;
 import com.main.model.TowerEntityStatusType;
 import com.main.model.UpdateDataTypeType;
-import io.reactivex.subjects.PublishSubject;
+//import io.reactivex.subjects.PublishSubject;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.ImagePattern;
 
-import javax.security.auth.Subject;
+//import javax.security.auth.Subject;
 import java.util.ArrayList;
 
 public class GameDataController {
@@ -84,11 +84,10 @@ public class GameDataController {
     }
 
     private void onGameUpdateData(UpdateData data) {
-        if (data.type == UpdateDataTypeType.PLAYER_DAMAGE) {
-            float newHp = ((EntityWithHealth) player).applyHpChange(data.damage);
+        if (data.getType() == UpdateDataTypeType.PLAYER_DAMAGE) {
+            float newHp = ((EntityWithHealth) player).applyHpChange(data.getDamage());
             onPlayerHpChange(newHp);
-        }
-        else if (data.type == UpdateDataTypeType.END_GAME) {
+        } else if (data.getType() == UpdateDataTypeType.END_GAME) {
             ActionEvent endGame = new ActionEvent();
         }
     }
@@ -96,7 +95,8 @@ public class GameDataController {
     private void onPlayerHpChange(float newHp) {
         if (newHp <= 0) {
             gameFlowController.getGameUpdateDataSubject().onNext(
-                    new UpdateData(UpdateDataTypeType.END_GAME, newHp));
+                    new UpdateData(UpdateDataTypeType.END_GAME, newHp)
+            );
         }
     }
 
@@ -127,7 +127,7 @@ public class GameDataController {
 
         this.gamePaneWrapper.addNodeWithXidxYidx(0, vCenterIdx, player);
         this.gamePaneWrapper.addNodeWithXidxYidx(1, 1, tower);
-        this.gameFlowController.getIntervalObservable$().subscribe(time -> {
+        this.gameFlowController.getIntervalObservable().subscribe(time -> {
             if (time % 5 == 0) {
                 addEnemy();
             }

@@ -3,7 +3,7 @@ package com.main.game.gamePane;
 import com.main.game.common.IndexPosition;
 import com.main.game.common.IndexPositionObject;
 import com.main.game.entity.Entity;
-import javafx.scene.Node;
+//import javafx.scene.Node;
 
 public class PositionMap {
     private IndexPositionObject[][] map;

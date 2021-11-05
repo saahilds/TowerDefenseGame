@@ -46,6 +46,7 @@ public class GameOverScreenTest extends ApplicationTest {
         assertNotNull(clickOn("#restartGame"));
         assertNotNull(clickOn("#exitGame"));
     }
+}
 
 //screensController.setScreen(GameScreenType.GAME_OVER_SCREEN);
 //Button button = from(mainNode).lookup("restartGame").query();

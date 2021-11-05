@@ -4,22 +4,17 @@ package com.main.test;
 import com.main.MainApplication;
 import com.main.ScreensController;
 import com.main.game.DataController;
-import com.main.game.GameDataController;
 import com.main.game.GameFlowController;
 import com.main.game.components.gameScreen.GameFlowControllerComponent;
 import com.main.game.data.GameSettingDataMap;
-//import com.main.model.GameLevelType;
-import com.main.game.gamePane.GamePaneWrapper;
 import com.main.model.GameScreenType;
-//import com.main.game.entity.EntityWithHealth;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.junit.After;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
@@ -74,7 +69,7 @@ public class EnemyTest extends ApplicationTest {
         assertFalse(gFC.getIsGameStarted());
 
     }
-    
+
     @Test
     public void testClockStart() {
         GameFlowController gameFlowController = new GameFlowController();
@@ -82,7 +77,7 @@ public class EnemyTest extends ApplicationTest {
         gameFlowController.setClockStarted(true);
         assertTrue(gameFlowController.isClockStarted());
     }
-    
+
     @Test
     public void testGameOverScreen() {
         ScreensController screensController = new ScreensController();
@@ -93,3 +88,4 @@ public class EnemyTest extends ApplicationTest {
 
         assertNotNull(screensController.getScreen(GameScreenType.GAME_OVER_SCREEN));
     }
+}

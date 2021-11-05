@@ -64,7 +64,11 @@ public class EnemyTest extends ApplicationTest {
 
     @Test
     public void gameStartButtonTest() {
-        
+        gameFlowControllerEl = new VBox();
+        gF = new GameFlowController();
+        GameFlowControllerComponent gFC = new GameFlowControllerComponent(gameFlowControllerEl, gF);
+        //making sure game has started
+        assertTrue(gFC.getIsGameStarted());
 
     }
 

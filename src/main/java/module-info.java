@@ -7,8 +7,7 @@ module com.main {
     requires io.reactivex.rxjava2;
     requires org.kordamp.bootstrapfx.core;
     requires rxjavafx;
-    requires rxjava;
-    requires org.testfx.junit;
+    requires hamcrest.core;
 
     opens com.main to javafx.fxml;
     exports com.main;

@@ -58,9 +58,9 @@ public class GameSettingDataMap {
 
     private static HashMap<GameLevelType, Integer> startingMonumentHealthMap  = new HashMap<>() {
         {
-            put(GameLevelType.EASY, 100);
+            put(GameLevelType.EASY, 1000);
             put(GameLevelType.NORMAL, 500);
-            put(GameLevelType.HARD, 1000);
+            put(GameLevelType.HARD, 100);
         }
     };
 

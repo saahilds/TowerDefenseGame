@@ -1,5 +1,6 @@
 package com.main.test;
 
+
 import com.main.MainApplication;
 import com.main.ScreensController;
 import com.main.game.DataController;
@@ -92,4 +93,3 @@ public class EnemyTest extends ApplicationTest {
 
         assertNotNull(screensController.getScreen(GameScreenType.GAME_OVER_SCREEN));
     }
-}

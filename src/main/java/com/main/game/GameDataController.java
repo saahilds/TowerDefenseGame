@@ -58,6 +58,10 @@ public class GameDataController {
     private DataController dataController;
     private GameFlowController gameFlowController;
 
+    public PlayerEntity getPlayer() {
+        return player;
+    }
+
     private PlayerEntity player;
     private ArrayList<IndexPosition> pathPositionArray;
 
@@ -95,7 +99,8 @@ public class GameDataController {
     private void onPlayerHpChange(float newHp) {
         if (newHp <= 0) {
             gameFlowController.getGameUpdateDataSubject().onNext(
-                    new UpdateData(UpdateDataTypeType.END_GAME, newHp));
+                    new UpdateData(UpdateDataTypeType.END_GAME, newHp)
+            );
         }
     }
 
@@ -126,7 +131,7 @@ public class GameDataController {
 
         this.gamePaneWrapper.addNodeWithXidxYidx(0, vCenterIdx, player);
         this.gamePaneWrapper.addNodeWithXidxYidx(1, 1, tower);
-        this.gameFlowController.getIntervalObservable$().subscribe(time -> {
+        this.gameFlowController.getIntervalObservable().subscribe(time -> {
             if (time % 5 == 0) {
                 addEnemy();
             }

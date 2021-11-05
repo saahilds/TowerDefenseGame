@@ -4,12 +4,9 @@ import com.main.config.Config;
 import com.main.game.common.UpdateData;
 import com.main.model.UpdateDataTypeType;
 import io.reactivex.Observable;
-//import io.reactivex.disposables.Disposable;
 import io.reactivex.observables.ConnectableObservable;
-//import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
 import io.reactivex.subjects.BehaviorSubject;
 
-//import javax.security.auth.Subject;
 import java.util.concurrent.TimeUnit;
 
 public class GameFlowController {

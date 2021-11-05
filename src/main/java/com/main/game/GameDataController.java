@@ -58,6 +58,10 @@ public class GameDataController {
     private DataController dataController;
     private GameFlowController gameFlowController;
 
+    public PlayerEntity getPlayer() {
+        return player;
+    }
+
     private PlayerEntity player;
     private ArrayList<IndexPosition> pathPositionArray;
 

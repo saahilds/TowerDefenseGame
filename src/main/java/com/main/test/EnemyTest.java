@@ -69,8 +69,8 @@ public class EnemyTest extends ApplicationTest {
         gameFlowControllerEl = new VBox();
         gF = new GameFlowController();
         GameFlowControllerComponent gFC = new GameFlowControllerComponent(gameFlowControllerEl, gF);
-        //making sure game has started
-        assertTrue(gFC.getIsGameStarted());
+        //making sure game hasn't started without mouse click
+        assertFalse(gFC.getIsGameStarted());
 
     }
     

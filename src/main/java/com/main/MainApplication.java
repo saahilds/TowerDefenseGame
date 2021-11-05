@@ -24,13 +24,13 @@ public class MainApplication extends Application {
     @Override
     public void start(Stage primaryStage) {
         ScreensController mainContainer = new ScreensController();
-// FIXME: GAME TEST SHORTCUT
-//        mainContainer.loadScreen(GameScreenType.WELCOME_SCREEN,
-//                GameSettingDataMap.getFileName(GameScreenType.WELCOME_SCREEN));
-//        mainContainer.setScreen(GameScreenType.WELCOME_SCREEN);
+        // FIXME: GAME TEST SHORTCUT
+        mainContainer.loadScreen(GameScreenType.WELCOME_SCREEN,
+                GameSettingDataMap.getFileName(GameScreenType.WELCOME_SCREEN));
+        mainContainer.setScreen(GameScreenType.WELCOME_SCREEN);
         mainContainer.loadScreen(GameScreenType.GAME_SCREEN,
                 GameSettingDataMap.getFileName(GameScreenType.GAME_SCREEN));
-        mainContainer.setScreen(GameScreenType.GAME_SCREEN);
+        //mainContainer.setScreen(GameScreenType.GAME_SCREEN);
 
         mainContainer.loadScreen(GameScreenType.GAME_OVER_SCREEN,
                 GameSettingDataMap.getFileName(GameScreenType.GAME_OVER_SCREEN));

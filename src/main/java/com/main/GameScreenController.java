@@ -11,7 +11,7 @@ import com.main.game.gamePane.GamePaneWrapper;
 import com.main.model.GameLevelType;
 import com.main.model.GameScreenType;
 import com.main.model.UpdateDataTypeType;
-import io.reactivex.functions.Action;
+//import io.reactivex.functions.Action;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -97,12 +97,13 @@ public class GameScreenController extends
             setPlayerName(getDataController().getPlayerName());
             setGameMoney(getDataController().getGameMoney());
             this.initGamePaneSetting();
-            this.gameFlowController.getGameUpdateDataSubject().subscribe(data -> onGameUpdateData(data));
+            this.gameFlowController.getGameUpdateDataSubject().
+                    subscribe(data -> onGameUpdateData(data));
         }
     }
 
     public void onGameUpdateData(UpdateData data) {
-        if (data.type == UpdateDataTypeType.END_GAME) {
+        if (data.getType() == UpdateDataTypeType.END_GAME) {
             goToGameOverScreen();
         }
     }

@@ -2,8 +2,8 @@ package com.main.game.entity;
 
 import com.main.config.Config;
 import javafx.scene.control.Label;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+//import javafx.scene.paint.Color;
+//import javafx.scene.shape.Rectangle;
 
 public class EntityWithHealth extends EntityWithBackground {
 
@@ -35,9 +35,9 @@ public class EntityWithHealth extends EntityWithBackground {
         hpBar.setTranslateY(-hpBarTranslateY);
 
         this.hpText = new Label(currHP + " / " + maxHP);
-//        int hpTextTranslateY = hpBarTranslateY + 15;
-//        this.hpText.setTranslateY(-hpTextTranslateY);
-//        this.getChildren().addAll(getEntity(), hpBar, hpText);
+        //        int hpTextTranslateY = hpBarTranslateY + 15;
+        //        this.hpText.setTranslateY(-hpTextTranslateY);
+        //        this.getChildren().addAll(getEntity(), hpBar, hpText);
         this.getChildren().addAll(getEntity(), hpBar);
     }
 

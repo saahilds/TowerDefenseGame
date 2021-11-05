@@ -17,9 +17,9 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
+//import java.util.LinkedList;
 import java.util.Stack;
-import java.util.concurrent.Flow;
+//import java.util.concurrent.Flow;
 
 
 public class GamePaneWrapper {
@@ -91,8 +91,24 @@ public class GamePaneWrapper {
         return maxYidx;
     }
 
-    public GameFlowController gameFlowController;
-    public ConnectableObservable<Long> intervalHotObservable;
+    private GameFlowController gameFlowController;
+    private ConnectableObservable<Long> intervalHotObservable;
+
+    public ConnectableObservable<Long> getIntervalHotObservable() {
+        return intervalHotObservable;
+    }
+
+    public void setIntervalHotObservable(ConnectableObservable<Long> intervalHotObservable) {
+        this.intervalHotObservable = intervalHotObservable;
+    }
+
+    public GameFlowController getGameFlowController() {
+        return gameFlowController;
+    }
+
+    public void setGameFlowController(GameFlowController gameFlowController) {
+        this.gameFlowController = gameFlowController;
+    }
 
     public GamePaneWrapper(
             Pane pane, int width, int height,
@@ -169,12 +185,7 @@ public class GamePaneWrapper {
         return prevNode;
     }
 
-    /**
-     * Add Entity that moves along the input path
-     *
-     * @param enemyEntity
-     * @param pathPositionArray
-     */
+    //add entity that moves
     public void addEnemyEntityWithDesginatedPath(
             EnemyEntity enemyEntity,
             ArrayList<IndexPosition> pathPositionArray
@@ -225,10 +236,44 @@ public class GamePaneWrapper {
      * class that controls the transition of the entity
      */
     public class EntityTransitionController {
-        public int clock = -1;
-        Entity entity;
-        Stack<IndexPosition> pathIndexDeltaStack;
-        Pane pane;
+        private int clock = -1;
+
+        public int getClock() {
+            return clock;
+        }
+
+        public void setClock(int clock) {
+            this.clock = clock;
+        }
+
+        private Entity entity;
+        private Stack<IndexPosition> pathIndexDeltaStack;
+
+        public Entity getEntity() {
+            return entity;
+        }
+
+        public void setEntity(Entity entity) {
+            this.entity = entity;
+        }
+
+        public Stack<IndexPosition> getPathIndexDeltaStack() {
+            return pathIndexDeltaStack;
+        }
+
+        public void setPathIndexDeltaStack(Stack<IndexPosition> pathIndexDeltaStack) {
+            this.pathIndexDeltaStack = pathIndexDeltaStack;
+        }
+
+        public Pane getPane() {
+            return pane;
+        }
+
+        public void setPane(Pane pane) {
+            this.pane = pane;
+        }
+
+        private Pane pane;
 
         public EntityTransitionController(
                 Entity entity,

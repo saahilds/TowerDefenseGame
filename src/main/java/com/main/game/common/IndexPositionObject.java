@@ -1,7 +1,7 @@
 package com.main.game.common;
 
 import com.main.game.entity.Entity;
-import javafx.scene.Node;
+//import javafx.scene.Node;
 
 public class IndexPositionObject extends IndexPosition {
     private Entity node;

@@ -1,6 +1,6 @@
 package com.main.test;
 
-import com.main.config.Config;
+//import com.main.config.Config;
 import com.main.game.DataController;
 import com.main.game.GameDataController;
 import com.main.game.data.GameSettingDataMap;
@@ -9,7 +9,7 @@ import com.main.game.entity.tower.TowerEntity;
 import com.main.game.gamePane.GamePaneWrapper;
 import com.main.model.GameLevelType;
 import javafx.scene.Node;
-import javafx.scene.Scene;
+//import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.junit.Test;
@@ -30,21 +30,21 @@ public class GameDataControllerTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws Exception {
-//        pane = new Pane();
-//        gamePaneWrapper = new GamePaneWrapper(
-//                pane, Config.STAGE_WIDTH - Config.LEFT_TOOLBAR_WIDTH,
-//                Config.STAGE_HEIGHT - Config.GNB_TOP_HEIGHT,
-//                Config.UNIT, Config.UNIT
-//        );
-//        gameDataController = new GameDataController(
-//                gamePaneWrapper,
-//                dataController,
-//                GameLevelType.EASY
-//        );
-//        dataController = new DataController();
-//        mainstage = stage;
-//        Scene scene = new Scene(pane, Config.STAGE_WIDTH, Config.STAGE_HEIGHT);
-//        stage.setScene(scene);
+        //        pane = new Pane();
+        //        gamePaneWrapper = new GamePaneWrapper(
+        //                pane, Config.STAGE_WIDTH - Config.LEFT_TOOLBAR_WIDTH,
+        //                Config.STAGE_HEIGHT - Config.GNB_TOP_HEIGHT,
+        //                Config.UNIT, Config.UNIT
+        //        );
+        //        gameDataController = new GameDataController(
+        //                gamePaneWrapper,
+        //                dataController,
+        //                GameLevelType.EASY
+        //        );
+        //        dataController = new DataController();
+        //        mainstage = stage;
+        //        Scene scene = new Scene(pane, Config.STAGE_WIDTH, Config.STAGE_HEIGHT);
+        //        stage.setScene(scene);
         stage.show();
         stage.toFront();
     }

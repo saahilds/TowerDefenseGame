@@ -2,7 +2,7 @@ package com.main.game.entity;
 
 import com.main.config.Config;
 import javafx.scene.image.Image;
-import javafx.scene.layout.StackPane;
+//import javafx.scene.layout.StackPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 

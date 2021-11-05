@@ -1,18 +1,15 @@
 package com.main;
 
 import com.main.config.Config;
-//import com.main.game.DataController;
 import com.main.game.GameDataController;
 import com.main.game.GameFlowController;
 import com.main.game.common.UpdateData;
 import com.main.game.components.gameScreen.GameFlowControllerComponent;
 import com.main.game.components.gameScreen.TowerMenuComponent;
-import com.main.game.data.GameSettingDataMap;
 import com.main.game.gamePane.GamePaneWrapper;
 import com.main.model.GameLevelType;
 import com.main.model.GameScreenType;
 import com.main.model.UpdateDataTypeType;
-import io.reactivex.functions.Action;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -99,22 +96,21 @@ public class GameScreenController extends
             setPlayerName(getDataController().getPlayerName());
             setGameMoney(getDataController().getGameMoney());
             this.initGamePaneSetting();
-            this.gameFlowController.getGameUpdateDataSubject().subscribe(data -> onGameUpdateData(data));
+            this.gameFlowController.getGameUpdateDataSubject().
+                    subscribe(data -> onGameUpdateData(data));
         }
     }
 
     private void reset() {
-//        screensController = null;
-//        gamePaneWrapper = null;
-//        gameDataController = null;
-//        towerMenu = null;
-//        gameFlowControllerComponent = null;
-//        gameFlowController = null;
-//        gameMoneyObserber = null;
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+            }
+        });
     }
 
     public void onGameUpdateData(UpdateData data) {
-        if (data.type == UpdateDataTypeType.END_GAME) {
+        if (data.getType() == UpdateDataTypeType.END_GAME) {
             goToGameOverScreen();
         }
     }
@@ -131,28 +127,34 @@ public class GameScreenController extends
         Platform.runLater(new Runnable() {
             @Override public void run() {
                 screensController.setScreen(GameScreenType.WELCOME_SCREEN);
+                reset();
             }
         });
     }
 
     @FXML
     private void goToInitialScreen(ActionEvent event) {
-//        gameFlowController.getGameUpdateDataSubject().onNext(
-//                new UpdateData(UpdateDataTypeType.RESET, 0)
-//        );
+        gameFlowController.getGameUpdateDataSubject().onNext(
+                new UpdateData(UpdateDataTypeType.RESET, 0)
+        );
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 screensController.setScreen(GameScreenType.CONFIG_SCREEN);
+                reset();
             }
         });
     }
 
     private void goToGameOverScreen() {
+        gameFlowController.getGameUpdateDataSubject().onNext(
+                new UpdateData(UpdateDataTypeType.RESET, 0)
+        );
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 screensController.setScreen(GameScreenType.GAME_OVER_SCREEN);
+                reset();
             }
         });
     }

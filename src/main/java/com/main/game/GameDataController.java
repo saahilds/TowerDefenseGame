@@ -283,9 +283,13 @@ public class GameDataController {
                     return;
                 }
             }
+            for (TowerEntity el: temporaryTowerEntityArray) {
+                gamePaneWrapper.getPane().getChildren().remove(el);
+            }
             cursorTowerEntity = new TowerEntity(selectedTower, TowerEntityStatusType.STAGED);
             cursorTowerEntity.setId("cursorTowerEntity");
             gamePaneWrapper.addNodeWithIndexPosition(currPos, cursorTowerEntity);
+            temporaryTowerEntityArray.add(cursorTowerEntity);
         }
     }
 }

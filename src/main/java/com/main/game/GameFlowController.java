@@ -2,6 +2,7 @@ package com.main.game;
 
 import com.main.config.Config;
 import com.main.game.common.UpdateData;
+import com.main.model.UpdateDataTypeType;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observables.ConnectableObservable;
@@ -45,5 +46,14 @@ public class GameFlowController {
                 .publish();
         intervalObservable$.connect();
         gameUpdateDataSubject = BehaviorSubject.create();
+        gameUpdateDataSubject.subscribe(data -> onGameUpdateDate(data));
+    }
+
+    private void onGameUpdateDate(UpdateData data) {
+        if (data.type == UpdateDataTypeType.END_GAME || data.type == UpdateDataTypeType.RESET) {
+            intervalObservable$ = null;
+            gameUpdateDataSubject = null;
+            clockStarted = false;
+        }
     }
 }

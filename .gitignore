@@ -29,4 +29,8 @@ hs_err_pid*
 /_MACOS
 desktop.ini
 .DS_Store
+/.DS_Store/
 *.iml
+/bin/
+/target/
+/.idea/

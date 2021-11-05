@@ -1,6 +1,7 @@
 package com.main.test;
 
 import com.main.MainApplication;
+import com.main.ScreensController;
 import com.main.game.DataController;
 import com.main.game.GameDataController;
 import com.main.game.GameFlowController;
@@ -11,6 +12,7 @@ import com.main.game.gamePane.GamePaneWrapper;
 import com.main.model.GameScreenType;
 //import com.main.game.entity.EntityWithHealth;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -71,5 +73,23 @@ public class EnemyTest extends ApplicationTest {
         assertTrue(gFC.getIsGameStarted());
 
     }
+    
+    @Test
+    public void testClockStart() {
+        GameFlowController gameFlowController = new GameFlowController();
+        assertFalse(gameFlowController.isClockStarted());
+        gameFlowController.setClockStarted(true);
+        assertTrue(gameFlowController.isClockStarted());
+    }
+    
+    @Test
+    public void testGameOverScreen() {
+        ScreensController screensController = new ScreensController();
+        Node screen = new Node() {
+        };
+        screensController.addScreen(GameScreenType.GAME_OVER_SCREEN, screen);
+        screensController.setScreen(GameScreenType.GAME_OVER_SCREEN);
 
+        assertNotNull(screensController.getScreen(GameScreenType.GAME_OVER_SCREEN));
+    }
 }

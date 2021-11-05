@@ -1,6 +1,7 @@
 package com.main.test;
 
 import com.main.MainApplication;
+import com.main.ScreensController;
 import com.main.game.DataController;
 import com.main.game.GameDataController;
 import com.main.game.GameFlowController;
@@ -11,6 +12,7 @@ import com.main.game.gamePane.GamePaneWrapper;
 import com.main.model.GameScreenType;
 //import com.main.game.entity.EntityWithHealth;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -86,6 +88,4 @@ public class EnemyTest extends ApplicationTest {
 
         assertNotNull(screensController.getScreen(GameScreenType.GAME_OVER_SCREEN));
     }
-
-
 }

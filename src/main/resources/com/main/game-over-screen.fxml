@@ -60,10 +60,10 @@
                 </SplitPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="133.0" prefWidth="1022.0">
                     <children>
-                        <Button layoutX="466.0" layoutY="93.0" mnemonicParsing="false" onAction="#goToMainScreen" text="Restart Game" />
+                        <Button fx:id="restartGame" layoutX="466.0" layoutY="93.0" mnemonicParsing="false" onAction="#goToMainScreen" text="Restart Game" />
                     </children>
                 </AnchorPane>
-                  <Button mnemonicParsing="false" onAction="#exitGame" text="Exit Game" />
+                  <Button fx:id="exitGame" mnemonicParsing="false" onAction="#exitGame" text="Exit Game" />
 
             </children>
         </VBox>

@@ -1,16 +1,18 @@
 package com.game;
 
 import com.main.config.Config;
+import com.game.components.gameScene.TowerMenuComponent;
+import com.main.model.GameLevelType;
 import javafx.animation.AnimationTimer;
-import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -38,7 +40,9 @@ public class GameSceneWrapper {
     private ArrayList<Tower> towers = new ArrayList();
     private ArrayList<Enemy> enemies = new ArrayList();
 
-    private boolean isStopped = false;
+    private TowerMenuComponent towerMenuComponent;
+
+    private boolean isStopped = false, showMemu = false;
 
     public GameSceneWrapper(
             Stage stage,
@@ -48,8 +52,9 @@ public class GameSceneWrapper {
         this.stage = stage;
         this.root = root;
         this.scene = scene;
+        this.towerMenuComponent = new TowerMenuComponent(GameLevelType.EASY);
 
-        root.getChildren().addAll(player);
+        root.getChildren().addAll(towerMenuComponent, player);;
 
         controls();
         loop();
@@ -75,6 +80,14 @@ public class GameSceneWrapper {
                     break;
                 case DOWN:
                     goDown = true;
+                    break;
+                case M:
+                    showMemu = !showMemu;
+                    if (showMemu) {
+                        this.towerMenuComponent.setVisible(true);
+                    } else {
+                        this.towerMenuComponent.setVisible(false);
+                    }
                     break;
                 case SPACE:
                     if (!isShooting) {
@@ -141,19 +154,23 @@ public class GameSceneWrapper {
 
     }
 
+    private ImagePattern imgPattern = new ImagePattern(
+            new Image(getClass().getResourceAsStream("/com/main/skeleton_01.png"))
+    );
+
     private void spawnEnemy() {
 
         double spawnPosition = Math.random();
 
         int eWidth = 40;
         int eHeight = 40;
-//        double ex = (int) ((Config.STAGE_WIDTH - eWidth) * spawnPosition);
-//        int ey = (int) (root.getLayoutY());
         double ex = (int) (root.getLayoutX());
         int ey = (int) ((100 - eHeight) * spawnPosition);
 
         if (counter % spawnTime == 0) {
-            enemy = new Enemy(new Rectangle(eWidth, eHeight));
+            Rectangle rectangle = new Rectangle(eWidth, eHeight);
+            rectangle.setFill(imgPattern);
+            enemy = new Enemy(rectangle);
             enemy.getStackPane().relocate(ex, ey);
             enemies.add(enemy);
             root.getChildren().add(enemy.getStackPane());
@@ -164,7 +181,6 @@ public class GameSceneWrapper {
     public void moveEnemy(int delta) {
         for (Enemy enemy : enemies) {
             StackPane enetity = enemy.getStackPane();
-//            enetity.setTranslateY(enetity.getTranslateY() + delta);
             enetity.setTranslateX(enetity.getTranslateX() + delta);
         }
 

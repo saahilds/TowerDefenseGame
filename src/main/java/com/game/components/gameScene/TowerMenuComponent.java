@@ -14,29 +14,8 @@ import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 
-public class TowerMenuComponent {
-    private VBox towerMenuEl;
-
-    public VBox getTowerMenuEl() {
-        return towerMenuEl;
-    }
-
-    public void setTowerMenuEl(VBox towerMenuEl) {
-        this.towerMenuEl = towerMenuEl;
-    }
-
-    public GameDataController getGameDataController() {
-        return gameDataController;
-    }
-
-    public void setGameDataController(GameDataController gameDataController) {
-        this.gameDataController = gameDataController;
-    }
-
-    private GameDataController gameDataController;
-
+public class TowerMenuComponent extends VBox{
     private TowerData selectedTowerData;
-
     private ArrayList<TowerData> towerDataItemList;
 
     public TowerMenuComponent(GameLevelType gameLevel) {
@@ -82,18 +61,11 @@ public class TowerMenuComponent {
         towerDataItemList.add(pencilBuilding);
         towerDataItemList.add(catapultTower);
         setSelectedTowerData(catapultTower);
-    }
-
-    public TowerMenuComponent(VBox towerMenuEl, GameLevelType gameLevel) {
-        this(gameLevel);
-        this.towerMenuEl = towerMenuEl;
         initMenuItemList();
     }
 
+
     private void initMenuItemList() {
-        if (towerMenuEl == null) {
-            return;
-        }
         for (TowerData item: towerDataItemList) {
             SplitMenuButton splitMenuButton = new SplitMenuButton();
             splitMenuButton.setText(item.getName());
@@ -109,7 +81,7 @@ public class TowerMenuComponent {
                 }
             });
             splitMenuButton.getItems().addAll(name, cost, health, description, purchase);
-            towerMenuEl.getChildren().add(splitMenuButton);
+            this.getChildren().add(splitMenuButton);
         }
     }
 
@@ -118,19 +90,6 @@ public class TowerMenuComponent {
     }
 
     public void setSelectedTowerData(TowerData selectedTowerData) {
-        this.selectedTowerData = selectedTowerData;
-        if (gameDataController != null) {
-            stageTowerPurchase(selectedTowerData);
-        }
-    }
-
-    private void stageTowerPurchase(TowerData towerData) {
-        System.out.println(gameDataController.getDataController().getGameMoney());
-        if (gameDataController.getDataController().getGameMoney() - towerData.getCost() < 0) {
-            System.out.println("NOT ENOUGH MONEY");
-        } else {
-            gameDataController.setSelectedTower(towerData);
-        }
     }
 
     public ArrayList<TowerData> getTowerDataItemList() {

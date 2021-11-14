@@ -11,5 +11,6 @@ module com.main {
 
     opens com.main to javafx.fxml;
     exports com.main;
-    exports com.main.test;
+    exports com.test;
+    exports com.game;
 }

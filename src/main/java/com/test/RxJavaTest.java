@@ -14,6 +14,7 @@ import io.reactivex.observables.ConnectableObservable;
 import io.reactivex.observers.TestObserver;
 import io.reactivex.subjects.BehaviorSubject;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.junit.Test;
@@ -27,7 +28,7 @@ public class RxJavaTest extends ApplicationTest {
     private GamePaneWrapper gamePaneWrapper;
     private GameDataController gameDataController;
     private DataController dataController;
-    private Pane pane;
+    private AnchorPane pane;
     private GameFlowController gameFlowController;
 
     private Stage mainstage;
@@ -35,7 +36,7 @@ public class RxJavaTest extends ApplicationTest {
     @Override
     public void start(Stage stage) throws Exception {
         gameFlowController = new GameFlowController();
-        pane = new Pane();
+        pane = new AnchorPane();
         gamePaneWrapper = new GamePaneWrapper(
                 pane, Config.STAGE_WIDTH - Config.LEFT_TOOLBAR_WIDTH,
                 Config.STAGE_HEIGHT - Config.GNB_TOP_HEIGHT,

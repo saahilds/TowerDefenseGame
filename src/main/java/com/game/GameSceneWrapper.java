@@ -145,40 +145,33 @@ public class GameSceneWrapper {
 
         double spawnPosition = Math.random();
 
-        int eWidth = 20;
+        int eWidth = 40;
         int eHeight = 40;
-        double ex = (int) ((Config.STAGE_WIDTH - eWidth) * spawnPosition);
-        int ey = (int) (root.getLayoutY());
+//        double ex = (int) ((Config.STAGE_WIDTH - eWidth) * spawnPosition);
+//        int ey = (int) (root.getLayoutY());
+        double ex = (int) (root.getLayoutX());
+        int ey = (int) ((100 - eHeight) * spawnPosition);
 
         if (counter % spawnTime == 0) {
             enemy = new Enemy(new Rectangle(eWidth, eHeight));
-//            enemy.get().relocate(ex, ey);
             enemy.getStackPane().relocate(ex, ey);
             enemies.add(enemy);
-//            root.getChildren().add(enemy.get());
             root.getChildren().add(enemy.getStackPane());
         }
 
     }
 
     public void moveEnemy(int delta) {
-
-//        for (int i = 0; i < enemies.size(); ++i) {
-//            enemies.get(i).get().setY(enemies.get(i).get().getY() + delta);
-//        }
-        for (Enemy enemy: enemies) {
-//            Shape entityT = enemy.getStackPane();
-//            Rectangle entity = (Rectangle) entityT;
-//            entity.setY(entity.getY() + delta);
+        for (Enemy enemy : enemies) {
             StackPane enetity = enemy.getStackPane();
-//            enetity.setLayoutY(enetity.getLayoutY() - delta);
-            enetity.setTranslateY(enetity.getTranslateY() + delta);
+//            enetity.setTranslateY(enetity.getTranslateY() + delta);
+            enetity.setTranslateX(enetity.getTranslateX() + delta);
         }
 
         Iterator<Enemy> iterator = enemies.iterator();
         while (iterator.hasNext()) {
             enemy = iterator.next();
-            if (enemy.get().getLayoutY() < root.getLayoutY()) {
+            if (enemy.get().getLayoutX() < root.getLayoutX()) {
                 iterator.remove();
                 root.getChildren().remove(enemy.get());
             }
@@ -224,7 +217,7 @@ public class GameSceneWrapper {
                 shoot();
                 counter++;
                 spawnEnemy();
-                moveEnemy(4);
+                moveEnemy(1);
                 triggerTowerShot();
                 checkHit();
             }
@@ -246,7 +239,6 @@ public class GameSceneWrapper {
             for (Tower tower : towers) {
                 Projectile towerProj = tower.getProjectile();
                 projectiles.add(towerProj);
-//                System.out.println(tower.get().getLayoutX() + " , " + tower.get().getLayoutY());
                 towerProj.get().relocate(tower.get().getLayoutX(), tower.get().getLayoutY());
                 root.getChildren().add(towerProj.get());
             }
@@ -308,7 +300,8 @@ public class GameSceneWrapper {
             c.setLayoutX(c.getLayoutX() + offsetX);
             c.setLayoutY(c.getLayoutY() + offsetY);
             orgSceneX = t.getSceneX();
-            orgSceneY = t.getSceneY();;
+            orgSceneY = t.getSceneY();
+            ;
         });
 
         Tower tower = new Tower(rectangle);

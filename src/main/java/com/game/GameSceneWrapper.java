@@ -413,6 +413,8 @@ public class GameSceneWrapper extends MainApplication {
     }
 
     private void onEnter() {
+        boolean isIntersect = false;
+        boolean isOnPath = false;
         Rectangle rectangle = new Rectangle(10, 10, Color.ORANGERED);
         rectangle.setCursor(Cursor.HAND);
         rectangle.setOnMousePressed((t) -> {
@@ -422,6 +424,14 @@ public class GameSceneWrapper extends MainApplication {
             c.toFront();
         });
         rectangle.setOnMouseDragged((t) -> {
+            if (t.getSceneY() < 100) {
+//                isOnPath = true;
+                modalToast(root, "Cannot place the tower on the path");
+                return;
+            } else {
+//                isOnPath = false;
+
+            }
             double offsetX = t.getSceneX() - orgSceneX;
             double offsetY = t.getSceneY() - orgSceneY;
             Rectangle c = (Rectangle) (t.getSource());
@@ -429,13 +439,12 @@ public class GameSceneWrapper extends MainApplication {
             c.setLayoutY(c.getLayoutY() + offsetY);
             orgSceneX = t.getSceneX();
             orgSceneY = t.getSceneY();
-            ;
+            System.out.println(t.getSceneY());
         });
 
         Tower tower = new Tower(rectangle);
         root.getChildren().add(tower.get());
         tower.get().relocate(x, y);
-        boolean isIntersect = false;
         for (Tower wrapper : towers) {
             if (checkIntersects(tower.get(), wrapper.get())) {
                 isIntersect = true;
@@ -443,7 +452,7 @@ public class GameSceneWrapper extends MainApplication {
             }
         }
 
-        if (isIntersect) {
+        if (isIntersect || isOnPath) {
             root.getChildren().remove(tower.get());
             modalToast(root, "cannot place the tower");
         } else {

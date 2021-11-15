@@ -29,7 +29,7 @@ import java.util.Iterator;
 
 public class GameSceneWrapper extends MainApplication {
 
-    private int dx, dy, x = 150, y = 470, projectileSpeed = 10;
+    private int dx, dy, x = 150, y = 470, projectileSpeed = 10, gameMoneyIncrementSpeed = 50;
     private int counter = 0, enemySpeed = 4;
     private boolean goLeft, goRight, goUp, goDown, isShooting;
     private int spawnTime = 180;
@@ -52,6 +52,31 @@ public class GameSceneWrapper extends MainApplication {
     private boolean isStopped = false, showMemu = false;
 
     StackPane startStackPane;
+
+    private int monumentHealth;
+
+    public int getMonumentHealth() {
+        return monumentHealth;
+    }
+
+    public void setMonumentHealth(int monumentHealth) {
+        this.monumentHealth = monumentHealth;
+        monumentHealthText.setText("Health: " + monumentHealth);
+    }
+
+    private int gameMoney = GameSettingDataMap.getStartingMoney(GameLevelType.EASY);
+
+    public int getGameMoney() {
+        return gameMoney;
+    }
+
+    public void setGameMoney(int gameMoney) {
+        this.gameMoney = gameMoney;
+        gameMoneyText.setText("$: " + gameMoney);
+    }
+
+
+    double orgSceneX, orgSceneY;
 
 
     private ImagePattern imgPattern = new ImagePattern(
@@ -310,10 +335,17 @@ public class GameSceneWrapper extends MainApplication {
                 spawnEnemy();
                 moveEnemy(enemySpeed);
                 triggerTowerShot();
+                handleGameMoney();
                 checkHit();
             }
         };
         timer.start();
+    }
+
+    private void handleGameMoney() {
+        if (counter % gameMoneyIncrementSpeed == 0) {
+            setGameMoney(getGameMoney() + 50);
+        }
     }
 
     private boolean isAvailableToMove() {
@@ -370,26 +402,15 @@ public class GameSceneWrapper extends MainApplication {
                 System.out.println(hpf);
                 root.getChildren().remove(e.getStackPane());
                 enemyIterator.remove();
-                if (hpf <= 90) {
+                if (hpf <= 0) {
                     handleGameOver();
+                } else {
+                    modalToast(root, "Damage " + e.getDamage());
                 }
                 setMonumentHealth(hpf);
             }
         }
     }
-
-    public int getMonumentHealth() {
-        return monumentHealth;
-    }
-
-    public void setMonumentHealth(int monumentHealth) {
-        this.monumentHealth = monumentHealth;
-        monumentHealthText.setText("Health: " + monumentHealth);
-    }
-
-    private int monumentHealth;
-
-    double orgSceneX, orgSceneY;
 
     private void onEnter() {
         Rectangle rectangle = new Rectangle(10, 10, Color.ORANGERED);
@@ -421,11 +442,18 @@ public class GameSceneWrapper extends MainApplication {
                 break;
             }
         }
+
         if (isIntersect) {
             root.getChildren().remove(tower.get());
-            tower = null;
+            modalToast(root, "cannot place the tower");
         } else {
-            towers.add(tower);
+            if (getGameMoney() - tower.getPrice() < 0) {
+                root.getChildren().remove(tower.get());
+                modalToast(root, "not enough money");
+            } else {
+                towers.add(tower);
+                setGameMoney(getGameMoney() - tower.getPrice());
+            }
         }
     }
 

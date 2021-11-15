@@ -52,4 +52,8 @@ public class Tower {
     public int getDamage() {
         return 50;
     }
+
+    public int getPrice() {
+        return 500;
+    }
 }

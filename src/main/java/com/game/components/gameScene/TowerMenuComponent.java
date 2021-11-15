@@ -7,14 +7,16 @@ import com.main.game.entity.tower.TowerData;
 import com.main.model.GameLevelType;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
 //import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 
-public class TowerMenuComponent extends VBox{
+public class TowerMenuComponent extends StackPane {
     private TowerData selectedTowerData;
     private ArrayList<TowerData> towerDataItemList;
 
@@ -67,6 +69,9 @@ public class TowerMenuComponent extends VBox{
 
     private void initMenuItemList() {
         for (TowerData item: towerDataItemList) {
+            Group group = new Group();
+
+
             SplitMenuButton splitMenuButton = new SplitMenuButton();
             splitMenuButton.setText(item.getName());
             MenuItem name = new MenuItem(item.getName());

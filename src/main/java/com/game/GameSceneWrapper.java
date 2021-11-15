@@ -4,18 +4,24 @@ import com.main.config.Config;
 import com.game.components.gameScene.TowerMenuComponent;
 import com.main.model.GameLevelType;
 import javafx.animation.AnimationTimer;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.geometry.Side;
 import javafx.scene.Cursor;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -41,8 +47,21 @@ public class GameSceneWrapper {
     private ArrayList<Enemy> enemies = new ArrayList();
 
     private TowerMenuComponent towerMenuComponent;
+    private Monument monument;
 
     private boolean isStopped = false, showMemu = false;
+
+    StackPane startStackPane;
+
+
+    private ImagePattern imgPattern = new ImagePattern(
+            new Image(getClass().getResourceAsStream("/com/game/bird1.gif"))
+    );
+
+    private ImagePattern moonImgPattern = new ImagePattern(
+            new Image(getClass().getResourceAsStream("/com/game/moon.png"))
+    );
+
 
     public GameSceneWrapper(
             Stage stage,
@@ -52,13 +71,73 @@ public class GameSceneWrapper {
         this.stage = stage;
         this.root = root;
         this.scene = scene;
-        this.towerMenuComponent = new TowerMenuComponent(GameLevelType.EASY);
 
-        root.getChildren().addAll(towerMenuComponent, player);;
+        startStackPane = new StackPane();
+        Text startIntroText = new Text(
+                "SPACE: shoot\n"
+                        + "ENTER: place tower\n"
+                        + "ESC: STOP GAME\n"
+        );
+        startIntroText.setFont(Font.font("Verdana", 20));
+        startIntroText.setFill(Color.GHOSTWHITE);
+        Button startButton = new Button("Start Game");
+        startButton.setOnMouseClicked(event -> {
+            initGame();
+        });
+        startButton.getStyleClass().setAll("btn", "btn-default");
+        startButton.setStyle("-fx-text-fill: white; -fx-background-color: transparent;");
+        startStackPane.getChildren().addAll(
+                startIntroText,
+                startButton
+        );
+        StackPane.setAlignment(startButton, Pos.CENTER);
+        startStackPane.setBackground(
+                new Background(
+                        new BackgroundFill(Color.rgb(50, 50, 50, 0.7), CornerRadii.EMPTY, Insets.EMPTY)
+                )
+        );
+        startButton.setTranslateY(100);
+
+        System.out.println(startStackPane);
+        System.out.println(this.root);
+        this.root.getChildren().add(startStackPane);
+        this.root.setTopAnchor(startStackPane, 0.0);
+        this.root.setLeftAnchor(startStackPane, 0.0);
+        this.root.setBottomAnchor(startStackPane, 0.0);
+        this.root.setRightAnchor(startStackPane, 0.0);
+    }
+
+
+    private void initGame() {
+        root.getChildren().remove(startStackPane);
+
+        Rectangle monumentRect = new Rectangle(60, 60);
+        monumentRect.setFill(moonImgPattern);
+        monument = new Monument(monumentRect);
+        monument.get().relocate(Config.STAGE_WIDTH - 120, 40);
+        root.getChildren().addAll(player, monument.get());
+
+        root.getChildren().add(gameStatusStackPane);
+        root.setBottomAnchor(gameStatusStackPane, 18.0);
+        root.setRightAnchor(gameStatusStackPane, 18.0);
+
+        gameMoneyText.setFill(Color.GHOSTWHITE);
+        gameMoneyText.setFont(Font.font(20));
+        monumentHealthText.setFill(Color.GHOSTWHITE);
+        monumentHealthText.setFont(Font.font(20));
+        gameStatusStackPane.getChildren().addAll(
+                gameMoneyText,
+                monumentHealthText
+        );
+        gameMoneyText.setTranslateY(-28);
 
         controls();
         loop();
     }
+
+    public StackPane gameStatusStackPane = new StackPane();
+    public Text gameMoneyText = new Text("$: ");
+    public Text monumentHealthText = new Text("Health: ");
 
     private boolean checkIntersects(Node a, Node b) {
         return a.getBoundsInParent().intersects(b.getBoundsInParent());
@@ -154,10 +233,6 @@ public class GameSceneWrapper {
 
     }
 
-    private ImagePattern imgPattern = new ImagePattern(
-            new Image(getClass().getResourceAsStream("/com/main/skeleton_01.png"))
-    );
-
     private void spawnEnemy() {
 
         double spawnPosition = Math.random();
@@ -233,7 +308,7 @@ public class GameSceneWrapper {
                 shoot();
                 counter++;
                 spawnEnemy();
-                moveEnemy(1);
+                moveEnemy(enemySpeed);
                 triggerTowerShot();
                 checkHit();
             }
@@ -263,40 +338,56 @@ public class GameSceneWrapper {
 
     private void checkHit() {
         Iterator<Projectile> projectileIterator = projectiles.iterator();
+        Iterator<Enemy> enemyIterator = enemies.iterator();
         Projectile p;
         Enemy e;
+        // enemy hit
         while (projectileIterator.hasNext()) {
             p = projectileIterator.next();
-            Iterator<Enemy> iterator = enemies.iterator();
+            enemyIterator = enemies.iterator();
 
-            while (iterator.hasNext()) {
-                e = iterator.next();
+            while (enemyIterator.hasNext()) {
+                e = enemyIterator.next();
                 if (checkIntersects(p.get(), e.getStackPane())) {
                     int hpf = e.applyDamage(p.getDamage());
                     root.getChildren().remove(p.get());
                     if (hpf <= 0) {
                         root.getChildren().remove(e.getStackPane());
-                        iterator.remove();
+                        enemyIterator.remove();
                     }
                     projectileIterator.remove();
                     return;
                 }
             }
         }
-//        for (Projectile wrapper : projectiles) {
-//            Shape p = wrapper.get();
-//
-////            for (Enemy e : enemies) {
-////                if (checkIntersects(p, e.getStackPane())) {
-////                    int hpf = e.applyDamage(wrapper.getDamage());
-////                    System.out.println(hpf);
-////                    if (hpf <= 0) {
-////                        root.getChildren().remove(e.getStackPane());
-////                    }
-////                }
-////            }
-//        }
+
+        // monumnet hit
+        enemyIterator = enemies.iterator();
+        while (enemyIterator.hasNext()) {
+            e = enemyIterator.next();
+            if (checkIntersects(monument.get(), e.getStackPane())) {
+                int hpf = monument.applyDamage(e.getDamage());
+                System.out.println(hpf);
+                root.getChildren().remove(e.getStackPane());
+                enemyIterator.remove();
+                if (hpf <= 90) {
+                    handleGameOver();
+                }
+                setMonumentHealth(hpf);
+            }
+        }
     }
+
+    public int getMonumentHealth() {
+        return monumentHealth;
+    }
+
+    public void setMonumentHealth(int monumentHealth) {
+        this.monumentHealth = monumentHealth;
+        monumentHealthText.setText("Health: " + monumentHealth);
+    }
+
+    private int monumentHealth;
 
     double orgSceneX, orgSceneY;
 
@@ -336,5 +427,44 @@ public class GameSceneWrapper {
         } else {
             towers.add(tower);
         }
+    }
+
+    public void handleGameOver() {
+        isStopped = true;
+
+        StackPane gameOverStackPane = new StackPane();
+        gameOverStackPane.setBackground(
+                new Background(
+                        new BackgroundFill(Color.rgb(50, 50, 50, 0.7), CornerRadii.EMPTY, Insets.EMPTY)
+                )
+        );
+        Text gameOverText = new Text(
+                "Game Over\n"
+        );
+        gameOverText.setFont(Font.font("Verdana", 20));
+        gameOverText.setFill(Color.GHOSTWHITE);
+        gameOverText.setTranslateY(-30);
+
+        Button exitButton = new Button("Exit");
+        exitButton.setOnMouseClicked(mouseEvent -> {
+            System.exit(0);
+        });
+        exitButton.getStyleClass().setAll("btn", "btn-default");
+        exitButton.setStyle("-fx-text-fill: white; -fx-background-color: transparent;");
+
+        Button newGameButton = new Button("New Game");
+        newGameButton.getStyleClass().setAll("btn", "btn-default");
+        newGameButton.setStyle("-fx-text-fill: white; -fx-background-color: transparent;");
+        newGameButton.setTranslateY(40);
+        gameOverStackPane.getChildren().addAll(
+                gameOverText,
+                exitButton,
+                newGameButton
+        );
+        root.getChildren().add(gameOverStackPane);
+        root.setTopAnchor(gameOverStackPane, 0.0);
+        root.setLeftAnchor(gameOverStackPane, 0.0);
+        root.setBottomAnchor(gameOverStackPane, 0.0);
+        root.setRightAnchor(gameOverStackPane, 0.0);
     }
 }

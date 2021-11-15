@@ -1,15 +1,13 @@
 package com.game;
 
 import com.main.game.entity.HealthBar;
-import javafx.scene.Group;
-import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 
-public class Enemy {
+public class Monument {
     Rectangle shape;
     StackPane stackPane;
     Text text;
@@ -26,14 +24,14 @@ public class Enemy {
     private int maxHP = 100;
     private int currHP = 100;
 
-    public Enemy() {
+    public Monument() {
 
     }
 
-    public Enemy(Rectangle rectangle) {
+    public Monument(Rectangle rectangle) {
         shape = rectangle;
         text = new Text(currHP + "/" + maxHP);
-        text.setFill(Color.GRAY);
+        text.setFill(Color.RED);
         stackPane = new StackPane();
         stackPane.getChildren().addAll(shape, text);
     }
@@ -51,10 +49,6 @@ public class Enemy {
         currHP += delta;
         text.setText(currHP + "/" + maxHP);
         return currHP;
-    }
-
-    public int getDamage() {
-        return -10;
     }
 
 }

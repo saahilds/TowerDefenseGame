@@ -43,7 +43,7 @@ public class Tower {
 
     public Projectile getProjectile() {
         return new Projectile(
-                new Rectangle(5, 5, Color.ORANGERED),
+                new Rectangle(10, 10, Color.ORANGERED),
                 getDx(),
                 getDy()
         );

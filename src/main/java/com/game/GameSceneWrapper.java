@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class GameSceneWrapper {
+public class GameSceneWrapper extends MainApplication {
 
     private int dx, dy, x = 150, y = 470, projectileSpeed = 10;
     private int counter = 0, enemySpeed = 4;
@@ -456,6 +456,9 @@ public class GameSceneWrapper {
         newGameButton.getStyleClass().setAll("btn", "btn-default");
         newGameButton.setStyle("-fx-text-fill: white; -fx-background-color: transparent;");
         newGameButton.setTranslateY(40);
+        newGameButton.setOnMouseClicked(mouseEvent -> {
+            initWelcomeScene();
+        });
         gameOverStackPane.getChildren().addAll(
                 gameOverText,
                 exitButton,

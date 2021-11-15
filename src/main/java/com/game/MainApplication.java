@@ -18,39 +18,48 @@ public class MainApplication extends Application {
     private WelcomeSceneWrapper welcomeSceneWrapper;
     private GameSceneWrapper gameSceneWrapper;
 
+    BackgroundImage myBI = new BackgroundImage(
+            new Image(
+                    getClass().getResourceAsStream("/com/game/bg5.gif"),
+                    1100,
+                    1100, false, false),
+            BackgroundRepeat.NO_REPEAT,
+            BackgroundRepeat.NO_REPEAT,
+            new BackgroundPosition(Side.LEFT, 0.5D, true, Side.BOTTOM, 0.0D, true),
+            BackgroundSize.DEFAULT
+    );
+
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.root = new AnchorPane();
         this.scene = new Scene(this.root, Config.STAGE_WIDTH, Config.STAGE_HEIGHT, Color.GHOSTWHITE);
 
-        BackgroundImage myBI = new BackgroundImage(
-                new Image(
-                        getClass().getResourceAsStream("/com/game/bg5.gif"),
-                        1100,
-                        1100, false, false),
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,
-                new BackgroundPosition(Side.LEFT, 0.5D, true, Side.BOTTOM, 0.0D, true),
-                BackgroundSize.DEFAULT
-        );
-        root.setBackground(new Background(myBI));
-        root.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
         this.primaryStage.setTitle("v2");
         this.primaryStage.setResizable(false);
 
         initWelcomeScene();
 //        initGameScene();
-
+        primaryStage.setScene(scene);
         this.primaryStage.show();
     }
 
     public void initWelcomeScene() {
+        root = new AnchorPane();
+        root.setBackground(new Background(myBI));
+        root.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+
+        this.scene = new Scene(this.root, Config.STAGE_WIDTH, Config.STAGE_HEIGHT, Color.GHOSTWHITE);
         welcomeSceneWrapper = new WelcomeSceneWrapper(primaryStage, root, scene);
         primaryStage.setScene(scene);
     }
 
     public void initGameScene() {
+        root = new AnchorPane();
+        root.setBackground(new Background(myBI));
+        root.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+
+        this.scene = new Scene(this.root, Config.STAGE_WIDTH, Config.STAGE_HEIGHT, Color.GHOSTWHITE);
         gameSceneWrapper = new GameSceneWrapper(primaryStage, root, scene);
         primaryStage.setScene(scene);
     }

@@ -3,8 +3,10 @@ package com.game;
 import com.main.game.entity.HealthBar;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
@@ -23,6 +25,7 @@ public class Enemy {
     }
 
     private HealthBar hpBar;
+    private int damage = 10;
     private int maxHP = 100;
     private int currHP = 100;
 
@@ -30,7 +33,14 @@ public class Enemy {
 
     }
 
-    public Enemy(Rectangle rectangle) {
+    public Enemy(int width, int height, int level, int baseHealth, int baseDamage) {
+        int w = (int) (width * (1 + (level - 1) * 0.25));
+        int h = (int) (height * (1 + (level - 1) * 0.25));
+        damage = (int) (baseDamage * (1 + (level - 1) * 0.25));
+        maxHP = (int) (baseHealth * (1 + (level - 1) * 0.5));
+        currHP = maxHP;
+        Rectangle rectangle = new Rectangle(w, h);
+        rectangle.setFill(getImage());
         shape = rectangle;
         text = new Text(currHP + "/" + maxHP);
         text.setFill(Color.GRAY);
@@ -46,15 +56,20 @@ public class Enemy {
         return stackPane;
     }
 
+    private ImagePattern getImage() {
+        return new ImagePattern(
+                new Image(getClass().getResourceAsStream("/com/game/bird1.gif"))
+        );
+    }
+
     public int applyDamage(int delta) {
-        System.out.println(delta);
         currHP += delta;
         text.setText(currHP + "/" + maxHP);
         return currHP;
     }
 
     public int getDamage() {
-        return -10;
+        return -1 * damage;
     }
 
 }

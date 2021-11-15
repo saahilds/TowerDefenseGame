@@ -87,6 +87,7 @@ public class ConfigSceneWrapper extends MainApplication {
             levelButton.setAlignment(Pos.CENTER);
             levelButton.setOnMouseClicked(event -> {
                 modalToast(root, text + " selected");
+                setGameLevel(level);
             });
             levelButton.getStyleClass().setAll("btn", "btn-default");
             levelButton.setStyle("-fx-text-fill: white; -fx-background-color: transparent; -fx-border-color: white;");

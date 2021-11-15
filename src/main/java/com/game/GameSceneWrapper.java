@@ -2,13 +2,10 @@ package com.game;
 
 import com.main.config.Config;
 import com.game.components.gameScene.TowerMenuComponent;
-import com.main.model.GameLevelType;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.Side;
 import javafx.scene.Cursor;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -33,6 +30,7 @@ public class GameSceneWrapper extends MainApplication {
     private int counter = 0, enemySpeed = 4;
     private boolean goLeft, goRight, goUp, goDown, isShooting;
     private int spawnTime = 180;
+    private final int pathHeight = 100;
 
     private AnchorPane root;
     private Stage stage;
@@ -64,7 +62,7 @@ public class GameSceneWrapper extends MainApplication {
         monumentHealthText.setText("Health: " + monumentHealth);
     }
 
-    private int gameMoney = GameSettingDataMap.getStartingMoney(GameLevelType.EASY);
+    private int gameMoney;
 
     public int getGameMoney() {
         return gameMoney;
@@ -79,7 +77,7 @@ public class GameSceneWrapper extends MainApplication {
     double orgSceneX, orgSceneY;
 
 
-    private ImagePattern imgPattern = new ImagePattern(
+    private ImagePattern enemyImagePattern = new ImagePattern(
             new Image(getClass().getResourceAsStream("/com/game/bird1.gif"))
     );
 
@@ -96,6 +94,8 @@ public class GameSceneWrapper extends MainApplication {
         this.stage = stage;
         this.root = root;
         this.scene = scene;
+        System.out.println(getGameLevel());
+//        gameMoney = GameSettingDataMap.getStartingMoney(getGameLevel());
 
         startStackPane = new StackPane();
         Text startIntroText = new Text(
@@ -258,19 +258,23 @@ public class GameSceneWrapper extends MainApplication {
 
     }
 
+    @SuppressWarnings("checkstyle:WhitespaceAfter")
     private void spawnEnemy() {
 
         double spawnPosition = Math.random();
 
-        int eWidth = 40;
-        int eHeight = 40;
+        int eBaseWidth = 40;
+        int eBaseHeight = 40;
+        int eBaseHealth = 100;
+        int eBaseDamage = 10;
         double ex = (int) (root.getLayoutX());
-        int ey = (int) ((100 - eHeight) * spawnPosition);
+        int ey = (int) ((100 - eBaseHeight) * spawnPosition);
 
         if (counter % spawnTime == 0) {
-            Rectangle rectangle = new Rectangle(eWidth, eHeight);
-            rectangle.setFill(imgPattern);
-            enemy = new Enemy(rectangle);
+            int min = 1;
+            int max = 5;
+            int enemyLevel = min + (int) (Math.random() * ((max - min) + 1));
+            enemy = new Enemy(eBaseWidth, eBaseHeight, enemyLevel, eBaseHealth, eBaseDamage);
             enemy.getStackPane().relocate(ex, ey);
             enemies.add(enemy);
             root.getChildren().add(enemy.getStackPane());
@@ -413,8 +417,16 @@ public class GameSceneWrapper extends MainApplication {
     }
 
     private void onEnter() {
+<<<<<<< HEAD
         boolean isIntersect = false;
         boolean isOnPath = false;
+=======
+        if (y <= pathHeight) {
+            modalToast(root, "cannot place the tower");
+            return;
+        }
+
+>>>>>>> 79d9b0b542d429f9e684b4fe3e569d5f8185fa05
         Rectangle rectangle = new Rectangle(10, 10, Color.ORANGERED);
         rectangle.setCursor(Cursor.HAND);
         rectangle.setOnMousePressed((t) -> {
@@ -434,12 +446,19 @@ public class GameSceneWrapper extends MainApplication {
             }
             double offsetX = t.getSceneX() - orgSceneX;
             double offsetY = t.getSceneY() - orgSceneY;
-            Rectangle c = (Rectangle) (t.getSource());
-            c.setLayoutX(c.getLayoutX() + offsetX);
-            c.setLayoutY(c.getLayoutY() + offsetY);
+            if (orgSceneY <= pathHeight) {
+                modalToast(root, "cannot place the tower");
+            } else {
+                Rectangle c = (Rectangle) (t.getSource());
+                c.setLayoutX(c.getLayoutX() + offsetX);
+                c.setLayoutY(c.getLayoutY() + offsetY);
+            }
             orgSceneX = t.getSceneX();
             orgSceneY = t.getSceneY();
+<<<<<<< HEAD
             System.out.println(t.getSceneY());
+=======
+>>>>>>> 79d9b0b542d429f9e684b4fe3e569d5f8185fa05
         });
 
         Tower tower = new Tower(rectangle);

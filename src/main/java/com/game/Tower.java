@@ -1,5 +1,6 @@
 package com.game;
 
+import com.game.model.TowerType;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -35,6 +36,9 @@ public class Tower {
 
     public Tower(Rectangle rectangle) {
         shape = rectangle;
+    }
+
+    public Tower(TowerType type) {
     }
 
     public Shape get() {

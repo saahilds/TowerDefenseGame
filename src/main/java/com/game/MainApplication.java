@@ -27,6 +27,16 @@ public class MainApplication extends Application {
     private AnchorPane root;
     private Scene scene;
 
+    private GameLevelType gameLevel;
+
+    public GameLevelType getGameLevel() {
+        return gameLevel;
+    }
+
+    public void setGameLevel(GameLevelType gameLevel) {
+        this.gameLevel = gameLevel;
+    }
+
     public ArrayList<GameLevelType> gameLevelTypeArr = new ArrayList<GameLevelType>() {{
         add(GameLevelType.EASY);
         add(GameLevelType.NORMAL);
@@ -81,12 +91,15 @@ public class MainApplication extends Application {
     }
 
     public void initGameScene() {
+        System.out.println(getGameLevel());
         root = new AnchorPane();
         root.setBackground(new Background(myBI));
         root.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
 
         this.scene = new Scene(this.root, Config.STAGE_WIDTH, Config.STAGE_HEIGHT, Color.GHOSTWHITE);
+        System.out.println("qwer 1" + getGameLevel());
         GameSceneWrapper gameSceneWrapper = new GameSceneWrapper(primaryStage, root, scene);
+        System.out.println("qwer 2" + getGameLevel());
         primaryStage.setScene(scene);
     }
 
@@ -123,7 +136,6 @@ public class MainApplication extends Application {
                     });
                 }
             };
-
             timer.schedule(task,1000l);
         }
     }

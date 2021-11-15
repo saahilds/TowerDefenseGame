@@ -1,4 +1,4 @@
-package com.main.test;
+package com.test;
 
 import com.main.game.DataController;
 import com.main.game.data.GameSettingDataMap;

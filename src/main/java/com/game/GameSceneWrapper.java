@@ -450,11 +450,15 @@ public class GameSceneWrapper extends MainApplication {
             System.exit(0);
         });
         exitButton.getStyleClass().setAll("btn", "btn-default");
-        exitButton.setStyle("-fx-text-fill: white; -fx-background-color: transparent;");
+        exitButton.setStyle("-fx-text-fill: white; -fx-background-color: transparent; -fx-border-color: white;");
+        exitButton.setAlignment(Pos.CENTER);
+        exitButton.setMaxWidth(280);
 
         Button newGameButton = new Button("New Game");
-        newGameButton.getStyleClass().setAll("btn", "btn-default");
-        newGameButton.setStyle("-fx-text-fill: white; -fx-background-color: transparent;");
+        exitButton.getStyleClass().setAll("btn", "btn-default");
+        newGameButton.setStyle("-fx-text-fill: white; -fx-background-color: transparent; -fx-border-color: white;");
+        newGameButton.setAlignment(Pos.CENTER);
+        newGameButton.setMaxWidth(280);
         newGameButton.setTranslateY(40);
         newGameButton.setOnMouseClicked(mouseEvent -> {
             initWelcomeScene();

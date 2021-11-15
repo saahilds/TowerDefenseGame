@@ -6,44 +6,6 @@ import com.main.model.GameScreenType;
 import java.util.HashMap;
 
 public class GameSettingDataMap {
-    private static String welcomeFile = "main.fxml";
-
-    public static String getWelcomeFile() {
-        return welcomeFile;
-    }
-
-    private static String configScreenFile = "initial-screen.fxml";
-
-    public static String getConfigScreenFile() {
-        return configScreenFile;
-    }
-
-    private static String gameScreenFile = "game-screen.fxml";
-
-    public static String getGameScreenFile() {
-        return gameScreenFile;
-    }
-
-    private static String gameOverScreenFile = "game-over-screen.fxml";
-
-    public static String getGaveOverScreenFile() {
-        return gameOverScreenFile;
-    }
-
-    private static HashMap<GameScreenType, String> screenFileMap = new HashMap<>() {
-        {
-            put(GameScreenType.WELCOME_SCREEN, welcomeFile);
-            put(GameScreenType.CONFIG_SCREEN, configScreenFile);
-            put(GameScreenType.GAME_SCREEN, gameScreenFile);
-            put(GameScreenType.GAME_OVER_SCREEN, gameOverScreenFile);
-        }
-    };
-
-    public static String getFileName(GameScreenType gameScreenType) {
-        return screenFileMap.get(gameScreenType);
-    }
-
-
     private static HashMap<GameLevelType, Integer> startingMoneyMap  = new HashMap<>() {
         {
             put(GameLevelType.EASY, 1000);
@@ -55,6 +17,15 @@ public class GameSettingDataMap {
     public static Integer getStartingMoney(GameLevelType gameLevelType) {
         return startingMoneyMap.get(gameLevelType);
     }
+
+    public static HashMap<GameLevelType, String> gameLevelTextMap = new HashMap<>() {
+        {
+            put(GameLevelType.EASY, "EASY");
+            put(GameLevelType.NORMAL, "NORMAL");
+            put(GameLevelType.HARD, "HARD");
+        }
+    };
+
 
     private static HashMap<GameLevelType, Integer> startingMonumentHealthMap  = new HashMap<>() {
         {

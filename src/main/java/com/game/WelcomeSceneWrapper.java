@@ -34,18 +34,6 @@ public class WelcomeSceneWrapper extends MainApplication {
         this.root = root;
         this.scene = scene;
 
-        BackgroundImage myBI = new BackgroundImage(
-                new Image(
-                        getClass().getResourceAsStream("/com/game/bg5.gif"),
-                        1100,
-                        1100, false, false),
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,
-                new BackgroundPosition(Side.LEFT, 0.5D, true, Side.BOTTOM, 0.0D, true),
-                BackgroundSize.DEFAULT
-        );
-        root.setBackground(new Background(myBI));
-
         welcomStackPane = new StackPane();
         Text welcomeText = new Text(
                 "Welcome!"
@@ -54,7 +42,8 @@ public class WelcomeSceneWrapper extends MainApplication {
         welcomeText.setFill(Color.GHOSTWHITE);
         Button startButton = new Button("Start Game");
         startButton.setOnMouseClicked(event -> {
-            initGameScene();
+//            initGameScene();
+            initConfigScene();
         });
         startButton.getStyleClass().setAll("btn", "btn-default");
         startButton.setStyle("-fx-text-fill: white; -fx-background-color: transparent;");

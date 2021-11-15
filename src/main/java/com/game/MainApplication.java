@@ -1,22 +1,37 @@
 package com.game;
 
 import com.game.config.Config;
+import com.main.model.GameLevelType;
+import javafx.animation.FadeTransition;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.kordamp.bootstrapfx.BootstrapFX;
+
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainApplication extends Application {
     private static Stage primaryStage;
     private AnchorPane root;
     private Scene scene;
 
-    private WelcomeSceneWrapper welcomeSceneWrapper;
-    private GameSceneWrapper gameSceneWrapper;
+    public ArrayList<GameLevelType> gameLevelTypeArr = new ArrayList<GameLevelType>() {{
+        add(GameLevelType.EASY);
+        add(GameLevelType.NORMAL);
+        add(GameLevelType.HARD);
+    }};
 
     BackgroundImage myBI = new BackgroundImage(
             new Image(
@@ -40,6 +55,7 @@ public class MainApplication extends Application {
 
         initWelcomeScene();
 //        initGameScene();
+//        initConfigScene();
         primaryStage.setScene(scene);
         this.primaryStage.show();
     }
@@ -50,7 +66,17 @@ public class MainApplication extends Application {
         root.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
 
         this.scene = new Scene(this.root, Config.STAGE_WIDTH, Config.STAGE_HEIGHT, Color.GHOSTWHITE);
-        welcomeSceneWrapper = new WelcomeSceneWrapper(primaryStage, root, scene);
+        WelcomeSceneWrapper welcomeSceneWrapper = new WelcomeSceneWrapper(primaryStage, root, scene);
+        primaryStage.setScene(scene);
+    }
+
+    public void initConfigScene() {
+        root = new AnchorPane();
+        root.setBackground(new Background(myBI));
+        root.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+
+        this.scene = new Scene(this.root, Config.STAGE_WIDTH, Config.STAGE_HEIGHT, Color.GHOSTWHITE);
+        ConfigSceneWrapper configSceneWrapper = new ConfigSceneWrapper(primaryStage, root, scene);
         primaryStage.setScene(scene);
     }
 
@@ -60,8 +86,46 @@ public class MainApplication extends Application {
         root.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
 
         this.scene = new Scene(this.root, Config.STAGE_WIDTH, Config.STAGE_HEIGHT, Color.GHOSTWHITE);
-        gameSceneWrapper = new GameSceneWrapper(primaryStage, root, scene);
+        GameSceneWrapper gameSceneWrapper = new GameSceneWrapper(primaryStage, root, scene);
         primaryStage.setScene(scene);
+    }
+
+    Timer timer = new Timer();
+
+    public void modalToast(AnchorPane root, String msg) {
+        System.out.println(root);
+        if (root != null) {
+            TextFlow toast = new TextFlow();
+            Text text = new Text(msg);
+            text.setStyle("-fx-font-weight: bold; -fx-text-fill: white;");
+            text.setFill(Color.GHOSTWHITE);
+
+            toast.getChildren().add(text);
+            toast.setTextAlignment(TextAlignment.CENTER);
+            root.setTopAnchor(toast, 80.0);
+            root.setLeftAnchor(toast, 0.0);
+            root.setRightAnchor(toast, 0.0);
+            root.getChildren().add(toast);
+
+            TimerTask task = new TimerTask() {
+                public void run() {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            FadeTransition transition = new FadeTransition(Duration.millis(500), toast);
+                            transition.setFromValue(1);
+                            transition.setToValue(0);
+                            transition.setOnFinished((event) -> {
+                                root.getChildren().remove(toast);
+                            });
+                            transition.play();
+                        }
+                    });
+                }
+            };
+
+            timer.schedule(task,1000l);
+        }
     }
 
     public static void main(String[] args) {

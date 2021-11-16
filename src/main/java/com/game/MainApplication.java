@@ -27,6 +27,16 @@ public class MainApplication extends Application {
     private AnchorPane root;
     private Scene scene;
 
+    private String username;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     private GameLevelType gameLevel;
 
     public GameLevelType getGameLevel() {

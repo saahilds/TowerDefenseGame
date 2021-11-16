@@ -1,5 +1,6 @@
 package com.game;
 
+import com.game.model.GameLevelType;
 import com.main.config.Config;
 import com.game.components.gameScene.TowerMenuComponent;
 import javafx.animation.AnimationTimer;
@@ -94,7 +95,7 @@ public class GameSceneWrapper extends MainApplication {
         this.stage = stage;
         this.root = root;
         this.scene = scene;
-        System.out.println(getGameLevel());
+//        modalToast(this.root,getGameLevel().toString());
 //        gameMoney = GameSettingDataMap.getStartingMoney(getGameLevel());
 
         startStackPane = new StackPane();
@@ -417,16 +418,16 @@ public class GameSceneWrapper extends MainApplication {
     }
 
     private void onEnter() {
-<<<<<<< HEAD
+//<<<<<<< HEAD
         boolean isIntersect = false;
         boolean isOnPath = false;
-=======
+//=======
         if (y <= pathHeight) {
             modalToast(root, "cannot place the tower");
             return;
         }
 
->>>>>>> 79d9b0b542d429f9e684b4fe3e569d5f8185fa05
+//>>>>>>> 79d9b0b542d429f9e684b4fe3e569d5f8185fa05
         Rectangle rectangle = new Rectangle(10, 10, Color.ORANGERED);
         rectangle.setCursor(Cursor.HAND);
         rectangle.setOnMousePressed((t) -> {
@@ -455,10 +456,10 @@ public class GameSceneWrapper extends MainApplication {
             }
             orgSceneX = t.getSceneX();
             orgSceneY = t.getSceneY();
-<<<<<<< HEAD
+//<<<<<<< HEAD
             System.out.println(t.getSceneY());
-=======
->>>>>>> 79d9b0b542d429f9e684b4fe3e569d5f8185fa05
+//=======
+//>>>>>>> 79d9b0b542d429f9e684b4fe3e569d5f8185fa05
         });
 
         Tower tower = new Tower(rectangle);

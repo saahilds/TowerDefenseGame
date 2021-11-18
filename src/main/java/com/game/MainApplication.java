@@ -19,6 +19,7 @@ import javafx.util.Duration;
 import org.kordamp.bootstrapfx.BootstrapFX;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -47,11 +48,26 @@ public class MainApplication extends Application {
         this.gameLevel = gameLevel;
     }
 
-    public ArrayList<GameLevelType> gameLevelTypeArr = new ArrayList<GameLevelType>() {{
+    private ArrayList<GameLevelType> gameLevelTypeArr = new ArrayList<GameLevelType>() {{
         add(GameLevelType.EASY);
         add(GameLevelType.NORMAL);
         add(GameLevelType.HARD);
     }};
+
+    public ArrayList<GameLevelType> getGameLevelTypeArr() {
+        return gameLevelTypeArr;
+    }
+
+    private HashMap<GameLevelType, Integer> gameMoneyMap = new HashMap() {{
+        put(GameLevelType.EASY, 1000);
+        put(GameLevelType.NORMAL, 500);
+        put(GameLevelType.HARD, 100);
+    }};
+
+
+    public HashMap getGameMoneyMap() {
+        return gameMoneyMap;
+    }
 
     BackgroundImage myBI = new BackgroundImage(
             new Image(

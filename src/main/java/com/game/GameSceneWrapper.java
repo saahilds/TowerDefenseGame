@@ -1,8 +1,8 @@
 package com.game;
 
-import com.game.model.GameLevelType;
 import com.main.config.Config;
 import com.game.components.gameScene.TowerMenuComponent;
+import com.main.model.GameLevelType;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -23,6 +23,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 public class GameSceneWrapper extends MainApplication {
@@ -69,6 +70,7 @@ public class GameSceneWrapper extends MainApplication {
         return gameMoney;
     }
 
+
     public void setGameMoney(int gameMoney) {
         this.gameMoney = gameMoney;
         gameMoneyText.setText("$: " + gameMoney);
@@ -95,8 +97,8 @@ public class GameSceneWrapper extends MainApplication {
         this.stage = stage;
         this.root = root;
         this.scene = scene;
-//        modalToast(this.root,getGameLevel().toString());
-//        gameMoney = GameSettingDataMap.getStartingMoney(getGameLevel());
+        //modalToast(this.root,getGameLevel().toString());
+        //setGameMoney((int) getGameMoneyMap().get(getGameLevel()));
 
         startStackPane = new StackPane();
         Text startIntroText = new Text(
@@ -147,16 +149,33 @@ public class GameSceneWrapper extends MainApplication {
         root.setBottomAnchor(gameStatusStackPane, 18.0);
         root.setRightAnchor(gameStatusStackPane, 18.0);
 
+        //setGameMoney((int) getGameMoneyMap().get(getGameLevel()));
+        //getGameLevel();
+        //final int startingMoney = (int) getGameMoneyMap().get(getGameLevel());
+        //setGameMoney(startingMoney);
+
         gameMoneyText.setFill(Color.GHOSTWHITE);
         gameMoneyText.setFont(Font.font(20));
         monumentHealthText.setFill(Color.GHOSTWHITE);
         monumentHealthText.setFont(Font.font(20));
         gameStatusStackPane.getChildren().addAll(
                 gameMoneyText,
-                monumentHealthText
+                monumentHealthText,
+                gameLevelText
         );
         gameMoneyText.setTranslateY(-28);
-
+        gameLevelText.setFill(Color.GHOSTWHITE);
+        gameLevelText.setFont(Font.font(20));
+        //gameLevelText.setText("Game Level: " + getGameLevel().toString());
+        gameLevelText.setTranslateY(-10);
+//        if (getGameLevel() == GameLevelType.EASY) {
+//            setGameMoney(1000);
+//        } else if (getGameLevel() == GameLevelType.NORMAL) {
+//            setGameMoney(500);
+//        } else if (getGameLevel() == GameLevelType.HARD){
+//            setGameMoney(100);
+//        }
+//        setGameMoney( (int) getGameMoneyMap().get(getGameLevel()));
         controls();
         loop();
     }
@@ -164,6 +183,7 @@ public class GameSceneWrapper extends MainApplication {
     public StackPane gameStatusStackPane = new StackPane();
     public Text gameMoneyText = new Text("$: ");
     public Text monumentHealthText = new Text("Health: ");
+    public Text gameLevelText = new Text("");
 
     private boolean checkIntersects(Node a, Node b) {
         return a.getBoundsInParent().intersects(b.getBoundsInParent());
@@ -285,8 +305,8 @@ public class GameSceneWrapper extends MainApplication {
 
     public void moveEnemy(int delta) {
         for (Enemy enemy : enemies) {
-            StackPane enetity = enemy.getStackPane();
-            enetity.setTranslateX(enetity.getTranslateX() + delta);
+            StackPane entity = enemy.getStackPane();
+            entity.setTranslateX(entity.getTranslateX() + delta);
         }
 
         Iterator<Enemy> iterator = enemies.iterator();

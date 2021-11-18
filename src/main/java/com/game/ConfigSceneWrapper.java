@@ -92,7 +92,7 @@ public class ConfigSceneWrapper extends MainApplication {
         levelInputText.setFill(Color.GHOSTWHITE);
         levelInputText.setTranslateY(0);
 
-        for (GameLevelType level: gameLevelTypeArr) {
+        for (GameLevelType level: getGameLevelTypeArr()) {
             String text;
             int xTranslate = 0;
             if (level == GameLevelType.EASY) {

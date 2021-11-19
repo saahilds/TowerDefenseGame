@@ -1,22 +1,22 @@
 package com.game;
 
-import com.game.MainApplication;
-import javafx.fxml.Initializable;
+//import com.game.MainApplication;
+//import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.geometry.Side;
+//import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
+//import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.ResourceBundle;
+//import java.net.URL;
+//import java.util.ArrayList;
+//import java.util.Iterator;
+//import java.util.ResourceBundle;
 
 public class WelcomeSceneWrapper extends SceneWrapper {
 
@@ -42,7 +42,7 @@ public class WelcomeSceneWrapper extends SceneWrapper {
         welcomeText.setFill(Color.GHOSTWHITE);
         Button startButton = new Button("Start Game");
         startButton.setOnMouseClicked(event -> {
-//            initGameScene();
+            //initGameScene();
             initConfigScene(stage, root);
         });
         startButton.getStyleClass().setAll("btn", "btn-default");
@@ -54,7 +54,8 @@ public class WelcomeSceneWrapper extends SceneWrapper {
         );
         welcomStackPane.setBackground(
                 new Background(
-                        new BackgroundFill(Color.rgb(50, 50, 50, 0.7), CornerRadii.EMPTY, Insets.EMPTY)
+                        new BackgroundFill(Color.rgb(50, 50, 50, 0.7),
+                                CornerRadii.EMPTY, Insets.EMPTY)
                 )
         );
         root.getChildren().add(welcomStackPane);

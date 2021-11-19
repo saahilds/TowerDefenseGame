@@ -17,7 +17,7 @@ public class GameSettingDataMap {
         return startingMoneyMap.get(gameLevelType);
     }
 
-    public static HashMap<GameLevelType, String> gameLevelTextMap = new HashMap<>() {
+    private static HashMap<GameLevelType, String> gameLevelTextMap = new HashMap<>() {
         {
             put(GameLevelType.EASY, "EASY");
             put(GameLevelType.NORMAL, "NORMAL");
@@ -25,6 +25,9 @@ public class GameSettingDataMap {
         }
     };
 
+    public static HashMap<GameLevelType, String> getGameLevelTextMap() {
+        return gameLevelTextMap;
+    }
 
     private static HashMap<GameLevelType, Integer> startingMonumentHealthMap  = new HashMap<>() {
         {

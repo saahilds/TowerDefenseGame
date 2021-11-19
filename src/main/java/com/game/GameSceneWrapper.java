@@ -1,9 +1,12 @@
 package com.game;
 
+//import com.game.components.gameScene.TowerData;
+import com.game.model.TowerType;
 import com.main.config.Config;
 import com.game.components.gameScene.TowerMenuComponent;
-import com.main.model.GameLevelType;
+//import com.main.model.GameLevelType;
 import javafx.animation.AnimationTimer;
+import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -12,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -23,7 +27,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+//import java.util.HashMap;
 import java.util.Iterator;
 
 public class GameSceneWrapper extends SceneWrapper {
@@ -57,8 +61,13 @@ public class GameSceneWrapper extends SceneWrapper {
         this.counter = counter;
     }
 
-    private int counter = 0, enemySpeed = 4;
-    private boolean goLeft, goRight, goUp, goDown, isShooting;
+    private int counter = 0;
+    private int enemySpeed = 4;
+    private boolean goLeft;
+    private boolean goRight;
+    private boolean goUp;
+    private boolean goDown;
+    private boolean isShooting;
     private int spawnTime = 180;
     private final int pathHeight = 100;
 
@@ -94,9 +103,18 @@ public class GameSceneWrapper extends SceneWrapper {
     private TowerMenuComponent towerMenuComponent;
     private Monument monument;
 
-    private boolean isStopped = false, showMemu = false;
+    private boolean isStopped = false;
+    private boolean showMenu = false;
 
-    StackPane startStackPane;
+    private StackPane startStackPane;
+
+    public StackPane getStartStackPane() {
+        return startStackPane;
+    }
+
+    public void setStartStackPane(StackPane startStackPane) {
+        this.startStackPane = startStackPane;
+    }
 
     private int monumentHealth;
 
@@ -122,7 +140,8 @@ public class GameSceneWrapper extends SceneWrapper {
     }
 
 
-    double orgSceneX, orgSceneY;
+    private double orgSceneX;
+    private double orgSceneY;
 
 
     private ImagePattern enemyImagePattern = new ImagePattern(
@@ -132,6 +151,69 @@ public class GameSceneWrapper extends SceneWrapper {
     private ImagePattern moonImgPattern = new ImagePattern(
             new Image(getClass().getResourceAsStream("/com/game/moon.png"))
     );
+
+    private TowerType towerSelected;
+
+    public TowerType getTowerSelected() {
+        return towerSelected;
+    }
+
+    public void setTowerSelected(TowerType towerSelected) {
+        this.towerSelected = towerSelected;
+    }
+
+    //    private HashMap<TowerType, TowerData> towerDataMap = new HashMap<>() {{
+    //        put(
+    //                TowerType.TYPE_A,
+    //                new TowerData(
+    //                        TowerType.TYPE_A,
+    //                        10,
+    //                        50,
+    //                        Color.RED,
+    //                        //Rectangle(20, 20, Color.ORANGERED),
+    //                        "Basic Tower",
+    //                        "Tower with price of 50 and damage of 10"
+    //                )
+    //        );
+    //        put(
+    //                TowerType.TYPE_B,
+    //                new TowerData(
+    //                        TowerType.TYPE_B,
+    //                        15,
+    //                        75,
+    //                        Color.BLUE,
+    //                        " Fortified Tower",
+    //                        "Tower with price of 100 and damage of 15"
+    //                )
+    //        );
+    //        put(
+    //                TowerType.TYPE_C,
+    //                new TowerData(
+    //                        TowerType.TYPE_C,
+    //                        20,
+    //                        100,
+    //                        Color.YELLOW,
+    //                        "Enchanted Tower",
+    //                        "Tower with price of 100 and damage of 20"
+    //                )
+    //        );
+    //        put(
+    //                TowerType.TYPE_D,
+    //                new TowerData(
+    //                        TowerType.TYPE_D,
+    //                        25,
+    //                        125,
+    //                        Color.RED,
+    //                        "Best Tower",
+    //                        "Tower with price of 125 and damage of 25"
+    //                )
+    //        );
+    //    }};
+    //
+    //    public HashMap<TowerType, TowerData> getTowerDataMap() {
+    //        return towerDataMap;
+    //    }
+
 
 
     public GameSceneWrapper(
@@ -166,7 +248,8 @@ public class GameSceneWrapper extends SceneWrapper {
         StackPane.setAlignment(startButton, Pos.CENTER);
         startStackPane.setBackground(
                 new Background(
-                        new BackgroundFill(Color.rgb(50, 50, 50, 0.7), CornerRadii.EMPTY, Insets.EMPTY)
+                        new BackgroundFill(Color.rgb(50, 50, 50, 0.7),
+                                CornerRadii.EMPTY, Insets.EMPTY)
                 )
         );
         startButton.setTranslateY(100);
@@ -206,29 +289,72 @@ public class GameSceneWrapper extends SceneWrapper {
         gameStatusStackPane.getChildren().addAll(
                 gameMoneyText,
                 monumentHealthText,
-                gameLevelText
+                gameLevelText,
+                towerMenuText,
+                towerType1,
+                towerType2,
+                towerType3
         );
         gameMoneyText.setTranslateY(-28);
         gameLevelText.setFill(Color.GHOSTWHITE);
         gameLevelText.setFont(Font.font(20));
         //gameLevelText.setText("Game Level: " + getGameLevel().toString());
         gameLevelText.setTranslateY(-10);
-//        if (getGameLevel() == GameLevelType.EASY) {
-//            setGameMoney(1000);
-//        } else if (getGameLevel() == GameLevelType.NORMAL) {
-//            setGameMoney(500);
-//        } else if (getGameLevel() == GameLevelType.HARD){
-//            setGameMoney(100);
-//        }
-//        setGameMoney( (int) getGameMoneyMap().get(getGameLevel()));
+
+        //gameLevelText.setText("Game Level: " + getGameLevel().toString());
+        gameLevelText.setTranslateY(-10);
+        towerMenuText.setFill(Color.GHOSTWHITE);
+        towerMenuText.setFont(Font.font(20));
+        towerMenuText.setTranslateX(-800);
+        towerMenuText.setTranslateY(-100);
+
+        towerType1.addEventFilter(KeyEvent.ANY, Event::consume);
+        towerType1.setFocusTraversable(false); //prevents keys from iterating thru buttons
+
+        towerType1.setTextFill(Color.RED);
+        towerType1.setTranslateY(-75);
+        towerType1.setTranslateX(-800);
+        towerType1.setOnMouseClicked(event -> {
+            setTowerSelected(TowerType.TYPE_A);
+        });
+
+        towerType2.addEventFilter(KeyEvent.ANY, Event::consume);
+        towerType2.setFocusTraversable(false);
+        towerType2.setTextFill(Color.RED);
+        towerType2.setTranslateY(-50);
+        towerType2.setTranslateX(-800);
+        towerType2.setOnMouseClicked(event -> {
+            setTowerSelected(TowerType.TYPE_B);
+        });
+
+        towerType3.addEventFilter(KeyEvent.ANY, Event::consume);
+        towerType3.setFocusTraversable(false);
+
+
+        towerType3.setOnMouseClicked(event -> {
+            setTowerSelected(TowerType.TYPE_C);
+        });
+        towerType3.setTextFill(Color.RED);
+        towerType3.setTranslateY(-25);
+        towerType3.setTranslateX(-800);
+
+
         controls();
         loop();
     }
 
-    public StackPane gameStatusStackPane = new StackPane();
-    public Text gameMoneyText = new Text("$: ");
-    public Text monumentHealthText = new Text("Health: ");
-    public Text gameLevelText = new Text("");
+    private StackPane gameStatusStackPane = new StackPane();
+    private Text gameMoneyText = new Text("$: ");
+    private Text monumentHealthText = new Text("Health: ");
+    private Text gameLevelText = new Text("");
+
+    private Text towerMenuText = new Text("Tower Menu:");
+    private Button towerType1 = new Button("Tower 1 " + "Cost: " + 50);
+    //+ getTowerDataMap().get(TowerType.TYPE_A).getPrice());
+    private Button towerType2 = new Button("Tower 2 " + "Cost: " + 75);
+    //+ getTowerDataMap().get(TowerType.TYPE_B).getPrice());
+    private Button towerType3 = new Button("Tower 3 " + "Cost: " + 100);
+    //+ getTowerDataMap().get(TowerType.TYPE_C).getPrice());
 
     private boolean checkIntersects(Node a, Node b) {
         return a.getBoundsInParent().intersects(b.getBoundsInParent());
@@ -239,43 +365,50 @@ public class GameSceneWrapper extends SceneWrapper {
         scene.setOnKeyPressed(event -> {
             KeyCode key = event.getCode();
             switch (key) {
-                case LEFT:
-                    goLeft = true;
-                    break;
-                case RIGHT:
-                    goRight = true;
-                    break;
-                case UP:
-                    goUp = true;
-                    break;
-                case DOWN:
-                    goDown = true;
-                    break;
-                case M:
-                    showMemu = !showMemu;
-                    if (showMemu) {
-                        this.towerMenuComponent.setVisible(true);
-                    } else {
-                        this.towerMenuComponent.setVisible(false);
-                    }
-                    break;
-                case SPACE:
-                    if (!isShooting) {
+            case LEFT:
+                goLeft = true;
+                break;
+            case RIGHT:
+                goRight = true;
+                break;
+            case UP:
+                goUp = true;
+                break;
+            case DOWN:
+                goDown = true;
+                break;
+            case M:
+                showMenu = !showMenu;
+                if (showMenu) {
+                    this.towerMenuComponent.setVisible(true);
+                } else {
+                    this.towerMenuComponent.setVisible(false);
+                }
+                break;
+            case SPACE:
+                if (!isShooting) {
+                    playerProjectile = new Projectile(
+                            new Rectangle(5, 5, Color.YELLOW));
+                    if (getTowerSelected() == TowerType.TYPE_B) {
                         playerProjectile = new Projectile(
-                                new Rectangle(5, 5, Color.ORANGERED)
-                        );
-                        projectiles.add(playerProjectile);
-                        playerProjectile.get().relocate(x + player.getRadius(), y);
-                        root.getChildren().add(playerProjectile.get());
-                        isShooting = true;
-                        break;
+                                new Rectangle(5, 5, Color.ORANGE));
+                    } else if (getTowerSelected() == TowerType.TYPE_C) {
+                        playerProjectile = new Projectile(
+                                new Rectangle(5, 5, Color.RED));
                     }
-                case ENTER:
-                    onEnter();
+
+                    projectiles.add(playerProjectile);
+                    playerProjectile.get().relocate(x + player.getRadius(), y);
+                    root.getChildren().add(playerProjectile.get());
+                    isShooting = true;
                     break;
-                case ESCAPE:
-                    isStopped = !isStopped;
-                    break;
+                }
+            case ENTER:
+                onEnter();
+                break;
+            case ESCAPE:
+                isStopped = !isStopped;
+                break;
             }
 
         });
@@ -283,50 +416,53 @@ public class GameSceneWrapper extends SceneWrapper {
             KeyCode key = event.getCode();
 
             switch (key) {
-                case LEFT:
-                    goLeft = false;
-                    break;
-                case RIGHT:
-                    goRight = false;
-                    break;
-                case UP:
-                    goUp = false;
-                    break;
-                case DOWN:
-                    goDown = false;
-                    break;
-                case SPACE:
-                    isShooting = false;
-                    break;
+            case LEFT:
+                goLeft = false;
+                break;
+            case RIGHT:
+                goRight = false;
+                break;
+            case UP:
+                goUp = false;
+                break;
+            case DOWN:
+                goDown = false;
+                break;
+            case SPACE:
+                isShooting = false;
+                break;
             }
 
         });
     }
 
     private void shoot() {
-        for (Projectile p : projectiles) {
-            Shape entity = p.get();
+        for (int p = 0; p < projectiles.size(); p++) {
+            Shape entity = projectiles.get(p).get();
             entity.relocate(
-                    entity.getLayoutX() + p.getDx(),
-                    (entity.getLayoutY() + p.getDy())
+                    entity.getLayoutX() + projectiles.get(p).getDx(),
+                    (entity.getLayoutY() + projectiles.get(p).getDy())
             );
-        }
+            projectiles.get(p).setRange(
+                    projectiles.get(p).getRange() + projectiles.get(p).getDy());
+            System.out.println(projectiles.get(p).getRange());
 
-        Iterator<Projectile> iterator = projectiles.iterator();
-        Projectile temp;
-        while (iterator.hasNext()) {
-            temp = iterator.next();
-            if (temp.get().getLayoutY() < root.getLayoutY()) {
-                iterator.remove();
-                root.getChildren().remove(temp.get());
+
+            Iterator<Projectile> iterator = projectiles.iterator();
+            Projectile temp;
+            while (iterator.hasNext()) {
+                temp = iterator.next();
+                if ((temp.get().getLayoutY() < root.getLayoutY())
+                        || (temp.getRange() <= 0)) {
+                    iterator.remove();
+                    root.getChildren().remove(temp.get());
+                }
             }
-        }
 
+        }
     }
 
-    @SuppressWarnings("checkstyle:WhitespaceAfter")
     private void spawnEnemy() {
-
         double spawnPosition = Math.random();
 
         int eBaseWidth = 40;
@@ -410,13 +546,20 @@ public class GameSceneWrapper extends SceneWrapper {
         if (!goUp && !goDown) {
             dy = 0;
         }
-        int xi = x, yi = y;
-        player.relocate(x += dx, y += dy);
-        if (isAvailableToMove()) {
-
-        } else {
-            player.relocate(xi, yi);
+        //int xi = x;
+        //int yi = y;
+        //player.relocate(x += dx, y += dy);
+        player.relocate(x + dx, y + dy);
+        x += dx;
+        y += dy;
+        if (!isAvailableToMove()) {
+            player.relocate(x - dx, y - dy);
         }
+        //if (isAvailableToMove()) {
+
+        //} else {
+        //    player.relocate(xi, yi);
+        //}
         shoot();
         counter++;
         spawnEnemy();
@@ -477,7 +620,7 @@ public class GameSceneWrapper extends SceneWrapper {
             }
         }
 
-        // monumnet hit
+        // monument hit
         enemyIterator = enemies.iterator();
         while (enemyIterator.hasNext()) {
             e = enemyIterator.next();
@@ -504,8 +647,13 @@ public class GameSceneWrapper extends SceneWrapper {
             modalToast(root, "cannot place the tower");
             return;
         }
+        Rectangle rectangle = new Rectangle(10, 10, Color.YELLOW);
+        if (getTowerSelected() == TowerType.TYPE_B) {
+            rectangle = new Rectangle(10, 10, Color.ORANGE);
+        } else if (getTowerSelected() == TowerType.TYPE_C) {
+            rectangle = new Rectangle(10, 10, Color.RED);
+        }
 
-        Rectangle rectangle = new Rectangle(10, 10, Color.ORANGERED);
         rectangle.setCursor(Cursor.HAND);
         rectangle.setOnMousePressed((t) -> {
             orgSceneX = t.getSceneX();
@@ -515,13 +663,13 @@ public class GameSceneWrapper extends SceneWrapper {
         });
         rectangle.setOnMouseDragged((t) -> {
             if (t.getSceneY() < 100) {
-//                isOnPath = true;
+                //isOnPath = true;
                 modalToast(root, "Cannot place the tower on the path");
                 return;
-            } else {
-//                isOnPath = false;
+            } //else {
+            //    isOnPath = false;
 
-            }
+            //}
             double offsetX = t.getSceneX() - orgSceneX;
             double offsetY = t.getSceneY() - orgSceneY;
             if (orgSceneY <= pathHeight) {
@@ -535,7 +683,9 @@ public class GameSceneWrapper extends SceneWrapper {
             orgSceneY = t.getSceneY();
         });
 
-        Tower tower = new Tower(rectangle);
+        Tower tower = new Tower(rectangle, getTowerSelected(),
+                Tower.getTowerAttributes().get(getTowerSelected())[0],
+                Tower.getTowerAttributes().get(getTowerSelected())[1]);
         root.getChildren().add(tower.get());
         tower.get().relocate(x, y);
         for (Tower wrapper : towers) {
@@ -565,7 +715,8 @@ public class GameSceneWrapper extends SceneWrapper {
         StackPane gameOverStackPane = new StackPane();
         gameOverStackPane.setBackground(
                 new Background(
-                        new BackgroundFill(Color.rgb(50, 50, 50, 0.7), CornerRadii.EMPTY, Insets.EMPTY)
+                        new BackgroundFill(Color.rgb(50, 50, 50, 0.7),
+                                CornerRadii.EMPTY, Insets.EMPTY)
                 )
         );
         Text gameOverText = new Text(
@@ -580,13 +731,15 @@ public class GameSceneWrapper extends SceneWrapper {
             System.exit(0);
         });
         exitButton.getStyleClass().setAll("btn", "btn-default");
-        exitButton.setStyle("-fx-text-fill: white; -fx-background-color: transparent; -fx-border-color: white;");
+        exitButton.setStyle("-fx-text-fill: white; "
+                + "-fx-background-color: transparent; -fx-border-color: white;");
         exitButton.setAlignment(Pos.CENTER);
         exitButton.setMaxWidth(280);
 
         Button newGameButton = new Button("New Game");
         exitButton.getStyleClass().setAll("btn", "btn-default");
-        newGameButton.setStyle("-fx-text-fill: white; -fx-background-color: transparent; -fx-border-color: white;");
+        newGameButton.setStyle("-fx-text-fill: white; "
+                + "-fx-background-color: transparent; -fx-border-color: white;");
         newGameButton.setAlignment(Pos.CENTER);
         newGameButton.setMaxWidth(280);
         newGameButton.setTranslateY(40);

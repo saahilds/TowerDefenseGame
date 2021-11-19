@@ -1,23 +1,23 @@
 package com.game.components.gameScene;
 
 import com.game.model.TowerType;
-import com.main.model.GameLevelType;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+//import com.main.model.GameLevelType;
+//import javafx.scene.paint.Color;
+//import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 import java.util.HashMap;
 
 public class TowerData {
-    public static TowerType type;
-    public static int damage;
-    public static int price;
-    public static Shape shape;
-    public static String name;
-    public static String description;
+    private static TowerType type;
+    private static int damage;
+    private static int price;
+    private static Shape shape;
+    private static String name;
+    private static String description;
 
-    public static HashMap<TowerType, TowerData> towerDataMap = new HashMap<>() {{
-        put(
+    private static HashMap<TowerType, TowerData> towerDataMap = new HashMap<>() {{
+            put(
                 TowerType.TYPE_A,
                 new TowerData(
                         TowerType.TYPE_A,
@@ -26,8 +26,8 @@ public class TowerData {
                         "typeA",
                         "typeA description"
                 )
-        );
-        put(
+            );
+            put(
                 TowerType.TYPE_A,
                 new TowerData(
                         TowerType.TYPE_A,
@@ -36,8 +36,8 @@ public class TowerData {
                         "typeA",
                         "typeA description"
                 )
-        );
-    }};
+            );
+        }};
 
     public TowerData(
             TowerType type,

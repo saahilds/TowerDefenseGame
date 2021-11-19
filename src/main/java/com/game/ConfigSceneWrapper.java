@@ -12,7 +12,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
 public class ConfigSceneWrapper extends SceneWrapper {
 
@@ -38,14 +38,15 @@ public class ConfigSceneWrapper extends SceneWrapper {
 
         configStackPane = new StackPane();
 
-        Button toWelcomeSceneButton = new Button("To Welcome Screen");;
+        Button toWelcomeSceneButton = new Button("To Welcome Screen");
         toWelcomeSceneButton.setOnMouseClicked(event -> {
             initWelcomeScene(stage, root);
         });
         toWelcomeSceneButton.getStyleClass().setAll("btn", "btn-default");
-        toWelcomeSceneButton.setStyle("-fx-text-fill: white; -fx-background-color: transparent; -fx-border-color: transparent;");
+        toWelcomeSceneButton.setStyle("-fx-text-fill: white; "
+                + "-fx-background-color: transparent; -fx-border-color: transparent;");
         toWelcomeSceneButton.setAlignment(Pos.CENTER_LEFT);
-//        toWelcomeSceneButton.setMaxWidth(0);
+        //toWelcomeSceneButton.setMaxWidth(0);
         root.setTopAnchor(toWelcomeSceneButton, 16.0);
         root.setLeftAnchor(toWelcomeSceneButton, 8.0);
 
@@ -57,12 +58,14 @@ public class ConfigSceneWrapper extends SceneWrapper {
         nameInputText.setTranslateY(-80);
 
         nameTextField = new TextField("Name: ");
-        nameTextField.setStyle("-fx-text-fill: white; -fx-background-color: transparent; -fx-border-color: white;");
+        nameTextField.setStyle("-fx-text-fill: white; "
+                + "-fx-background-color: transparent; -fx-border-color: white;");
         nameTextField.setMaxWidth(200);
         nameTextField.setTranslateY(-40);
         Button saveName = new Button("Save Name");
         saveName.getStyleClass().setAll("btn", "btn-default");
-        saveName.setStyle("-fx-text-fill: white; -fx-background-color: transparent; -fx-border-color: white;");
+        saveName.setStyle("-fx-text-fill: white; "
+                + "-fx-background-color: transparent; -fx-border-color: white;");
         saveName.setTranslateX(150);
         saveName.setTranslateY(-40);
 
@@ -97,7 +100,7 @@ public class ConfigSceneWrapper extends SceneWrapper {
             if (level == GameLevelType.EASY) {
                 text = "Easy";
                 xTranslate = -100;
-            } else if (level == GameLevelType.NORMAL){
+            } else if (level == GameLevelType.NORMAL) {
                 text = "Normal";
             } else {
                 text = "Hard";
@@ -119,7 +122,8 @@ public class ConfigSceneWrapper extends SceneWrapper {
                 }
             });
             levelButton.getStyleClass().setAll("btn", "btn-default");
-            levelButton.setStyle("-fx-text-fill: white; -fx-background-color: transparent; -fx-border-color: white;");
+            levelButton.setStyle("-fx-text-fill: white; "
+                    + "-fx-background-color: transparent; -fx-border-color: white;");
             levelButton.setMaxWidth(80);
             levelButton.setTranslateX(xTranslate);
             levelButton.setTranslateY(40);
@@ -129,7 +133,7 @@ public class ConfigSceneWrapper extends SceneWrapper {
         /**
          * START
          */
-        Button startButton = new Button("Start Game");;
+        Button startButton = new Button("Start Game");
         startButton.setOnMouseClicked(event -> {
             if (isNameValid()) {
                 if (isLevelValid()) {
@@ -142,7 +146,8 @@ public class ConfigSceneWrapper extends SceneWrapper {
             }
         });
         startButton.getStyleClass().setAll("btn", "btn-default");
-        startButton.setStyle("-fx-text-fill: white; -fx-background-color: transparent; -fx-border-color: white;");
+        startButton.setStyle("-fx-text-fill: white; "
+                + "-fx-background-color: transparent; -fx-border-color: white;");
         startButton.setAlignment(Pos.CENTER);
         startButton.setMaxWidth(280);
         startButton.setTranslateY(80);
@@ -155,7 +160,8 @@ public class ConfigSceneWrapper extends SceneWrapper {
         );
         configStackPane.setBackground(
                 new Background(
-                        new BackgroundFill(Color.rgb(50, 50, 50, 0.7), CornerRadii.EMPTY, Insets.EMPTY)
+                        new BackgroundFill(Color.rgb(50, 50, 50, 0.7),
+                                CornerRadii.EMPTY, Insets.EMPTY)
                 )
         );
         root.getChildren().addAll(

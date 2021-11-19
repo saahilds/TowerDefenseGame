@@ -73,7 +73,7 @@ public class TowerMenuComponent {
                 "Catapult Tower",
                 "Catapult Tower Desc",
                 GameSettingDataMap.getTowerInitialCost(gameLevel),
-                75,
+                70,
                 150.0,
                 "/com/main/catapult.png"
         );

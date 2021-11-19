@@ -1,5 +1,7 @@
 package com.test;
 
+import com.game.Enemy;
+import com.game.GameSceneWrapper;
 import com.main.MainApplication;
 import com.main.ScreensController;
 import com.main.game.DataController;
@@ -13,6 +15,7 @@ import com.main.model.GameScreenType;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -73,6 +76,12 @@ public class CombatTest {
 
     @Test
     public void testUniqueEnemy() {
+        GameSceneWrapper g = new GameSceneWrapper(mainstage, new AnchorPane(mainNode), new Scene(mainNode));
+        g.spawnEnemy();
+        g.spawnEnemy();
+
+        ArrayList<Enemy> enemies = g.getEnemies();
+        assertFalse(enemies.get(0).getDamage() == enemies.get(1).getDamage());
 
     }
 }

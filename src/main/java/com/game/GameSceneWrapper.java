@@ -122,6 +122,10 @@ public class GameSceneWrapper extends SceneWrapper {
         return monumentHealth;
     }
 
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
+    }
+
     public void setMonumentHealth(int monumentHealth) {
         this.monumentHealth = monumentHealth;
         monumentHealthText.setText("Health: " + monumentHealth);
@@ -462,7 +466,7 @@ public class GameSceneWrapper extends SceneWrapper {
         }
     }
 
-    private void spawnEnemy() {
+    public void spawnEnemy() {
         double spawnPosition = Math.random();
 
         int eBaseWidth = 40;

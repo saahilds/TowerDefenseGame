@@ -5,9 +5,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 public class Projectile {
-    Shape shape;
-    boolean isCircle;
-    boolean isRectangle;
+    private Shape shape;
+    private boolean isCircle;
+    private boolean isRectangle;
 
     public int getDx() {
         return dx;

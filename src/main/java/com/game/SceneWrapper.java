@@ -47,24 +47,24 @@ public class SceneWrapper {
     }
 
     private static ArrayList<GameLevelType> gameLevelTypeArr = new ArrayList<GameLevelType>() {{
-        add(GameLevelType.EASY);
-        add(GameLevelType.NORMAL);
-        add(GameLevelType.HARD);
-    }};
+            add(GameLevelType.EASY);
+            add(GameLevelType.NORMAL);
+            add(GameLevelType.HARD);
+        }};
 
-    public static HashMap<GameLevelType, Integer> gameMoneyMap = new HashMap() {{
-        put(GameLevelType.EASY, 1000);
-        put(GameLevelType.NORMAL, 500);
-        put(GameLevelType.HARD, 100);
-    }};
+    private static HashMap<GameLevelType, Integer> gameMoneyMap = new HashMap() {{
+            put(GameLevelType.EASY, 1000);
+            put(GameLevelType.NORMAL, 500);
+            put(GameLevelType.HARD, 100);
+        }};
 
     public static HashMap getGameMoneyMap() {
         return gameMoneyMap;
     }
 
-    Timer timer = new Timer();
+    private Timer timer = new Timer();
 
-    BackgroundImage myBI = new BackgroundImage(
+    private BackgroundImage myBI = new BackgroundImage(
             new Image(
                     getClass().getResourceAsStream("/com/game/bg5.gif"),
                     1100,
@@ -95,7 +95,8 @@ public class SceneWrapper {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            FadeTransition transition = new FadeTransition(Duration.millis(500), toast);
+                            FadeTransition transition = new FadeTransition(
+                                    Duration.millis(500), toast);
                             transition.setFromValue(1);
                             transition.setToValue(0);
                             transition.setOnFinished((event) -> {
@@ -106,7 +107,7 @@ public class SceneWrapper {
                     });
                 }
             };
-            timer.schedule(task, 1000l);
+            timer.schedule(task, 1000L);
         }
     }
 

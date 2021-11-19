@@ -2,7 +2,7 @@ package com.game;
 
 import com.main.config.Config;
 import com.game.components.gameScene.TowerMenuComponent;
-import com.main.model.GameLevelType;
+//import com.main.model.GameLevelType;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -23,7 +23,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+//import java.util.HashMap;
 import java.util.Iterator;
 
 public class GameSceneWrapper extends SceneWrapper {
@@ -57,8 +57,13 @@ public class GameSceneWrapper extends SceneWrapper {
         this.counter = counter;
     }
 
-    private int counter = 0, enemySpeed = 4;
-    private boolean goLeft, goRight, goUp, goDown, isShooting;
+    private int counter = 0;
+    private int enemySpeed = 4;
+    private boolean goLeft;
+    private boolean goRight;
+    private boolean goUp;
+    private boolean goDown;
+    private boolean isShooting;
     private int spawnTime = 180;
     private final int pathHeight = 100;
 
@@ -94,9 +99,18 @@ public class GameSceneWrapper extends SceneWrapper {
     private TowerMenuComponent towerMenuComponent;
     private Monument monument;
 
-    private boolean isStopped = false, showMemu = false;
+    private boolean isStopped = false;
+    private boolean showMenu = false;
 
-    StackPane startStackPane;
+    private StackPane startStackPane;
+
+    public StackPane getStartStackPane() {
+        return startStackPane;
+    }
+
+    public void setStartStackPane(StackPane startStackPane) {
+        this.startStackPane = startStackPane;
+    }
 
     private int monumentHealth;
 
@@ -122,7 +136,8 @@ public class GameSceneWrapper extends SceneWrapper {
     }
 
 
-    double orgSceneX, orgSceneY;
+    private double orgSceneX;
+    private double orgSceneY;
 
 
     private ImagePattern enemyImagePattern = new ImagePattern(
@@ -166,7 +181,8 @@ public class GameSceneWrapper extends SceneWrapper {
         StackPane.setAlignment(startButton, Pos.CENTER);
         startStackPane.setBackground(
                 new Background(
-                        new BackgroundFill(Color.rgb(50, 50, 50, 0.7), CornerRadii.EMPTY, Insets.EMPTY)
+                        new BackgroundFill(Color.rgb(50, 50, 50, 0.7),
+                                CornerRadii.EMPTY, Insets.EMPTY)
                 )
         );
         startButton.setTranslateY(100);
@@ -213,22 +229,22 @@ public class GameSceneWrapper extends SceneWrapper {
         gameLevelText.setFont(Font.font(20));
         //gameLevelText.setText("Game Level: " + getGameLevel().toString());
         gameLevelText.setTranslateY(-10);
-//        if (getGameLevel() == GameLevelType.EASY) {
-//            setGameMoney(1000);
-//        } else if (getGameLevel() == GameLevelType.NORMAL) {
-//            setGameMoney(500);
-//        } else if (getGameLevel() == GameLevelType.HARD){
-//            setGameMoney(100);
-//        }
-//        setGameMoney( (int) getGameMoneyMap().get(getGameLevel()));
+        //if (getGameLevel() == GameLevelType.EASY) {
+        //    setGameMoney(1000);
+        //} else if (getGameLevel() == GameLevelType.NORMAL) {
+        //    setGameMoney(500);
+        //} else if (getGameLevel() == GameLevelType.HARD){
+        //    setGameMoney(100);
+        //}
+        //setGameMoney( (int) getGameMoneyMap().get(getGameLevel()));
         controls();
         loop();
     }
 
-    public StackPane gameStatusStackPane = new StackPane();
-    public Text gameMoneyText = new Text("$: ");
-    public Text monumentHealthText = new Text("Health: ");
-    public Text gameLevelText = new Text("");
+    private StackPane gameStatusStackPane = new StackPane();
+    private Text gameMoneyText = new Text("$: ");
+    private Text monumentHealthText = new Text("Health: ");
+    private Text gameLevelText = new Text("");
 
     private boolean checkIntersects(Node a, Node b) {
         return a.getBoundsInParent().intersects(b.getBoundsInParent());
@@ -239,43 +255,43 @@ public class GameSceneWrapper extends SceneWrapper {
         scene.setOnKeyPressed(event -> {
             KeyCode key = event.getCode();
             switch (key) {
-                case LEFT:
-                    goLeft = true;
+            case LEFT:
+                goLeft = true;
+                break;
+            case RIGHT:
+                goRight = true;
+                break;
+            case UP:
+                goUp = true;
+                break;
+            case DOWN:
+                goDown = true;
+                break;
+            case M:
+                showMenu = !showMenu;
+                if (showMenu) {
+                    this.towerMenuComponent.setVisible(true);
+                } else {
+                    this.towerMenuComponent.setVisible(false);
+                }
+                break;
+            case SPACE:
+                if (!isShooting) {
+                    playerProjectile = new Projectile(
+                            new Rectangle(5, 5, Color.ORANGERED)
+                    );
+                    projectiles.add(playerProjectile);
+                    playerProjectile.get().relocate(x + player.getRadius(), y);
+                    root.getChildren().add(playerProjectile.get());
+                    isShooting = true;
                     break;
-                case RIGHT:
-                    goRight = true;
-                    break;
-                case UP:
-                    goUp = true;
-                    break;
-                case DOWN:
-                    goDown = true;
-                    break;
-                case M:
-                    showMemu = !showMemu;
-                    if (showMemu) {
-                        this.towerMenuComponent.setVisible(true);
-                    } else {
-                        this.towerMenuComponent.setVisible(false);
-                    }
-                    break;
-                case SPACE:
-                    if (!isShooting) {
-                        playerProjectile = new Projectile(
-                                new Rectangle(5, 5, Color.ORANGERED)
-                        );
-                        projectiles.add(playerProjectile);
-                        playerProjectile.get().relocate(x + player.getRadius(), y);
-                        root.getChildren().add(playerProjectile.get());
-                        isShooting = true;
-                        break;
-                    }
-                case ENTER:
-                    onEnter();
-                    break;
-                case ESCAPE:
-                    isStopped = !isStopped;
-                    break;
+                }
+            case ENTER:
+                onEnter();
+                break;
+            case ESCAPE:
+                isStopped = !isStopped;
+                break;
             }
 
         });
@@ -283,21 +299,21 @@ public class GameSceneWrapper extends SceneWrapper {
             KeyCode key = event.getCode();
 
             switch (key) {
-                case LEFT:
-                    goLeft = false;
-                    break;
-                case RIGHT:
-                    goRight = false;
-                    break;
-                case UP:
-                    goUp = false;
-                    break;
-                case DOWN:
-                    goDown = false;
-                    break;
-                case SPACE:
-                    isShooting = false;
-                    break;
+            case LEFT:
+                goLeft = false;
+                break;
+            case RIGHT:
+                goRight = false;
+                break;
+            case UP:
+                goUp = false;
+                break;
+            case DOWN:
+                goDown = false;
+                break;
+            case SPACE:
+                isShooting = false;
+                break;
             }
 
         });
@@ -410,13 +426,20 @@ public class GameSceneWrapper extends SceneWrapper {
         if (!goUp && !goDown) {
             dy = 0;
         }
-        int xi = x, yi = y;
-        player.relocate(x += dx, y += dy);
-        if (isAvailableToMove()) {
-
-        } else {
-            player.relocate(xi, yi);
+        //int xi = x;
+        //int yi = y;
+        //player.relocate(x += dx, y += dy);
+        player.relocate(x + dx, y + dy);
+        x += dx;
+        y += dy;
+        if (!isAvailableToMove()) {
+            player.relocate(x - dx, y - dy);
         }
+        //if (isAvailableToMove()) {
+
+        //} else {
+        //    player.relocate(xi, yi);
+        //}
         shoot();
         counter++;
         spawnEnemy();
@@ -477,7 +500,7 @@ public class GameSceneWrapper extends SceneWrapper {
             }
         }
 
-        // monumnet hit
+        // monument hit
         enemyIterator = enemies.iterator();
         while (enemyIterator.hasNext()) {
             e = enemyIterator.next();
@@ -515,13 +538,13 @@ public class GameSceneWrapper extends SceneWrapper {
         });
         rectangle.setOnMouseDragged((t) -> {
             if (t.getSceneY() < 100) {
-//                isOnPath = true;
+                //isOnPath = true;
                 modalToast(root, "Cannot place the tower on the path");
                 return;
-            } else {
-//                isOnPath = false;
+            } //else {
+            //    isOnPath = false;
 
-            }
+            //}
             double offsetX = t.getSceneX() - orgSceneX;
             double offsetY = t.getSceneY() - orgSceneY;
             if (orgSceneY <= pathHeight) {
@@ -565,7 +588,8 @@ public class GameSceneWrapper extends SceneWrapper {
         StackPane gameOverStackPane = new StackPane();
         gameOverStackPane.setBackground(
                 new Background(
-                        new BackgroundFill(Color.rgb(50, 50, 50, 0.7), CornerRadii.EMPTY, Insets.EMPTY)
+                        new BackgroundFill(Color.rgb(50, 50, 50, 0.7),
+                                CornerRadii.EMPTY, Insets.EMPTY)
                 )
         );
         Text gameOverText = new Text(
@@ -580,13 +604,15 @@ public class GameSceneWrapper extends SceneWrapper {
             System.exit(0);
         });
         exitButton.getStyleClass().setAll("btn", "btn-default");
-        exitButton.setStyle("-fx-text-fill: white; -fx-background-color: transparent; -fx-border-color: white;");
+        exitButton.setStyle("-fx-text-fill: white; "
+                + "-fx-background-color: transparent; -fx-border-color: white;");
         exitButton.setAlignment(Pos.CENTER);
         exitButton.setMaxWidth(280);
 
         Button newGameButton = new Button("New Game");
         exitButton.getStyleClass().setAll("btn", "btn-default");
-        newGameButton.setStyle("-fx-text-fill: white; -fx-background-color: transparent; -fx-border-color: white;");
+        newGameButton.setStyle("-fx-text-fill: white; "
+                + "-fx-background-color: transparent; -fx-border-color: white;");
         newGameButton.setAlignment(Pos.CENTER);
         newGameButton.setMaxWidth(280);
         newGameButton.setTranslateY(40);

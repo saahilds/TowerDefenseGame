@@ -1,8 +1,8 @@
 package com.game;
 
 import com.main.game.entity.HealthBar;
-import javafx.scene.Group;
-import javafx.scene.control.Label;
+//import javafx.scene.Group;
+//import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -12,9 +12,29 @@ import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 
 public class Enemy {
-    Rectangle shape;
-    StackPane stackPane;
-    Text text;
+    private Rectangle shape;
+    private StackPane stackPane;
+    private Text text;
+
+    public Rectangle getShape() {
+        return shape;
+    }
+
+    public void setShape(Rectangle shape) {
+        this.shape = shape;
+    }
+
+    public void setStackPane(StackPane stackPane) {
+        this.stackPane = stackPane;
+    }
+
+    public Text getText() {
+        return text;
+    }
+
+    public void setText(Text text) {
+        this.text = text;
+    }
 
     public HealthBar getHpBar() {
         return hpBar;

@@ -1,15 +1,15 @@
 package com.game;
 
 import com.game.model.TowerType;
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
+//import javafx.event.EventHandler;
+//import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
+//import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 public class Tower {
-    Rectangle shape;
+    private Rectangle shape;
 
     public int getDx() {
         return dx;

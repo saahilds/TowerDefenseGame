@@ -8,9 +8,9 @@ import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 
 public class Monument {
-    Rectangle shape;
-    StackPane stackPane;
-    Text text;
+    private Rectangle shape;
+    private StackPane stackPane;
+    private Text text;
 
     public HealthBar getHpBar() {
         return hpBar;

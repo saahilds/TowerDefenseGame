@@ -1,7 +1,7 @@
 package com.game;
 
 import com.game.config.Config;
-import com.main.model.GameLevelType;
+//import com.main.model.GameLevelType;
 import javafx.application.Application;
 import javafx.geometry.Side;
 import javafx.scene.Scene;
@@ -10,15 +10,15 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+//import java.util.ArrayList;
+//import java.util.HashMap;
 
 public class MainApplication extends Application {
     private static Stage stage;
     private AnchorPane root;
     private Scene scene;
 
-    BackgroundImage myBI = new BackgroundImage(
+    private BackgroundImage myBI = new BackgroundImage(
             new Image(
                     getClass().getResourceAsStream("/com/game/bg5.gif"),
                     1100,
@@ -29,13 +29,14 @@ public class MainApplication extends Application {
             BackgroundSize.DEFAULT
     );
 
-    public SceneWrapper sceneWrapper;
+    private SceneWrapper sceneWrapper;
 
     @Override
     public void start(Stage stage) {
         this.stage = stage;
         this.root = new AnchorPane();
-        this.scene = new Scene(this.root, Config.STAGE_WIDTH, Config.STAGE_HEIGHT, Color.GHOSTWHITE);
+        this.scene = new Scene(this.root, Config.STAGE_WIDTH,
+                Config.STAGE_HEIGHT, Color.GHOSTWHITE);
 
         this.stage.setTitle("v2");
         this.stage.setResizable(false);

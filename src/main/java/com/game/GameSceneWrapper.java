@@ -2,6 +2,7 @@ package com.game;
 
 import com.main.config.Config;
 import com.game.components.gameScene.TowerMenuComponent;
+import com.main.model.GameLevelType;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -22,11 +23,40 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
-public class GameSceneWrapper extends MainApplication {
+public class GameSceneWrapper extends SceneWrapper {
 
-    private int dx, dy, x = 150, y = 470, projectileSpeed = 10, gameMoneyIncrementSpeed = 50;
+    private int dx;
+    private int dy;
+    private int x = 150;
+    private int y = 470;
+    private int projectileSpeed = 10;
+
+    public int getGameMoneyIncrementSpeed() {
+        return gameMoneyIncrementSpeed;
+    }
+
+    private int gameMoneyIncrementSpeed = 50;
+
+    public int getMoneyIncrementAmount() {
+        return moneyIncrementAmount;
+    }
+
+    public void setMoneyIncrementAmount(int moneyIncrementAmount) {
+        this.moneyIncrementAmount = moneyIncrementAmount;
+    }
+
+    private int moneyIncrementAmount = 50;
+
+    public int getCounter() {
+        return counter;
+    }
+    public void setCounter(int counter) {
+        this.counter = counter;
+    }
+
     private int counter = 0, enemySpeed = 4;
     private boolean goLeft, goRight, goUp, goDown, isShooting;
     private int spawnTime = 180;
@@ -40,7 +70,24 @@ public class GameSceneWrapper extends MainApplication {
     private Circle player = new Circle(x, y, 10, Color.GRAY);
     private Enemy enemy;
 
+    public ArrayList<Projectile> getProjectiles() {
+        return projectiles;
+    }
+
+    public void setProjectiles(ArrayList<Projectile> projectiles) {
+        this.projectiles = projectiles;
+    }
+
     private ArrayList<Projectile> projectiles = new ArrayList();
+
+    public ArrayList<Tower> getTowers() {
+        return towers;
+    }
+
+    public void setTowers(ArrayList<Tower> towers) {
+        this.towers = towers;
+    }
+
     private ArrayList<Tower> towers = new ArrayList();
     private ArrayList<Enemy> enemies = new ArrayList();
 
@@ -68,6 +115,7 @@ public class GameSceneWrapper extends MainApplication {
         return gameMoney;
     }
 
+
     public void setGameMoney(int gameMoney) {
         this.gameMoney = gameMoney;
         gameMoneyText.setText("$: " + gameMoney);
@@ -94,8 +142,8 @@ public class GameSceneWrapper extends MainApplication {
         this.stage = stage;
         this.root = root;
         this.scene = scene;
-        System.out.println(getGameLevel());
-//        gameMoney = GameSettingDataMap.getStartingMoney(getGameLevel());
+        System.out.println(SceneWrapper.getGameLevel().toString());
+        setGameMoney((int) getGameMoneyMap().get(SceneWrapper.getGameLevel()));
 
         startStackPane = new StackPane();
         Text startIntroText = new Text(
@@ -146,16 +194,33 @@ public class GameSceneWrapper extends MainApplication {
         root.setBottomAnchor(gameStatusStackPane, 18.0);
         root.setRightAnchor(gameStatusStackPane, 18.0);
 
+        //setGameMoney((int) getGameMoneyMap().get(getGameLevel()));
+        //getGameLevel();
+        //final int startingMoney = (int) getGameMoneyMap().get(getGameLevel());
+        //setGameMoney(startingMoney);
+
         gameMoneyText.setFill(Color.GHOSTWHITE);
         gameMoneyText.setFont(Font.font(20));
         monumentHealthText.setFill(Color.GHOSTWHITE);
         monumentHealthText.setFont(Font.font(20));
         gameStatusStackPane.getChildren().addAll(
                 gameMoneyText,
-                monumentHealthText
+                monumentHealthText,
+                gameLevelText
         );
         gameMoneyText.setTranslateY(-28);
-
+        gameLevelText.setFill(Color.GHOSTWHITE);
+        gameLevelText.setFont(Font.font(20));
+        //gameLevelText.setText("Game Level: " + getGameLevel().toString());
+        gameLevelText.setTranslateY(-10);
+//        if (getGameLevel() == GameLevelType.EASY) {
+//            setGameMoney(1000);
+//        } else if (getGameLevel() == GameLevelType.NORMAL) {
+//            setGameMoney(500);
+//        } else if (getGameLevel() == GameLevelType.HARD){
+//            setGameMoney(100);
+//        }
+//        setGameMoney( (int) getGameMoneyMap().get(getGameLevel()));
         controls();
         loop();
     }
@@ -163,6 +228,7 @@ public class GameSceneWrapper extends MainApplication {
     public StackPane gameStatusStackPane = new StackPane();
     public Text gameMoneyText = new Text("$: ");
     public Text monumentHealthText = new Text("Health: ");
+    public Text gameLevelText = new Text("");
 
     private boolean checkIntersects(Node a, Node b) {
         return a.getBoundsInParent().intersects(b.getBoundsInParent());
@@ -284,8 +350,8 @@ public class GameSceneWrapper extends MainApplication {
 
     public void moveEnemy(int delta) {
         for (Enemy enemy : enemies) {
-            StackPane enetity = enemy.getStackPane();
-            enetity.setTranslateX(enetity.getTranslateX() + delta);
+            StackPane entity = enemy.getStackPane();
+            entity.setTranslateX(entity.getTranslateX() + delta);
         }
 
         Iterator<Enemy> iterator = enemies.iterator();
@@ -302,53 +368,67 @@ public class GameSceneWrapper extends MainApplication {
     private int frameTimeIndex = 0;
     private boolean arrayFilled = false;
 
+    public AnimationTimer getTimer() {
+        return timer;
+    }
+
+    public void setTimer(AnimationTimer timer) {
+        this.timer = timer;
+    }
+
+    private AnimationTimer timer;
+
     private void loop() {
-        AnimationTimer timer = new AnimationTimer() {
+        timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                if (isStopped) {
-                    return;
-                }
-                if (goLeft) {
-                    dx = -5;
-                }
-                if (goRight) {
-                    dx = 5;
-                }
-                if (goUp) {
-                    dy = -5;
-                }
-                if (goDown) {
-                    dy = 5;
-                }
-                if (!goLeft && !goRight) {
-                    dx = 0;
-                }
-                if (!goUp && !goDown) {
-                    dy = 0;
-                }
-                int xi = x, yi = y;
-                player.relocate(x += dx, y += dy);
-                if (isAvailableToMove()) {
-
-                } else {
-                    player.relocate(xi, yi);
-                }
-                shoot();
-                counter++;
-                spawnEnemy();
-                moveEnemy(enemySpeed);
-                triggerTowerShot();
-                handleGameMoney();
-                checkHit();
+                loopHandler();
             }
         };
         timer.start();
     }
 
+    public void loopHandler() {
+        if (isStopped) {
+            return;
+        }
+        if (goLeft) {
+            dx = -5;
+        }
+        if (goRight) {
+            dx = 5;
+        }
+        if (goUp) {
+            dy = -5;
+        }
+        if (goDown) {
+            dy = 5;
+        }
+        if (!goLeft && !goRight) {
+            dx = 0;
+        }
+        if (!goUp && !goDown) {
+            dy = 0;
+        }
+        int xi = x, yi = y;
+        player.relocate(x += dx, y += dy);
+        if (isAvailableToMove()) {
+
+        } else {
+            player.relocate(xi, yi);
+        }
+        shoot();
+        counter++;
+        spawnEnemy();
+        moveEnemy(enemySpeed);
+        triggerTowerShot();
+        handleGameMoney();
+        checkHit();
+    }
+
     private void handleGameMoney() {
         if (counter % gameMoneyIncrementSpeed == 0) {
-            setGameMoney(getGameMoney() + 50);
+            setGameMoney(getGameMoney() + moneyIncrementAmount);
         }
     }
 
@@ -361,7 +441,7 @@ public class GameSceneWrapper extends MainApplication {
         return true;
     }
 
-    private void triggerTowerShot() {
+    public void triggerTowerShot() {
         if (counter % 50 == 0) {
             for (Tower tower : towers) {
                 Projectile towerProj = tower.getProjectile();
@@ -416,17 +496,15 @@ public class GameSceneWrapper extends MainApplication {
         }
     }
 
-    private void onEnter() {
-<<<<<<< HEAD
+    public void onEnter() {
         boolean isIntersect = false;
         boolean isOnPath = false;
-=======
+
         if (y <= pathHeight) {
             modalToast(root, "cannot place the tower");
             return;
         }
 
->>>>>>> 79d9b0b542d429f9e684b4fe3e569d5f8185fa05
         Rectangle rectangle = new Rectangle(10, 10, Color.ORANGERED);
         rectangle.setCursor(Cursor.HAND);
         rectangle.setOnMousePressed((t) -> {
@@ -455,10 +533,6 @@ public class GameSceneWrapper extends MainApplication {
             }
             orgSceneX = t.getSceneX();
             orgSceneY = t.getSceneY();
-<<<<<<< HEAD
-            System.out.println(t.getSceneY());
-=======
->>>>>>> 79d9b0b542d429f9e684b4fe3e569d5f8185fa05
         });
 
         Tower tower = new Tower(rectangle);
@@ -517,7 +591,7 @@ public class GameSceneWrapper extends MainApplication {
         newGameButton.setMaxWidth(280);
         newGameButton.setTranslateY(40);
         newGameButton.setOnMouseClicked(mouseEvent -> {
-            initWelcomeScene();
+            initWelcomeScene(stage, root);
         });
         gameOverStackPane.getChildren().addAll(
                 gameOverText,

@@ -1,7 +1,6 @@
 package com.game;
 
-import com.main.model.GameLevelType;
-import com.main.model.GameScreenType;
+import com.game.model.GameLevelType;
 
 import java.util.HashMap;
 

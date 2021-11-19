@@ -23,7 +23,6 @@ public class TowerData {
                         TowerType.TYPE_A,
                         10,
                         50,
-                        new Rectangle(20, 20, Color.ORANGERED),
                         "typeA",
                         "typeA description"
                 )
@@ -34,7 +33,6 @@ public class TowerData {
                         TowerType.TYPE_A,
                         10,
                         50,
-                        new Rectangle(20, 20, Color.BLUE),
                         "typeA",
                         "typeA description"
                 )
@@ -45,15 +43,14 @@ public class TowerData {
             TowerType type,
             int damage,
             int price,
-            Shape shape,
             String name,
             String description
     ) {
         this.type = type;
         this.damage = damage;
         this.price = price;
-        this.shape = shape;
         this.name = name;
         this.description = description;
     }
+
 }

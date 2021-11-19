@@ -1,7 +1,6 @@
 package com.game;
 
-import com.game.config.Config;
-import com.main.model.GameLevelType;
+import com.game.model.GameLevelType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -15,14 +14,15 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-public class ConfigSceneWrapper extends MainApplication {
+public class ConfigSceneWrapper extends SceneWrapper {
 
     private AnchorPane root;
     private Stage stage;
     private Scene scene;
     private StackPane configStackPane;
 
-    private boolean isNameInvalid;
+    private boolean isNameValid;
+    private boolean isLevelValid;
 
     private TextField nameTextField;
     private Text errorText;
@@ -40,7 +40,7 @@ public class ConfigSceneWrapper extends MainApplication {
 
         Button toWelcomeSceneButton = new Button("To Welcome Screen");;
         toWelcomeSceneButton.setOnMouseClicked(event -> {
-            initWelcomeScene();
+            initWelcomeScene(stage, root);
         });
         toWelcomeSceneButton.getStyleClass().setAll("btn", "btn-default");
         toWelcomeSceneButton.setStyle("-fx-text-fill: white; -fx-background-color: transparent; -fx-border-color: transparent;");
@@ -56,10 +56,30 @@ public class ConfigSceneWrapper extends MainApplication {
         nameInputText.setFill(Color.GHOSTWHITE);
         nameInputText.setTranslateY(-80);
 
-        nameTextField = new TextField();
+        nameTextField = new TextField("Name: ");
         nameTextField.setStyle("-fx-text-fill: white; -fx-background-color: transparent; -fx-border-color: white;");
         nameTextField.setMaxWidth(200);
         nameTextField.setTranslateY(-40);
+        Button saveName = new Button("Save Name");
+        saveName.getStyleClass().setAll("btn", "btn-default");
+        saveName.setStyle("-fx-text-fill: white; -fx-background-color: transparent; -fx-border-color: white;");
+        saveName.setTranslateX(150);
+        saveName.setTranslateY(-40);
+
+        saveName.setOnMouseClicked(event -> {
+            String temp = nameTextField.getText();
+            setUsername(temp);
+            if (getUsername() == null || getUsername().trim().equals("")) {
+                setNameValid(false);
+            } else {
+                setNameValid(true);
+            }
+        });
+
+
+
+
+
 
         /**
          * LEVEL
@@ -71,7 +91,7 @@ public class ConfigSceneWrapper extends MainApplication {
         levelInputText.setFill(Color.GHOSTWHITE);
         levelInputText.setTranslateY(0);
 
-        for (GameLevelType level: gameLevelTypeArr) {
+        for (GameLevelType level: getGameLevelTypeArr()) {
             String text;
             int xTranslate = 0;
             if (level == GameLevelType.EASY) {
@@ -87,7 +107,16 @@ public class ConfigSceneWrapper extends MainApplication {
             levelButton.setAlignment(Pos.CENTER);
             levelButton.setOnMouseClicked(event -> {
                 modalToast(root, text + " selected");
-                setGameLevel(level);
+                if (text.equals("Easy")) {
+                    setGameLevel(GameLevelType.EASY);
+                    setLevelValid(true);
+                } else if (text.equals("Normal")) {
+                    setGameLevel(GameLevelType.NORMAL);
+                    setLevelValid(true);
+                } else if (text.equals("Hard")) {
+                    setGameLevel(GameLevelType.HARD);
+                    setLevelValid(true);
+                }
             });
             levelButton.getStyleClass().setAll("btn", "btn-default");
             levelButton.setStyle("-fx-text-fill: white; -fx-background-color: transparent; -fx-border-color: white;");
@@ -102,7 +131,15 @@ public class ConfigSceneWrapper extends MainApplication {
          */
         Button startButton = new Button("Start Game");;
         startButton.setOnMouseClicked(event -> {
-            onClickGameStart();
+            if (isNameValid()) {
+                if (isLevelValid()) {
+                    onClickGameStart();
+                } else {
+                    modalToast(root, "Choose a game level!");
+                }
+            } else {
+                modalToast(root, "Name is not valid!");
+            }
         });
         startButton.getStyleClass().setAll("btn", "btn-default");
         startButton.setStyle("-fx-text-fill: white; -fx-background-color: transparent; -fx-border-color: white;");
@@ -112,6 +149,7 @@ public class ConfigSceneWrapper extends MainApplication {
         configStackPane.getChildren().addAll(
                 nameInputText,
                 nameTextField,
+                saveName,
                 levelInputText,
                 startButton
         );
@@ -131,8 +169,22 @@ public class ConfigSceneWrapper extends MainApplication {
     }
 
     public void onClickGameStart() {
-        initGameScene();
+        initGameScene(stage, root);
     }
 
+    public boolean isNameValid() {
+        return isNameValid;
+    }
 
+    public void setNameValid(boolean nameValid) {
+        isNameValid = nameValid;
+    }
+
+    public boolean isLevelValid() {
+        return isLevelValid;
+    }
+
+    public void setLevelValid(boolean levelValid) {
+        isLevelValid = levelValid;
+    }
 }

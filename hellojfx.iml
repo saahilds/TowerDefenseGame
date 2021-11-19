@@ -20,6 +20,8 @@
     <orderEntry type="library" name="openjfx.javafx.fxml" level="project" />
     <orderEntry type="library" name="io.reactivex.rxjava2.rxjava" level="project" />
     <orderEntry type="library" name="io.reactivex.rxjavafx" level="project" />
+    <orderEntry type="library" name="org.testfx:testfx-core:4.0.15-alpha" level="project" />
+    <orderEntry type="library" name="org.testfx:testfx-junit:4.0.15-alpha" level="project" />
     <orderEntry type="library" name="Maven: junit:junit:4.13.1" level="project" />
     <orderEntry type="library" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
     <orderEntry type="library" name="Maven: org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0" level="project" />

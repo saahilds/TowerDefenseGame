@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-public class ConfigSceneWrapper extends MainApplication {
+public class ConfigSceneWrapper extends SceneWrapper {
 
     private AnchorPane root;
     private Stage stage;
@@ -41,7 +41,7 @@ public class ConfigSceneWrapper extends MainApplication {
 
         Button toWelcomeSceneButton = new Button("To Welcome Screen");;
         toWelcomeSceneButton.setOnMouseClicked(event -> {
-            initWelcomeScene();
+            initWelcomeScene(stage, root);
         });
         toWelcomeSceneButton.getStyleClass().setAll("btn", "btn-default");
         toWelcomeSceneButton.setStyle("-fx-text-fill: white; -fx-background-color: transparent; -fx-border-color: transparent;");
@@ -170,7 +170,7 @@ public class ConfigSceneWrapper extends MainApplication {
     }
 
     public void onClickGameStart() {
-        initGameScene();
+        initGameScene(stage, root);
     }
 
     public boolean isNameValid() {

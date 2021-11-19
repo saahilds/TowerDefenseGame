@@ -26,9 +26,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class GameSceneWrapper extends MainApplication {
+public class GameSceneWrapper extends SceneWrapper {
 
-    private int dx, dy, x = 150, y = 470, projectileSpeed = 10, gameMoneyIncrementSpeed = 50;
+    private int dx;
+    private int dy;
+    private int x = 150;
+    private int y = 470;
+    private int projectileSpeed = 10;
+
+    public int getGameMoneyIncrementSpeed() {
+        return gameMoneyIncrementSpeed;
+    }
+
+    private int gameMoneyIncrementSpeed = 50;
+
+    public int getCounter() {
+        return counter;
+    }
+
     private int counter = 0, enemySpeed = 4;
     private boolean goLeft, goRight, goUp, goDown, isShooting;
     private int spawnTime = 180;
@@ -97,8 +112,8 @@ public class GameSceneWrapper extends MainApplication {
         this.stage = stage;
         this.root = root;
         this.scene = scene;
-        //modalToast(this.root,getGameLevel().toString());
-        //setGameMoney((int) getGameMoneyMap().get(getGameLevel()));
+        System.out.println(SceneWrapper.getGameLevel().toString());
+        setGameMoney((int) getGameMoneyMap().get(SceneWrapper.getGameLevel()));
 
         startStackPane = new StackPane();
         Text startIntroText = new Text(
@@ -532,7 +547,7 @@ public class GameSceneWrapper extends MainApplication {
         newGameButton.setMaxWidth(280);
         newGameButton.setTranslateY(40);
         newGameButton.setOnMouseClicked(mouseEvent -> {
-            initWelcomeScene();
+            initWelcomeScene(stage, root);
         });
         gameOverStackPane.getChildren().addAll(
                 gameOverText,

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 
-public class WelcomeSceneWrapper extends MainApplication {
+public class WelcomeSceneWrapper extends SceneWrapper {
 
     private AnchorPane root;
     private Stage stage;
@@ -43,7 +43,7 @@ public class WelcomeSceneWrapper extends MainApplication {
         Button startButton = new Button("Start Game");
         startButton.setOnMouseClicked(event -> {
 //            initGameScene();
-            initConfigScene();
+            initConfigScene(stage, root);
         });
         startButton.getStyleClass().setAll("btn", "btn-default");
         startButton.setStyle("-fx-text-fill: white; -fx-background-color: transparent;");

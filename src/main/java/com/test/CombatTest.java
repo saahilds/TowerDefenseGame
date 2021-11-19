@@ -3,17 +3,17 @@ package com.test;
 import com.game.Enemy;
 import com.game.GameSceneWrapper;
 import com.main.MainApplication;
-import com.main.ScreensController;
+//import com.main.ScreensController;
 import com.main.game.DataController;
 import com.main.game.GameFlowController;
-import com.main.game.components.gameScreen.GameFlowControllerComponent;
+//import com.main.game.components.gameScreen.GameFlowControllerComponent;
 import com.main.game.components.gameScreen.TowerMenuComponent;
 import com.main.game.data.GameSettingDataMap;
 import com.main.game.entity.tower.TowerData;
 import com.main.model.GameLevelType;
 import com.main.model.GameScreenType;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
+//import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.testfx.framework.junit.ApplicationTest;
+//import org.testfx.framework.junit.ApplicationTest;
 
 import java.util.ArrayList;
 
@@ -57,26 +57,29 @@ public class CombatTest {
 
     @Test
     public void testUniqueTower() {
-       TowerMenuComponent easy = new TowerMenuComponent(GameLevelType.EASY);
-       boolean isNotUnique = false;
-       ArrayList<TowerData> towers = easy.getTowerDataItemList();
+        TowerMenuComponent easy = new TowerMenuComponent(GameLevelType.EASY);
+        boolean isNotUnique = false;
+        ArrayList<TowerData> towers = easy.getTowerDataItemList();
 
-       for (int i = 0; i < towers.size() - 1; i ++) {
-           if (towers.get(i).getDps() == towers.get(i + 1).getDps() //testing if adjacent towers have the same attributes
+        for (int i = 0; i < towers.size() - 1; i++) {
+            if (towers.get(i).getDps() == towers.get(i + 1).getDps()
+                   //testing if adjacent towers have the same attributes
                    && towers.get(i).getHealth() == towers.get(i + 1).getHealth()) {
-               isNotUnique = true;
-           }
-       }
-       if (towers.get(0).getDps() == towers.get(2).getDps() //testing if first and last towers have same attributes
+                isNotUnique = true;
+            }
+        }
+        if (towers.get(0).getDps() == towers.get(2).getDps()
+               //testing if first and last towers have same attributes
                && towers.get(0).getHealth() == towers.get(2).getHealth()) {
-           isNotUnique = true;
-       }
-       assertFalse(isNotUnique);
+            isNotUnique = true;
+        }
+        assertFalse(isNotUnique);
     }
 
     @Test
     public void testUniqueEnemy() {
-        GameSceneWrapper g = new GameSceneWrapper(mainstage, new AnchorPane(mainNode), new Scene(mainNode));
+        GameSceneWrapper g =
+                new GameSceneWrapper(mainstage, new AnchorPane(mainNode), new Scene(mainNode));
         g.spawnEnemy();
         g.spawnEnemy();
 

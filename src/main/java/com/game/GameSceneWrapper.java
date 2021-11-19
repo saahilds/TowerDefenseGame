@@ -1,9 +1,12 @@
 package com.game;
 
+//import com.game.components.gameScene.TowerData;
+import com.game.model.TowerType;
 import com.main.config.Config;
 import com.game.components.gameScene.TowerMenuComponent;
 //import com.main.model.GameLevelType;
 import javafx.animation.AnimationTimer;
+import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -12,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -148,6 +152,67 @@ public class GameSceneWrapper extends SceneWrapper {
             new Image(getClass().getResourceAsStream("/com/game/moon.png"))
     );
 
+    private TowerType towerSelected;
+
+    public TowerType getTowerSelected() {
+        return towerSelected;
+    }
+
+    public void setTowerSelected(TowerType towerSelected) {
+        this.towerSelected = towerSelected;
+    }
+    //private HashMap<TowerType, TowerData> towerDataMap = new HashMap<>() {{
+//        put(
+//                TowerType.TYPE_A,
+//                new TowerData(
+//                        TowerType.TYPE_A,
+//                        10,
+//                        50,
+//                        Color.RED,
+//                        //Rectangle(20, 20, Color.ORANGERED),
+//                        "Basic Tower",
+//                        "Tower with price of 50 and damage of 10"
+//                )
+//        );
+//        put(
+//                TowerType.TYPE_B,
+//                new TowerData(
+//                        TowerType.TYPE_B,
+//                        15,
+//                        75,
+//                        Color.BLUE,
+//                        " Fortified Tower",
+//                        "Tower with price of 100 and damage of 15"
+//                )
+//        );
+//        put(
+//                TowerType.TYPE_C,
+//                new TowerData(
+//                        TowerType.TYPE_C,
+//                        20,
+//                        100,
+//                        Color.YELLOW,
+//                        "Enchanted Tower",
+//                        "Tower with price of 100 and damage of 20"
+//                )
+//        );
+//        put(
+//                TowerType.TYPE_D,
+//                new TowerData(
+//                        TowerType.TYPE_D,
+//                        25,
+//                        125,
+//                        Color.RED,
+//                        "Best Tower",
+//                        "Tower with price of 125 and damage of 25"
+//                )
+//        );
+//    }};
+//
+//    public HashMap<TowerType, TowerData> getTowerDataMap() {
+//        return towerDataMap;
+//    }
+
 
     public GameSceneWrapper(
             Stage stage,
@@ -222,21 +287,56 @@ public class GameSceneWrapper extends SceneWrapper {
         gameStatusStackPane.getChildren().addAll(
                 gameMoneyText,
                 monumentHealthText,
-                gameLevelText
+                gameLevelText,
+                towerMenuText,
+                towerType1,
+                towerType2,
+                towerType3
         );
         gameMoneyText.setTranslateY(-28);
         gameLevelText.setFill(Color.GHOSTWHITE);
         gameLevelText.setFont(Font.font(20));
         //gameLevelText.setText("Game Level: " + getGameLevel().toString());
         gameLevelText.setTranslateY(-10);
-        //if (getGameLevel() == GameLevelType.EASY) {
-        //    setGameMoney(1000);
-        //} else if (getGameLevel() == GameLevelType.NORMAL) {
-        //    setGameMoney(500);
-        //} else if (getGameLevel() == GameLevelType.HARD){
-        //    setGameMoney(100);
-        //}
-        //setGameMoney( (int) getGameMoneyMap().get(getGameLevel()));
+
+        //gameLevelText.setText("Game Level: " + getGameLevel().toString());
+        gameLevelText.setTranslateY(-10);
+        towerMenuText.setFill(Color.GHOSTWHITE);
+        towerMenuText.setFont(Font.font(20));
+        towerMenuText.setTranslateX(-800);
+        towerMenuText.setTranslateY(-100);
+
+        towerType1.addEventFilter(KeyEvent.ANY, Event::consume);
+        towerType1.setFocusTraversable(false);
+
+        towerType1.setTextFill(Color.RED);
+        towerType1.setTranslateY(-75);
+        towerType1.setTranslateX(-800);
+        towerType1.setOnMouseClicked(event -> {
+            setTowerSelected(TowerType.TYPE_A);
+        });
+
+        towerType2.addEventFilter(KeyEvent.ANY, Event::consume);
+        towerType2.setFocusTraversable(false);
+        towerType2.setTextFill(Color.RED);
+        towerType2.setTranslateY(-50);
+        towerType2.setTranslateX(-800);
+        towerType2.setOnMouseClicked(event -> {
+            setTowerSelected(TowerType.TYPE_B);
+        });
+
+        towerType3.addEventFilter(KeyEvent.ANY, Event::consume);
+        towerType3.setFocusTraversable(false);
+
+
+        towerType3.setOnMouseClicked(event -> {
+            setTowerSelected(TowerType.TYPE_C);
+        });
+        towerType3.setTextFill(Color.RED);
+        towerType3.setTranslateY(-25);
+        towerType3.setTranslateX(-800);
+
+
         controls();
         loop();
     }
@@ -245,6 +345,14 @@ public class GameSceneWrapper extends SceneWrapper {
     private Text gameMoneyText = new Text("$: ");
     private Text monumentHealthText = new Text("Health: ");
     private Text gameLevelText = new Text("");
+
+    private Text towerMenuText = new Text("Tower Menu:");
+    private Button towerType1 = new Button("Tower 1 " + "Cost: " + 50);
+    //+ getTowerDataMap().get(TowerType.TYPE_A).getPrice());
+    private Button towerType2 = new Button("Tower 2 " + "Cost: " + 75);
+    //+ getTowerDataMap().get(TowerType.TYPE_B).getPrice());
+    private Button towerType3 = new Button("Tower 3 " + "Cost: " + 100);
+    //+ getTowerDataMap().get(TowerType.TYPE_C).getPrice());
 
     private boolean checkIntersects(Node a, Node b) {
         return a.getBoundsInParent().intersects(b.getBoundsInParent());

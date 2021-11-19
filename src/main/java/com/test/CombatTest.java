@@ -22,13 +22,14 @@ import javafx.stage.Stage;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.testfx.framework.junit.ApplicationTest;
 //import org.testfx.framework.junit.ApplicationTest;
 
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
-public class CombatTest {
+public class CombatTest extends ApplicationTest {
     private VBox gameFlowControllerEl;
     private GameFlowController gF;
 

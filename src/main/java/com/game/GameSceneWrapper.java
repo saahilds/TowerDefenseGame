@@ -161,57 +161,59 @@ public class GameSceneWrapper extends SceneWrapper {
     public void setTowerSelected(TowerType towerSelected) {
         this.towerSelected = towerSelected;
     }
-    //private HashMap<TowerType, TowerData> towerDataMap = new HashMap<>() {{
-//        put(
-//                TowerType.TYPE_A,
-//                new TowerData(
-//                        TowerType.TYPE_A,
-//                        10,
-//                        50,
-//                        Color.RED,
-//                        //Rectangle(20, 20, Color.ORANGERED),
-//                        "Basic Tower",
-//                        "Tower with price of 50 and damage of 10"
-//                )
-//        );
-//        put(
-//                TowerType.TYPE_B,
-//                new TowerData(
-//                        TowerType.TYPE_B,
-//                        15,
-//                        75,
-//                        Color.BLUE,
-//                        " Fortified Tower",
-//                        "Tower with price of 100 and damage of 15"
-//                )
-//        );
-//        put(
-//                TowerType.TYPE_C,
-//                new TowerData(
-//                        TowerType.TYPE_C,
-//                        20,
-//                        100,
-//                        Color.YELLOW,
-//                        "Enchanted Tower",
-//                        "Tower with price of 100 and damage of 20"
-//                )
-//        );
-//        put(
-//                TowerType.TYPE_D,
-//                new TowerData(
-//                        TowerType.TYPE_D,
-//                        25,
-//                        125,
-//                        Color.RED,
-//                        "Best Tower",
-//                        "Tower with price of 125 and damage of 25"
-//                )
-//        );
-//    }};
-//
-//    public HashMap<TowerType, TowerData> getTowerDataMap() {
-//        return towerDataMap;
-//    }
+
+    //    private HashMap<TowerType, TowerData> towerDataMap = new HashMap<>() {{
+    //        put(
+    //                TowerType.TYPE_A,
+    //                new TowerData(
+    //                        TowerType.TYPE_A,
+    //                        10,
+    //                        50,
+    //                        Color.RED,
+    //                        //Rectangle(20, 20, Color.ORANGERED),
+    //                        "Basic Tower",
+    //                        "Tower with price of 50 and damage of 10"
+    //                )
+    //        );
+    //        put(
+    //                TowerType.TYPE_B,
+    //                new TowerData(
+    //                        TowerType.TYPE_B,
+    //                        15,
+    //                        75,
+    //                        Color.BLUE,
+    //                        " Fortified Tower",
+    //                        "Tower with price of 100 and damage of 15"
+    //                )
+    //        );
+    //        put(
+    //                TowerType.TYPE_C,
+    //                new TowerData(
+    //                        TowerType.TYPE_C,
+    //                        20,
+    //                        100,
+    //                        Color.YELLOW,
+    //                        "Enchanted Tower",
+    //                        "Tower with price of 100 and damage of 20"
+    //                )
+    //        );
+    //        put(
+    //                TowerType.TYPE_D,
+    //                new TowerData(
+    //                        TowerType.TYPE_D,
+    //                        25,
+    //                        125,
+    //                        Color.RED,
+    //                        "Best Tower",
+    //                        "Tower with price of 125 and damage of 25"
+    //                )
+    //        );
+    //    }};
+    //
+    //    public HashMap<TowerType, TowerData> getTowerDataMap() {
+    //        return towerDataMap;
+    //    }
+
 
 
     public GameSceneWrapper(
@@ -307,7 +309,7 @@ public class GameSceneWrapper extends SceneWrapper {
         towerMenuText.setTranslateY(-100);
 
         towerType1.addEventFilter(KeyEvent.ANY, Event::consume);
-        towerType1.setFocusTraversable(false);
+        towerType1.setFocusTraversable(false); //prevents keys from iterating thru buttons
 
         towerType1.setTextFill(Color.RED);
         towerType1.setTranslateY(-75);
@@ -386,8 +388,15 @@ public class GameSceneWrapper extends SceneWrapper {
             case SPACE:
                 if (!isShooting) {
                     playerProjectile = new Projectile(
-                            new Rectangle(5, 5, Color.ORANGERED)
-                    );
+                            new Rectangle(5, 5, Color.YELLOW));
+                    if (getTowerSelected() == TowerType.TYPE_B) {
+                        playerProjectile = new Projectile(
+                                new Rectangle(5, 5, Color.ORANGE));
+                    } else if (getTowerSelected() == TowerType.TYPE_C) {
+                        playerProjectile = new Projectile(
+                                new Rectangle(5, 5, Color.RED));
+                    }
+
                     projectiles.add(playerProjectile);
                     playerProjectile.get().relocate(x + player.getRadius(), y);
                     root.getChildren().add(playerProjectile.get());
@@ -428,29 +437,32 @@ public class GameSceneWrapper extends SceneWrapper {
     }
 
     private void shoot() {
-        for (Projectile p : projectiles) {
-            Shape entity = p.get();
+        for (int p = 0; p < projectiles.size(); p++) {
+            Shape entity = projectiles.get(p).get();
             entity.relocate(
-                    entity.getLayoutX() + p.getDx(),
-                    (entity.getLayoutY() + p.getDy())
+                    entity.getLayoutX() + projectiles.get(p).getDx(),
+                    (entity.getLayoutY() + projectiles.get(p).getDy())
             );
-        }
+            projectiles.get(p).setRange(
+                    projectiles.get(p).getRange() + projectiles.get(p).getDy());
+            System.out.println(projectiles.get(p).getRange());
 
-        Iterator<Projectile> iterator = projectiles.iterator();
-        Projectile temp;
-        while (iterator.hasNext()) {
-            temp = iterator.next();
-            if (temp.get().getLayoutY() < root.getLayoutY()) {
-                iterator.remove();
-                root.getChildren().remove(temp.get());
+
+            Iterator<Projectile> iterator = projectiles.iterator();
+            Projectile temp;
+            while (iterator.hasNext()) {
+                temp = iterator.next();
+                if ((temp.get().getLayoutY() < root.getLayoutY())
+                        || (temp.getRange() <= 0)) {
+                    iterator.remove();
+                    root.getChildren().remove(temp.get());
+                }
             }
-        }
 
+        }
     }
 
-    @SuppressWarnings("checkstyle:WhitespaceAfter")
     private void spawnEnemy() {
-
         double spawnPosition = Math.random();
 
         int eBaseWidth = 40;
@@ -635,8 +647,13 @@ public class GameSceneWrapper extends SceneWrapper {
             modalToast(root, "cannot place the tower");
             return;
         }
+        Rectangle rectangle = new Rectangle(10, 10, Color.YELLOW);
+        if (getTowerSelected() == TowerType.TYPE_B) {
+            rectangle = new Rectangle(10, 10, Color.ORANGE);
+        } else if (getTowerSelected() == TowerType.TYPE_C) {
+            rectangle = new Rectangle(10, 10, Color.RED);
+        }
 
-        Rectangle rectangle = new Rectangle(10, 10, Color.ORANGERED);
         rectangle.setCursor(Cursor.HAND);
         rectangle.setOnMousePressed((t) -> {
             orgSceneX = t.getSceneX();
@@ -666,7 +683,9 @@ public class GameSceneWrapper extends SceneWrapper {
             orgSceneY = t.getSceneY();
         });
 
-        Tower tower = new Tower(rectangle);
+        Tower tower = new Tower(rectangle, getTowerSelected(),
+                Tower.getTowerAttributes().get(getTowerSelected())[0],
+                Tower.getTowerAttributes().get(getTowerSelected())[1]);
         root.getChildren().add(tower.get());
         tower.get().relocate(x, y);
         for (Tower wrapper : towers) {

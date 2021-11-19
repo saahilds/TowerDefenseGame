@@ -8,6 +8,16 @@ public class Projectile {
     private Shape shape;
     private boolean isCircle;
     private boolean isRectangle;
+    private int range = 100;
+    private int damage;
+
+    public int getRange() {
+        return range;
+    }
+
+    public void setRange(int range) {
+        this.range = range;
+    }
 
     public int getDx() {
         return dx;
@@ -28,9 +38,7 @@ public class Projectile {
     private int dx = 0;
     private int dy = -4;
 
-    public Projectile() {
-
-    }
+    //public Projectile() {}
     public Projectile(Circle circle) {
         shape = circle;
         isCircle = true;
@@ -41,10 +49,12 @@ public class Projectile {
         isRectangle = true;
     }
 
-    public Projectile(Rectangle rectangle, int dx, int dy) {
+    public Projectile(Rectangle rectangle, int dx, int dy, int range, int damage) {
         this(rectangle);
         setDx(dx);
         setDy(dy);
+        setRange(range);
+        setDamage(damage);
     }
 
     public Shape get() {
@@ -52,7 +62,10 @@ public class Projectile {
     }
 
     public int getDamage() {
-        return -50;
+        return damage;
     }
 
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
 }

@@ -1,7 +1,6 @@
 package com.game;
 
-import com.game.config.Config;
-import com.main.model.GameLevelType;
+import com.game.model.GameLevelType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

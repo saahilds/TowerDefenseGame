@@ -1,7 +1,7 @@
 package com.game;
 
 import com.game.config.Config;
-import com.main.model.GameLevelType;
+import com.game.model.GameLevelType;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.geometry.Side;
@@ -32,7 +32,7 @@ public class SceneWrapper {
         SceneWrapper.username = username;
     }
 
-    private static GameLevelType gameLevel;
+    private static GameLevelType gameLevel = GameLevelType.EASY;
 
     public static GameLevelType getGameLevel() {
         return SceneWrapper.gameLevel;

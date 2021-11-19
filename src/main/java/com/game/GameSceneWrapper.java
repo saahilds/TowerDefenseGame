@@ -40,8 +40,21 @@ public class GameSceneWrapper extends SceneWrapper {
 
     private int gameMoneyIncrementSpeed = 50;
 
+    public int getMoneyIncrementAmount() {
+        return moneyIncrementAmount;
+    }
+
+    public void setMoneyIncrementAmount(int moneyIncrementAmount) {
+        this.moneyIncrementAmount = moneyIncrementAmount;
+    }
+
+    private int moneyIncrementAmount = 50;
+
     public int getCounter() {
         return counter;
+    }
+    public void setCounter(int counter) {
+        this.counter = counter;
     }
 
     private int counter = 0, enemySpeed = 4;
@@ -57,7 +70,24 @@ public class GameSceneWrapper extends SceneWrapper {
     private Circle player = new Circle(x, y, 10, Color.GRAY);
     private Enemy enemy;
 
+    public ArrayList<Projectile> getProjectiles() {
+        return projectiles;
+    }
+
+    public void setProjectiles(ArrayList<Projectile> projectiles) {
+        this.projectiles = projectiles;
+    }
+
     private ArrayList<Projectile> projectiles = new ArrayList();
+
+    public ArrayList<Tower> getTowers() {
+        return towers;
+    }
+
+    public void setTowers(ArrayList<Tower> towers) {
+        this.towers = towers;
+    }
+
     private ArrayList<Tower> towers = new ArrayList();
     private ArrayList<Enemy> enemies = new ArrayList();
 
@@ -338,53 +368,67 @@ public class GameSceneWrapper extends SceneWrapper {
     private int frameTimeIndex = 0;
     private boolean arrayFilled = false;
 
+    public AnimationTimer getTimer() {
+        return timer;
+    }
+
+    public void setTimer(AnimationTimer timer) {
+        this.timer = timer;
+    }
+
+    private AnimationTimer timer;
+
     private void loop() {
-        AnimationTimer timer = new AnimationTimer() {
+        timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                if (isStopped) {
-                    return;
-                }
-                if (goLeft) {
-                    dx = -5;
-                }
-                if (goRight) {
-                    dx = 5;
-                }
-                if (goUp) {
-                    dy = -5;
-                }
-                if (goDown) {
-                    dy = 5;
-                }
-                if (!goLeft && !goRight) {
-                    dx = 0;
-                }
-                if (!goUp && !goDown) {
-                    dy = 0;
-                }
-                int xi = x, yi = y;
-                player.relocate(x += dx, y += dy);
-                if (isAvailableToMove()) {
-
-                } else {
-                    player.relocate(xi, yi);
-                }
-                shoot();
-                counter++;
-                spawnEnemy();
-                moveEnemy(enemySpeed);
-                triggerTowerShot();
-                handleGameMoney();
-                checkHit();
+                loopHandler();
             }
         };
         timer.start();
     }
 
+    public void loopHandler() {
+        if (isStopped) {
+            return;
+        }
+        if (goLeft) {
+            dx = -5;
+        }
+        if (goRight) {
+            dx = 5;
+        }
+        if (goUp) {
+            dy = -5;
+        }
+        if (goDown) {
+            dy = 5;
+        }
+        if (!goLeft && !goRight) {
+            dx = 0;
+        }
+        if (!goUp && !goDown) {
+            dy = 0;
+        }
+        int xi = x, yi = y;
+        player.relocate(x += dx, y += dy);
+        if (isAvailableToMove()) {
+
+        } else {
+            player.relocate(xi, yi);
+        }
+        shoot();
+        counter++;
+        spawnEnemy();
+        moveEnemy(enemySpeed);
+        triggerTowerShot();
+        handleGameMoney();
+        checkHit();
+    }
+
     private void handleGameMoney() {
         if (counter % gameMoneyIncrementSpeed == 0) {
-            setGameMoney(getGameMoney() + 50);
+            setGameMoney(getGameMoney() + moneyIncrementAmount);
         }
     }
 
@@ -397,7 +441,7 @@ public class GameSceneWrapper extends SceneWrapper {
         return true;
     }
 
-    private void triggerTowerShot() {
+    public void triggerTowerShot() {
         if (counter % 50 == 0) {
             for (Tower tower : towers) {
                 Projectile towerProj = tower.getProjectile();
@@ -452,7 +496,7 @@ public class GameSceneWrapper extends SceneWrapper {
         }
     }
 
-    private void onEnter() {
+    public void onEnter() {
         boolean isIntersect = false;
         boolean isOnPath = false;
 

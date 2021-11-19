@@ -10,7 +10,8 @@ module com.main {
     requires hamcrest.core;
     requires javafx.fxml;
     requires rxjava;
-    requires org.testfx.junit;
+    requires testfx.junit;
+//    requires org.testfx.junit;
 
     opens com.main to javafx.fxml;
     exports com.main;

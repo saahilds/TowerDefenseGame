@@ -438,16 +438,14 @@ public class GameSceneWrapper extends MainApplication {
     }
 
     private void onEnter() {
-//<<<<<<< HEAD
         boolean isIntersect = false;
         boolean isOnPath = false;
-//=======
+
         if (y <= pathHeight) {
             modalToast(root, "cannot place the tower");
             return;
         }
 
-//>>>>>>> 79d9b0b542d429f9e684b4fe3e569d5f8185fa05
         Rectangle rectangle = new Rectangle(10, 10, Color.ORANGERED);
         rectangle.setCursor(Cursor.HAND);
         rectangle.setOnMousePressed((t) -> {
@@ -476,10 +474,6 @@ public class GameSceneWrapper extends MainApplication {
             }
             orgSceneX = t.getSceneX();
             orgSceneY = t.getSceneY();
-//<<<<<<< HEAD
-            System.out.println(t.getSceneY());
-//=======
-//>>>>>>> 79d9b0b542d429f9e684b4fe3e569d5f8185fa05
         });
 
         Tower tower = new Tower(rectangle);

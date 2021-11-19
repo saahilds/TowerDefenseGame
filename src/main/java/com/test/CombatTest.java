@@ -86,6 +86,13 @@ public class CombatTest extends ApplicationTest {
 
         ArrayList<Enemy> enemies = g.getEnemies();
         assertFalse(enemies.get(0).getDamage() == enemies.get(1).getDamage());
-
     }
+    @Test
+    public void checkCombatScreenInit() { // check if gameOverScreen is initialized
+        assertNotNull(mainNode);
+    }
+
+
+
+
 }

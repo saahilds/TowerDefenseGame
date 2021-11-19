@@ -47,6 +47,11 @@ public class Enemy {
     private HealthBar hpBar;
     private int damage = 10;
     private int maxHP = 100;
+
+    public int getCurrHP() {
+        return currHP;
+    }
+
     private int currHP = 100;
 
     public Enemy() {

@@ -6,7 +6,6 @@ import com.main.config.Config;
 import com.game.components.gameScene.TowerMenuComponent;
 //import com.main.model.GameLevelType;
 import javafx.animation.AnimationTimer;
-import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -15,7 +14,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -244,8 +242,8 @@ public class GameSceneWrapper extends SceneWrapper {
         //gameLevelText.setText("Game Level: " + getGameLevel().toString());
         gameLevelText.setTranslateY(-10);
 
-        controls();
-        loop();
+        initKeyController();
+        initFrameLoop();
     }
 
     private StackPane gameStatusStackPane = new StackPane();
@@ -253,11 +251,9 @@ public class GameSceneWrapper extends SceneWrapper {
     private Text monumentHealthText = new Text("Health: ");
     private Text gameLevelText = new Text("");
 
-    private boolean checkIntersects(Node a, Node b) {
-        return a.getBoundsInParent().intersects(b.getBoundsInParent());
-    }
+    
 
-    private void controls() {
+    private void initKeyController() {
 
         scene.setOnKeyPressed(event -> {
             KeyCode key = event.getCode();
@@ -301,7 +297,7 @@ public class GameSceneWrapper extends SceneWrapper {
                     break;
                 }
             case ENTER:
-                onEnter();
+                onPressEnter();
                 break;
             case ESCAPE:
                 isStopped = !isStopped;
@@ -364,14 +360,12 @@ public class GameSceneWrapper extends SceneWrapper {
 
     private void spawnEnemy() {
         double spawnPosition = Math.random();
-
         int eBaseWidth = 40;
         int eBaseHeight = 40;
         int eBaseHealth = 100;
         int eBaseDamage = 10;
         double ex = (int) (root.getLayoutX());
         int ey = (int) ((100 - eBaseHeight) * spawnPosition);
-
         if (counter % spawnTime == 0) {
             int min = 1;
             int max = 5;
@@ -381,7 +375,6 @@ public class GameSceneWrapper extends SceneWrapper {
             enemies.add(enemy);
             root.getChildren().add(enemy.getStackPane());
         }
-
     }
 
     public void moveEnemy(int delta) {
@@ -414,7 +407,7 @@ public class GameSceneWrapper extends SceneWrapper {
 
     private AnimationTimer timer;
 
-    private void loop() {
+    private void initFrameLoop() {
         timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -466,7 +459,7 @@ public class GameSceneWrapper extends SceneWrapper {
         moveEnemy(enemySpeed);
         triggerTowerShot();
         handleGameMoney();
-        checkHit();
+        handleProjectileHit();
     }
 
     private void handleGameMoney() {
@@ -477,7 +470,7 @@ public class GameSceneWrapper extends SceneWrapper {
 
     private boolean isAvailableToMove() {
         for (Tower wrapper : towers) {
-            if (checkIntersects(wrapper.get(), player)) {
+            if (Util.isIntersecting(wrapper.get(), player)) {
                 return false;
             }
         }
@@ -495,7 +488,7 @@ public class GameSceneWrapper extends SceneWrapper {
         }
     }
 
-    private void checkHit() {
+    private void handleProjectileHit() {
         Iterator<Projectile> projectileIterator = projectiles.iterator();
         Iterator<Enemy> enemyIterator = enemies.iterator();
         Projectile p;
@@ -507,7 +500,7 @@ public class GameSceneWrapper extends SceneWrapper {
 
             while (enemyIterator.hasNext()) {
                 e = enemyIterator.next();
-                if (checkIntersects(p.get(), e.getStackPane())) {
+                if (Util.isIntersecting(p.get(), e.getStackPane())) {
                     int hpf = e.applyDamage(p.getDamage());
                     root.getChildren().remove(p.get());
                     if (hpf <= 0) {
@@ -524,7 +517,7 @@ public class GameSceneWrapper extends SceneWrapper {
         enemyIterator = enemies.iterator();
         while (enemyIterator.hasNext()) {
             e = enemyIterator.next();
-            if (checkIntersects(monument.get(), e.getStackPane())) {
+            if (Util.isIntersecting(monument.get(), e.getStackPane())) {
                 int hpf = monument.applyDamage(e.getDamage());
                 System.out.println(hpf);
                 root.getChildren().remove(e.getStackPane());
@@ -539,7 +532,7 @@ public class GameSceneWrapper extends SceneWrapper {
         }
     }
 
-    public void onEnter() {
+    public void onPressEnter() {
         boolean isIntersect = false;
         boolean isOnPath = false;
 
@@ -589,7 +582,7 @@ public class GameSceneWrapper extends SceneWrapper {
         root.getChildren().add(tower.get());
         tower.get().relocate(x, y);
         for (Tower wrapper : towers) {
-            if (checkIntersects(tower.get(), wrapper.get())) {
+            if (Util.isIntersecting(tower.get(), wrapper.get())) {
                 isIntersect = true;
                 break;
             }

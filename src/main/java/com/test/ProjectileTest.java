@@ -59,7 +59,7 @@ public class ProjectileTest extends ApplicationTest {
 
     @Test
     public void projectTimeTest1() {
-        gameSceneWrapper.onEnter();
+        gameSceneWrapper.onPressEnter();
         gameSceneWrapper.setCounter(50);
         gameSceneWrapper.triggerTowerShot();
         assertTrue(gameSceneWrapper.getProjectiles().size() == 1);
@@ -67,7 +67,7 @@ public class ProjectileTest extends ApplicationTest {
 
     @Test
     public void projectTimeTest2() {
-        gameSceneWrapper.onEnter();
+        gameSceneWrapper.onPressEnter();
         gameSceneWrapper.setCounter(50);
         gameSceneWrapper.triggerTowerShot();
         gameSceneWrapper.setCounter(100);
@@ -77,7 +77,7 @@ public class ProjectileTest extends ApplicationTest {
 
     @Test
     public void projectTimeTest3() {
-        gameSceneWrapper.onEnter();
+        gameSceneWrapper.onPressEnter();
         gameSceneWrapper.setCounter(50);
         gameSceneWrapper.triggerTowerShot();
         gameSceneWrapper.setCounter(100);

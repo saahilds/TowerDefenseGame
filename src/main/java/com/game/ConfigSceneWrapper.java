@@ -3,9 +3,11 @@ package com.game;
 import com.game.model.GameLevelType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -51,7 +53,7 @@ public class ConfigSceneWrapper extends SceneWrapper {
         root.setLeftAnchor(toWelcomeSceneButton, 8.0);
 
         Text nameInputText = new Text(
-                "Type your name"
+                "Type your name (press ENTER to save)"
         );
         nameInputText.setFont(Font.font("Verdana", 20));
         nameInputText.setFill(Color.GHOSTWHITE);
@@ -62,27 +64,6 @@ public class ConfigSceneWrapper extends SceneWrapper {
                 + "-fx-background-color: transparent; -fx-border-color: white;");
         nameTextField.setMaxWidth(200);
         nameTextField.setTranslateY(-40);
-        Button saveName = new Button("Save Name");
-        saveName.getStyleClass().setAll("btn", "btn-default");
-        saveName.setStyle("-fx-text-fill: white; "
-                + "-fx-background-color: transparent; -fx-border-color: white;");
-        saveName.setTranslateX(150);
-        saveName.setTranslateY(-40);
-
-        saveName.setOnMouseClicked(event -> {
-            String temp = nameTextField.getText();
-            setUsername(temp);
-            if (getUsername() == null || getUsername().trim().equals("")) {
-                setNameValid(false);
-            } else {
-                setNameValid(true);
-            }
-        });
-
-
-
-
-
 
         /**
          * LEVEL
@@ -154,7 +135,6 @@ public class ConfigSceneWrapper extends SceneWrapper {
         configStackPane.getChildren().addAll(
                 nameInputText,
                 nameTextField,
-                saveName,
                 levelInputText,
                 startButton
         );
@@ -172,6 +152,29 @@ public class ConfigSceneWrapper extends SceneWrapper {
         root.setLeftAnchor(configStackPane, 0.0);
         root.setBottomAnchor(configStackPane, 0.0);
         root.setRightAnchor(configStackPane, 0.0);
+
+        scene.setOnKeyPressed(event -> {
+            KeyCode key = event.getCode();
+            switch (key) {
+                case ENTER:
+                    onClickEnter();
+                    break;
+                default:
+                    break;
+            }
+        });
+    }
+
+    public void onClickEnter() {
+        String userName = nameTextField.getText();
+        setUsername(userName);
+        if (getUsername() == null || getUsername().trim().equals("")) {
+            modalToast(root, "Invalid name: " + userName + "!");
+            setNameValid(false);
+        } else {
+            modalToast(root, "Welcome " + userName + "!");
+            setNameValid(true);
+        }
     }
 
     public void onClickGameStart() {

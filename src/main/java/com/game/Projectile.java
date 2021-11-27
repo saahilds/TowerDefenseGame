@@ -8,7 +8,7 @@ public class Projectile {
     private Shape shape;
     private boolean isCircle;
     private boolean isRectangle;
-    private int range = 100;
+    private int range = 1000;
     private int damage;
 
     public int getRange() {

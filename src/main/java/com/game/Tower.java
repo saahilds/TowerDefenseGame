@@ -1,5 +1,6 @@
 package com.game;
 
+import com.game.components.gameScene.TowerData;
 import com.game.model.TowerType;
 //import javafx.event.EventHandler;
 //import javafx.scene.input.MouseEvent;
@@ -7,39 +8,11 @@ import javafx.scene.paint.Color;
 //import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Tower {
-    private TowerType towerType;
-    private int price;
-    private int damage;
-    private static HashMap<TowerType, int[]> towerAttributes = new HashMap<>() {{
-            int[] a = new int[2];
-            a[0] = 50;
-            a[1] = -10;
-            put(TowerType.TYPE_A, a);
-            int[] b = new int[2];
-            b[0] = 75;
-            b[1] = -15;
-            put(TowerType.TYPE_B, b);
-            int[] c = new int[2];
-            c[0] = 100;
-            c[1] = -20;
-            put(TowerType.TYPE_C, c);
-        }};
-
-    public static HashMap<TowerType, int[]> getTowerAttributes() {
-        return towerAttributes;
-    }
-
-    public TowerType getTowerType() {
-        return towerType;
-    }
-
-    public void setTowerType(TowerType towerType) {
-        this.towerType = towerType;
-    }
-
     private Rectangle shape;
 
     public int getDx() {
@@ -70,15 +43,27 @@ public class Tower {
         this.range = range;
     }
 
-    public Tower() {
-
+    public Rectangle getShape() {
+        return shape;
     }
 
-    public Tower(Rectangle rectangle, TowerType towerType, int price, int damage) {
-        shape = rectangle;
-        this.towerType = towerType;
-        this.price = price;
-        this.damage = damage;
+    public void setShape(Rectangle shape) {
+        this.shape = shape;
+    }
+
+    public TowerData getTowerData() {
+        return towerData;
+    }
+
+    public void setTowerData(TowerData towerData) {
+        this.towerData = towerData;
+    }
+
+    private TowerData towerData;
+
+    public Tower(Rectangle rectangle, TowerData towerData) {
+        this.shape = rectangle;
+        this.towerData = towerData;
     }
 
 
@@ -86,46 +71,37 @@ public class Tower {
         return shape;
     }
 
-    public Projectile getProjectile() {
-        if (towerType == TowerType.TYPE_A) {
-            return new Projectile(
-                    new Rectangle(10, 10, Color.YELLOW),
-                    getDx(),
-                    getDy(),
-                    getRange(),
-                    getDamage());
+    public ArrayList<Projectile> getProjectileArrayList() {
 
-        } else if (towerType == TowerType.TYPE_B) {
-            return new Projectile(
-                    new Rectangle(10, 10, Color.ORANGE),
-                    getDx(),
-                    getDy(),
-                    getRange(),
-                    getDamage());
-        }
-
-        return new Projectile(
-                    new Rectangle(10, 10, Color.RED),
-                    getDx(),
-                    getDy(),
-                    getRange(),
-                    getDamage());
-
+        return new ArrayList<Projectile>() {{
+            Rectangle r1 = new Rectangle(10, 10);
+            Rectangle r2 = new Rectangle(10, 10);
+            Rectangle r3 = new Rectangle(10, 10);
+            r1.setFill(Color.GHOSTWHITE);
+            r2.setFill(Color.GHOSTWHITE);
+            r3.setFill(Color.GHOSTWHITE);
+            add(new Projectile(
+                    new Rectangle(10, 10),
+                    -1,
+                    -1,
+                    1000,
+                    100
+            ));
+            add(new Projectile(
+                    new Rectangle(10, 10),
+                    0,
+                    -1,
+                    1000,
+                    100
+            ));
+            add(new Projectile(
+                    new Rectangle(10, 10),
+                    +1,
+                    -1,
+                    1000,
+                    100
+            ));
+        }};
     }
 
-    public int getDamage() {
-        return damage;
-    }
-
-    public void setDamage(int damage) {
-        this.damage = damage;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public int getPrice() {
-        return price;
-    }
 }

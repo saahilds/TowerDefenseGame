@@ -1,11 +1,17 @@
 package com.game;
 
+import com.game.components.gameScene.TowerData;
 import com.game.model.GameLevelType;
+import com.game.model.TowerType;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class GameSettingDataMap {
-    private static HashMap<GameLevelType, Integer> startingMoneyMap  = new HashMap<>() {
+    private static HashMap<GameLevelType, Integer> startingMoneyMap = new HashMap<>() {
         {
             put(GameLevelType.EASY, 1000);
             put(GameLevelType.NORMAL, 500);
@@ -29,7 +35,7 @@ public class GameSettingDataMap {
         return gameLevelTextMap;
     }
 
-    private static HashMap<GameLevelType, Integer> startingMonumentHealthMap  = new HashMap<>() {
+    private static HashMap<GameLevelType, Integer> startingMonumentHealthMap = new HashMap<>() {
         {
             put(GameLevelType.EASY, 1000);
             put(GameLevelType.NORMAL, 500);

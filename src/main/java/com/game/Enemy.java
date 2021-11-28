@@ -4,12 +4,17 @@ import com.main.game.entity.HealthBar;
 //import javafx.scene.Group;
 //import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
+
+import java.io.InputStream;
 
 public class Enemy {
     private Rectangle shape;
@@ -110,8 +115,9 @@ public class Enemy {
             currHP = maxHP;
         }
         Rectangle rectangle = new Rectangle(w, h);
-        rectangle.setFill(getImage());
-
+        InputStream imgStream = getImageInputStream();
+        rectangle.setFill(new ImagePattern(new Image(imgStream)));
+        rectangle.setStyle("-fx-background-position: bottom;");
         shape = rectangle;
         text = new Text(currHP + "/" + maxHP);
         text.setFill(Color.GRAY);
@@ -127,7 +133,26 @@ public class Enemy {
         return stackPane;
     }
 
-    private ImagePattern getImage() {
+    private InputStream getImageInputStream() {
+        InputStream imgStram = getClass().getResourceAsStream("/com/game/dino_09.gif");;
+        if (isBoss) {
+            imgStram = getClass().getResourceAsStream("/com/game/dino_10.gif");
+        } else if (level == 1) {
+            imgStram = getClass().getResourceAsStream("/com/game/dino_09.gif");
+        } else if (level == 2) {
+            imgStram = getClass().getResourceAsStream("/com/game/dino_07.gif");
+        } else if (level == 3) {
+            imgStram = getClass().getResourceAsStream("/com/game/dino_06.gif");
+        } else if (level == 4) {
+            imgStram = getClass().getResourceAsStream("/com/game/dino_04.gif");
+//        } else if (level == 5) {
+        } else {
+            imgStram = getClass().getResourceAsStream("/com/game/dino_08.gif");
+        }
+        return imgStram;
+    }
+
+    private Image getImage() {
         Image img = new Image(getClass().getResourceAsStream("/com/game/dino_09.gif"));;
         if (isBoss) {
             img = new Image(getClass().getResourceAsStream("/com/game/dino_10.gif"));
@@ -143,7 +168,7 @@ public class Enemy {
         } else {
             img = new Image(getClass().getResourceAsStream("/com/game/dino_08.gif"));
         }
-        return new ImagePattern(img);
+        return img;
     }
 
     public int applyDamage(int delta) {

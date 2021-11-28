@@ -410,26 +410,27 @@ public class GameSceneWrapper extends SceneWrapper {
         int eBaseDamage = 10;
         double ex = (int) (root.getLayoutX());
 //        int ey = (int) (Config.ENEMY_SPAWN_Y * spawnPosition);
-        int ey = (int) (path.getBoundsInParent().getMinY() + path.getBoundsInParent().getMaxY()) / 2 - 50;
-        if (counter % spawnTime == 0) {
-            int min = 1;
-            int max = 5;
-            int enemyLevel = min + (int) (Math.random() * ((max - min) + 1));
-            boolean isBoss = false;
-            enemy = new Enemy(eBaseWidth, eBaseHeight, enemyLevel, eBaseHealth, eBaseDamage, isBoss);
-            enemy.getStackPane().relocate(ex, ey);
-            enemies.add(enemy);
-            root.getChildren().add(enemy.getStackPane());
-        }
+        int ey = (int) (path.getBoundsInParent().getMinY() + path.getBoundsInParent().getMaxY()) / 2;
+
         if (counter % 600 == 0) {
             modalToast(root, "Boss is spawned!");
             int enemyLevel = 10;
             boolean isBoss = true;
             enemy = new Enemy(eBaseWidth, eBaseHeight, enemyLevel, eBaseHealth, eBaseDamage, isBoss);
-            enemy.getStackPane().relocate(ex, ey);
-            enemies.add(enemy);
-            root.getChildren().add(enemy.getStackPane());
+        } else if (counter % spawnTime == 0) {
+            int min = 1;
+            int max = 5;
+            int enemyLevel = min + (int) (Math.random() * ((max - min) + 1));
+            boolean isBoss = false;
+            enemy = new Enemy(eBaseWidth, eBaseHeight, enemyLevel, eBaseHealth, eBaseDamage, isBoss);
+        } else {
+            return;
         }
+        enemy.getStackPane().relocate(ex, ey);
+        enemies.add(enemy);
+        root.getChildren().add(enemy.getStackPane());
+        StackPane wrapper = enemy.getStackPane();
+        wrapper.setTranslateY(wrapper.getTranslateY() - enemy.getShape().getHeight());
     }
 
     public void moveEnemy(int delta) {

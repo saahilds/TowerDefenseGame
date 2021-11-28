@@ -66,7 +66,7 @@ public class SceneWrapper {
 
     private BackgroundImage myBI = new BackgroundImage(
             new Image(
-                    getClass().getResourceAsStream("/com/game/bg5.gif"),
+                    getClass().getResourceAsStream("/com/game/bg7.gif"),
                     1100,
                     1100, false, false),
             BackgroundRepeat.NO_REPEAT,

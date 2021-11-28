@@ -111,6 +111,7 @@ public class Enemy {
         }
         Rectangle rectangle = new Rectangle(w, h);
         rectangle.setFill(getImage());
+
         shape = rectangle;
         text = new Text(currHP + "/" + maxHP);
         text.setFill(Color.GRAY);

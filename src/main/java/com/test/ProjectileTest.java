@@ -23,7 +23,7 @@ public class ProjectileTest extends ApplicationTest {
 
     BackgroundImage myBI = new BackgroundImage(
             new Image(
-                    getClass().getResourceAsStream("/com/game/bg5.gif"),
+                    getClass().getResourceAsStream("/com/game/bg8.gif"),
                     1100,
                     1100, false, false),
             BackgroundRepeat.NO_REPEAT,

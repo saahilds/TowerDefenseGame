@@ -3,12 +3,9 @@ package com.game;
 //import com.game.components.gameScene.TowerData;
 
 import com.game.components.gameScene.TowerData;
-import com.game.model.TowerType;
-import com.main.config.Config;
+import com.game.config.Config;
 import com.game.components.gameScene.TowerMenuComponent;
-//import com.main.model.GameLevelType;
 import javafx.animation.AnimationTimer;
-import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -30,17 +27,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-//import java.util.HashMap;
 import java.util.Iterator;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 import static com.game.GameSettingDataMap.getStartingMonumentHealth;
 
 public class GameSceneWrapper extends SceneWrapper {
 
-    private int dx;
-    private int dy;
     private int x = 150;
     private int y = 470;
     private int projectileSpeed = 10;
@@ -98,7 +91,7 @@ public class GameSceneWrapper extends SceneWrapper {
     private Scene scene;
 
     private Projectile playerProjectile;
-    private Circle player = new Circle(x, y, 10, Color.GRAY);
+    private Circle player = new Circle(x, y, 10, Color.RED);
     private Enemy enemy;
 
     public ArrayList<Projectile> getProjectiles() {
@@ -175,10 +168,12 @@ public class GameSceneWrapper extends SceneWrapper {
     );
 
     private StackPane gameStatusStackPane = new StackPane();
+    private Rectangle path;
     private Text gameMoneyText = new Text("$: ");
     private Text monumentHealthText = new Text("Health: ");
     private Text gameLevelText = new Text("");
     private Text gameSecondsText = new Text("Time: ");
+
 
     public TowerData getPurchaseSelectedTowerData() {
         return towerMenuComponent.getSelectedTowerData();
@@ -189,12 +184,20 @@ public class GameSceneWrapper extends SceneWrapper {
             AnchorPane root,
             Scene scene
     ) {
+        /**
+         * set local variable
+         */
         this.stage = stage;
         this.root = root;
         this.scene = scene;
+        /**
+         * init config Data: game Money and Monument health
+         */
         setGameMoney((int) getGameMoneyMap().get(SceneWrapper.getGameLevel()));
         setMonumentHealth(getStartingMonumentHealth(SceneWrapper.getGameLevel()));
-
+        /**
+         * init tutorial screen
+         */
         startStackPane = new StackPane();
         Text startIntroText = new Text(
                 "SPACE: shoot\n"
@@ -222,17 +225,21 @@ public class GameSceneWrapper extends SceneWrapper {
         );
         startButton.setTranslateY(100);
 
-        this.root.getChildren().add(startStackPane);
-        this.root.setTopAnchor(startStackPane, 0.0);
-        this.root.setLeftAnchor(startStackPane, 0.0);
-        this.root.setBottomAnchor(startStackPane, 0.0);
-        this.root.setRightAnchor(startStackPane, 0.0);
+        root.getChildren().add(startStackPane);
+        root.setTopAnchor(startStackPane, 0.0);
+        root.setLeftAnchor(startStackPane, 0.0);
+        root.setBottomAnchor(startStackPane, 0.0);
+        root.setRightAnchor(startStackPane, 0.0);
 
         // FIXME: 2021/11/27
         initGame();
     }
 
+    /**
+     * when the GAME START button pressed
+     */
     private void initGame() {
+        // remove tutorial(intro) screen
         root.getChildren().remove(startStackPane);
 
         Rectangle monumentRect = new Rectangle(60, 60);
@@ -269,6 +276,7 @@ public class GameSceneWrapper extends SceneWrapper {
         gameSecondsText.setFont(Font.font(20));
         gameSecondsText.setTranslateY(-84);
 
+        // tower setting
         Function<String, Void> func = (String string) -> {
             this.test(string);
             return null;
@@ -276,9 +284,20 @@ public class GameSceneWrapper extends SceneWrapper {
         towerMenuComponent = new TowerMenuComponent(getGameLevel(), this.root, func);
         towerMenuComponent.addEventFilter(KeyEvent.ANY, Event::consume);
         towerMenuComponent.setFocusTraversable(false);
-        this.root.getChildren().add(towerMenuComponent);
-        this.root.setLeftAnchor(towerMenuComponent, 0.0);
-        this.root.setBottomAnchor(towerMenuComponent, 0.0);
+        root.getChildren().add(towerMenuComponent);
+        root.setLeftAnchor(towerMenuComponent, 0.0);
+        root.setBottomAnchor(towerMenuComponent, 0.0);
+
+        // path setting
+        path = new Rectangle(Config.STAGE_WIDTH, Config.PATH_HEIGHT);
+        path.setFill(Color.TRANSPARENT);
+        path.setFocusTraversable(false);
+        root.getChildren().add(path);
+        root.setLeftAnchor(path, 0.0);
+        root.setBottomAnchor(path, 0.0);
+        root.setRightAnchor(path, 0.0);
+
+        player.setFocusTraversable(true);
 
         initKeyController();
         initFrameLoop();
@@ -289,7 +308,6 @@ public class GameSceneWrapper extends SceneWrapper {
     }
 
     private void initKeyController() {
-
         scene.setOnKeyPressed(event -> {
             KeyCode key = event.getCode();
             switch (key) {
@@ -336,7 +354,6 @@ public class GameSceneWrapper extends SceneWrapper {
         });
         scene.setOnKeyReleased(event -> {
             KeyCode key = event.getCode();
-
             switch (key) {
                 case LEFT:
                     goLeft = false;
@@ -359,7 +376,7 @@ public class GameSceneWrapper extends SceneWrapper {
         });
     }
 
-    private void shoot() {
+    private void handlePlayerShoot() {
         for (int p = 0; p < projectiles.size(); p++) {
             Shape entity = projectiles.get(p).get();
             entity.relocate(
@@ -392,7 +409,8 @@ public class GameSceneWrapper extends SceneWrapper {
         int eBaseHealth = 100;
         int eBaseDamage = 10;
         double ex = (int) (root.getLayoutX());
-        int ey = (int) ((100 - eBaseHeight) * spawnPosition);
+//        int ey = (int) (Config.ENEMY_SPAWN_Y * spawnPosition);
+        int ey = (int) (path.getBoundsInParent().getMinY() + path.getBoundsInParent().getMaxY()) / 2 - 50;
         if (counter % spawnTime == 0) {
             int min = 1;
             int max = 5;
@@ -430,10 +448,6 @@ public class GameSceneWrapper extends SceneWrapper {
         }
     }
 
-    private final long[] frameTimes = new long[100];
-    private int frameTimeIndex = 0;
-    private boolean arrayFilled = false;
-
     public AnimationTimer getTimer() {
         return timer;
     }
@@ -458,6 +472,22 @@ public class GameSceneWrapper extends SceneWrapper {
         if (isStopped) {
             return;
         }
+        counter++;
+        if (counter % 60 == 0) {
+            setSeconds(getSeconds() + 1);
+        }
+        handlePlayerMove();
+        handlePlayerShoot();
+        spawnEnemy();
+        moveEnemy(enemySpeed);
+        triggerTowerShot();
+        handleGameMoney();
+        handleProjectileHit();
+    }
+
+    private void handlePlayerMove() {
+        int dx = 0;
+        int dy = 0;
         if (goLeft) {
             dx = -5;
         }
@@ -476,34 +506,15 @@ public class GameSceneWrapper extends SceneWrapper {
         if (!goUp && !goDown) {
             dy = 0;
         }
-//        goLeft = false;
-//        goRight = false;
-//        goUp = false;
-//        goDown = false;
-//        int xi = x;
-//        int yi = y;
-//        player.relocate(x += dx, y += dy);
-        player.relocate(x + dx, y + dy);
-        x += dx;
-        y += dy;
-//        if (!isAvailableToMove()) {
-//            player.relocate(x - dx, y - dy);
-//        }
-//        if (isAvailableToMove()) {
-//            player.relocate(x, y);
-//        } else {
-//            player.relocate(xi, yi);
-//        }
-        counter++;
-        if (counter % 60 == 0) {
-            setSeconds(getSeconds() + 1);
+        int xf = x + dx;
+        int yf = y + dy;
+        if (isIntersectingWithObjects(xf, yf)) {
+            modalToast(root, "Cannot move");
+        } else {
+            player.relocate(xf, yf);
+            x = xf;
+            y = yf;
         }
-        shoot();
-        spawnEnemy();
-        moveEnemy(enemySpeed);
-        triggerTowerShot();
-        handleGameMoney();
-        handleProjectileHit();
     }
 
     private void handleGameMoney() {
@@ -512,13 +523,28 @@ public class GameSceneWrapper extends SceneWrapper {
         }
     }
 
-    private boolean isAvailableToMove() {
+    private boolean isIntersectingWithObjects(Node target) {
+        if (Util.isIntersecting(target, path)) {
+            return true;
+        }
         for (Tower wrapper : towers) {
-            if (Util.isIntersecting(wrapper.get(), player)) {
-                return false;
+            if (Util.isIntersecting(wrapper.get(), target)) {
+                return true;
             }
         }
-        return true;
+        return false;
+    }
+
+    private boolean isIntersectingWithObjects(int x, int y) {
+        if (Util.isIntersecting(x, y, path)) {
+            return true;
+        }
+        for (Tower wrapper : towers) {
+            if (Util.isIntersecting(x, y, wrapper.get())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void triggerTowerShot() {
@@ -587,7 +613,7 @@ public class GameSceneWrapper extends SceneWrapper {
             modalToast(root, "No selected Tower");
             return;
         }
-        if (y <= pathHeight) {
+        if (isIntersectingWithObjects(player)) {
             modalToast(root, "cannot place the tower");
             return;
         }

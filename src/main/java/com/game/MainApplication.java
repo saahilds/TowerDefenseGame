@@ -18,17 +18,6 @@ public class MainApplication extends Application {
     private AnchorPane root;
     private Scene scene;
 
-    private BackgroundImage myBI = new BackgroundImage(
-            new Image(
-                    getClass().getResourceAsStream("/com/game/bg5.gif"),
-                    1100,
-                    1100, false, false),
-            BackgroundRepeat.NO_REPEAT,
-            BackgroundRepeat.NO_REPEAT,
-            new BackgroundPosition(Side.LEFT, 0.5D, true, Side.BOTTOM, 0.0D, true),
-            BackgroundSize.DEFAULT
-    );
-
     private SceneWrapper sceneWrapper;
 
     @Override

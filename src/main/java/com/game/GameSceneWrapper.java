@@ -1,12 +1,15 @@
 package com.game;
 
 //import com.game.components.gameScene.TowerData;
+
 import com.game.components.gameScene.TowerData;
 import com.game.model.TowerType;
 import com.main.config.Config;
 import com.game.components.gameScene.TowerMenuComponent;
 //import com.main.model.GameLevelType;
 import javafx.animation.AnimationTimer;
+import javafx.beans.value.ObservableValue;
+import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -15,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -31,6 +35,8 @@ import java.util.Iterator;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import static com.game.GameSettingDataMap.getStartingMonumentHealth;
+
 public class GameSceneWrapper extends SceneWrapper {
 
     private int dx;
@@ -39,11 +45,14 @@ public class GameSceneWrapper extends SceneWrapper {
     private int y = 470;
     private int projectileSpeed = 10;
 
+    private final int FPS = 60;
+    private final int BOSS_SPAWN_SEC = 60;
+
     public int getGameMoneyIncrementSpeed() {
         return gameMoneyIncrementSpeed;
     }
 
-    private int gameMoneyIncrementSpeed = 50;
+    private int gameMoneyIncrementSpeed = 60;
 
     public int getMoneyIncrementAmount() {
         return moneyIncrementAmount;
@@ -53,16 +62,28 @@ public class GameSceneWrapper extends SceneWrapper {
         this.moneyIncrementAmount = moneyIncrementAmount;
     }
 
-    private int moneyIncrementAmount = 50;
+    private int moneyIncrementAmount = 5;
 
     public int getCounter() {
         return counter;
     }
+
     public void setCounter(int counter) {
         this.counter = counter;
     }
 
     private int counter = 0;
+
+    public int getSeconds() {
+        return seconds;
+    }
+
+    public void setSeconds(int seconds) {
+        this.seconds = seconds;
+        this.gameSecondsText.setText("Time: " + seconds);
+    }
+
+    private int seconds = 0;
     private int enemySpeed = 4;
     private boolean goLeft;
     private boolean goRight;
@@ -157,6 +178,7 @@ public class GameSceneWrapper extends SceneWrapper {
     private Text gameMoneyText = new Text("$: ");
     private Text monumentHealthText = new Text("Health: ");
     private Text gameLevelText = new Text("");
+    private Text gameSecondsText = new Text("Time: ");
 
     public TowerData getPurchaseSelectedTowerData() {
         return towerMenuComponent.getSelectedTowerData();
@@ -170,8 +192,8 @@ public class GameSceneWrapper extends SceneWrapper {
         this.stage = stage;
         this.root = root;
         this.scene = scene;
-        System.out.println(SceneWrapper.getGameLevel().toString());
         setGameMoney((int) getGameMoneyMap().get(SceneWrapper.getGameLevel()));
+        setMonumentHealth(getStartingMonumentHealth(SceneWrapper.getGameLevel()));
 
         startStackPane = new StackPane();
         Text startIntroText = new Text(
@@ -235,16 +257,25 @@ public class GameSceneWrapper extends SceneWrapper {
         gameStatusStackPane.getChildren().addAll(
                 gameLevelText,
                 gameMoneyText,
-                monumentHealthText
+                monumentHealthText,
+                gameSecondsText
         );
         gameMoneyText.setTranslateY(-28);
         gameLevelText.setFill(Color.GHOSTWHITE);
         gameLevelText.setFont(Font.font(20));
         gameLevelText.setText("Game Level: " + getGameLevel().toString());
         gameLevelText.setTranslateY(-56);
+        gameSecondsText.setFill(Color.GHOSTWHITE);
+        gameSecondsText.setFont(Font.font(20));
+        gameSecondsText.setTranslateY(-84);
 
-        Function<String, Void> func = (String string) -> { this.test(string); return null;};
+        Function<String, Void> func = (String string) -> {
+            this.test(string);
+            return null;
+        };
         towerMenuComponent = new TowerMenuComponent(getGameLevel(), this.root, func);
+        towerMenuComponent.addEventFilter(KeyEvent.ANY, Event::consume);
+        towerMenuComponent.setFocusTraversable(false);
         this.root.getChildren().add(towerMenuComponent);
         this.root.setLeftAnchor(towerMenuComponent, 0.0);
         this.root.setBottomAnchor(towerMenuComponent, 0.0);
@@ -262,70 +293,69 @@ public class GameSceneWrapper extends SceneWrapper {
         scene.setOnKeyPressed(event -> {
             KeyCode key = event.getCode();
             switch (key) {
-            case LEFT:
-                goLeft = true;
-                break;
-            case RIGHT:
-                goRight = true;
-                break;
-            case UP:
-                goUp = true;
-                break;
-            case DOWN:
-                goDown = true;
-                break;
-            case M:
-                showMenu = !showMenu;
-                if (showMenu) {
-                    this.towerMenuComponent.setVisible(true);
-                } else {
-                    this.towerMenuComponent.setVisible(false);
-                }
-                break;
-            case SPACE:
-                if (!isShooting) {
-                    playerProjectile = new Projectile(
-                            new Rectangle(5, 5, Color.GHOSTWHITE)
-                    );
-                    projectiles.add(playerProjectile);
-                    playerProjectile.get().relocate(x + player.getRadius(), y);
-                    root.getChildren().add(playerProjectile.get());
-                    isShooting = true;
+                case LEFT:
+                    goLeft = true;
                     break;
-                }
-            case ENTER:
-                onPressEnter();
-                break;
-            case ESCAPE:
-                isStopped = !isStopped;
-                break;
-            default:
-                break;
+                case RIGHT:
+                    goRight = true;
+                    break;
+                case UP:
+                    goUp = true;
+                    break;
+                case DOWN:
+                    goDown = true;
+                    break;
+                case M:
+                    showMenu = !showMenu;
+                    if (showMenu) {
+                        this.towerMenuComponent.setVisible(true);
+                    } else {
+                        this.towerMenuComponent.setVisible(false);
+                    }
+                    break;
+                case SPACE:
+                    if (!isShooting) {
+                        playerProjectile = new Projectile(
+                                new Rectangle(5, 5, Color.GHOSTWHITE)
+                        );
+                        projectiles.add(playerProjectile);
+                        playerProjectile.get().relocate(x + player.getRadius(), y);
+                        root.getChildren().add(playerProjectile.get());
+                        isShooting = true;
+                        break;
+                    }
+                case ENTER:
+                    onPressEnter();
+                    break;
+                case ESCAPE:
+                    isStopped = !isStopped;
+                    break;
+                default:
+                    break;
             }
         });
         scene.setOnKeyReleased(event -> {
             KeyCode key = event.getCode();
 
             switch (key) {
-            case LEFT:
-                goLeft = false;
-                break;
-            case RIGHT:
-                goRight = false;
-                break;
-            case UP:
-                goUp = false;
-                break;
-            case DOWN:
-                goDown = false;
-                break;
-            case SPACE:
-                isShooting = false;
-                break;
-            default:
-                break;
+                case LEFT:
+                    goLeft = false;
+                    break;
+                case RIGHT:
+                    goRight = false;
+                    break;
+                case UP:
+                    goUp = false;
+                    break;
+                case DOWN:
+                    goDown = false;
+                    break;
+                case SPACE:
+                    isShooting = false;
+                    break;
+                default:
+                    break;
             }
-
         });
     }
 
@@ -371,6 +401,9 @@ public class GameSceneWrapper extends SceneWrapper {
             enemy.getStackPane().relocate(ex, ey);
             enemies.add(enemy);
             root.getChildren().add(enemy.getStackPane());
+        }
+        if (seconds == BOSS_SPAWN_SEC) {
+
         }
     }
 
@@ -436,22 +469,29 @@ public class GameSceneWrapper extends SceneWrapper {
         if (!goUp && !goDown) {
             dy = 0;
         }
-        //int xi = x;
-        //int yi = y;
-        //player.relocate(x += dx, y += dy);
+//        goLeft = false;
+//        goRight = false;
+//        goUp = false;
+//        goDown = false;
+//        int xi = x;
+//        int yi = y;
+//        player.relocate(x += dx, y += dy);
         player.relocate(x + dx, y + dy);
         x += dx;
         y += dy;
-        if (!isAvailableToMove()) {
-            player.relocate(x - dx, y - dy);
-        }
-        //if (isAvailableToMove()) {
-
-        //} else {
-        //    player.relocate(xi, yi);
-        //}
-        shoot();
+//        if (!isAvailableToMove()) {
+//            player.relocate(x - dx, y - dy);
+//        }
+//        if (isAvailableToMove()) {
+//            player.relocate(x, y);
+//        } else {
+//            player.relocate(xi, yi);
+//        }
         counter++;
+        if (counter % 60 == 0) {
+            setSeconds(getSeconds() + 1);
+        }
+        shoot();
         spawnEnemy();
         moveEnemy(enemySpeed);
         triggerTowerShot();
@@ -478,7 +518,7 @@ public class GameSceneWrapper extends SceneWrapper {
         if (counter % 50 == 0) {
             for (Tower tower : towers) {
                 ArrayList<Projectile> towerProjList = tower.getProjectileArrayList();
-                for (Projectile proj: towerProjList) {
+                for (Projectile proj : towerProjList) {
                     projectiles.add(proj);
                     proj.get().relocate(tower.get().getLayoutX(), tower.get().getLayoutY());
                     root.getChildren().add(proj.get());
@@ -545,7 +585,7 @@ public class GameSceneWrapper extends SceneWrapper {
             return;
         }
 
-        Rectangle rectangle = new Rectangle(10, 10, Color.YELLOW);
+        Rectangle rectangle = new Rectangle(40, 40, Color.YELLOW);
         rectangle.setFill(towerData.getImagePattern());
         rectangle.setCursor(Cursor.HAND);
         rectangle.setOnMousePressed((t) -> {

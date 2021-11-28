@@ -3,11 +3,13 @@ package com.game.components.gameScene;
 import com.game.Tower;
 import com.game.model.GameLevelType;
 import com.game.model.TowerType;
+import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -32,19 +34,19 @@ public class TowerMenuComponent extends VBox {
         add(new TowerData(
                 TowerType.TYPE_A,
                 50,
-                50,
+                100,
                 new ImagePattern(
-                        new Image(getClass().getResourceAsStream("/com/game/bird1.gif"))
+                        new Image(getClass().getResourceAsStream("/com/game/dino_01.gif"))
                 ),
-                "typeA",
+                "lil dino",
                 "typeA Description"
         ));
         add(new TowerData(
                 TowerType.TYPE_B,
                 100,
-                100,
+                300,
                 new ImagePattern(
-                        new Image(getClass().getResourceAsStream("/com/game/bird1.gif"))
+                        new Image(getClass().getResourceAsStream("/com/game/dino_03.gif"))
                 ),
                 "typeB",
                 "typeB Description"
@@ -52,9 +54,9 @@ public class TowerMenuComponent extends VBox {
         add(new TowerData(
                 TowerType.TYPE_C,
                 150,
-                150,
+                500,
                 new ImagePattern(
-                        new Image(getClass().getResourceAsStream("/com/game/bird1.gif"))
+                        new Image(getClass().getResourceAsStream("/com/game/dino_02.gif"))
                 ),
                 "typeC",
                 "typeC Description"
@@ -78,8 +80,7 @@ public class TowerMenuComponent extends VBox {
             group.setPadding(new Insets(8.0D, 8.0D, 8.0D, 8.0D));
             group.setSpacing(10);
 
-
-            Rectangle imgaeWrapper = new Rectangle(40, 40);
+            Rectangle imgaeWrapper = new Rectangle(60, 60);
             imgaeWrapper.setFill(item.getImagePattern());
             Text name = new Text("" + item.getName());
             name.setFill(Color.GHOSTWHITE);
@@ -99,6 +100,8 @@ public class TowerMenuComponent extends VBox {
                 func.apply(item.getName() + " selected");
                 setSelectedTowerData(item);
             });
+            purchaseButton.addEventFilter(KeyEvent.ANY, Event::consume);
+            purchaseButton.setFocusTraversable(false);
             purchaseButton.getStyleClass().setAll("btn", "btn-default");
             purchaseButton.setStyle("-fx-text-fill: white; -fx-background-color: transparent;");
             group.getChildren().addAll(firstRow, price, description, purchaseButton);

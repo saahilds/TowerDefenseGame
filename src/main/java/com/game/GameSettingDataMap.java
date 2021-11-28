@@ -39,7 +39,7 @@ public class GameSettingDataMap {
         {
             put(GameLevelType.EASY, 1000);
             put(GameLevelType.NORMAL, 500);
-            put(GameLevelType.HARD, 100);
+            put(GameLevelType.HARD, 300);
         }
     };
 

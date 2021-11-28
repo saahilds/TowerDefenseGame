@@ -158,13 +158,8 @@ public class GameSceneWrapper extends SceneWrapper {
     private double orgSceneX;
     private double orgSceneY;
 
-
-    private ImagePattern enemyImagePattern = new ImagePattern(
-            new Image(getClass().getResourceAsStream("/com/game/bird1.gif"))
-    );
-
     private ImagePattern moonImgPattern = new ImagePattern(
-            new Image(getClass().getResourceAsStream("/com/game/moon.png"))
+            new Image(getClass().getResourceAsStream("/com/game/egg_03.gif"))
     );
 
     private StackPane gameStatusStackPane = new StackPane();
@@ -242,14 +237,16 @@ public class GameSceneWrapper extends SceneWrapper {
         // remove tutorial(intro) screen
         root.getChildren().remove(startStackPane);
 
-        Rectangle monumentRect = new Rectangle(60, 60);
+        Rectangle monumentRect = new Rectangle(100, 100);
         monumentRect.setFill(moonImgPattern);
+        monumentRect.setStyle("-fx-background-position: bottom;");
         monument = new Monument(monumentRect);
-        monument.get().relocate(Config.STAGE_WIDTH - 120, 40);
+        monument.get().relocate(Config.MONUMENT_SPAWN_X, Config.MONUMENT_SPAWN_Y);
         root.getChildren().addAll(player, monument.get());
 
+        gameStatusStackPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.4)");
         root.getChildren().add(gameStatusStackPane);
-        root.setBottomAnchor(gameStatusStackPane, 18.0);
+        root.setTopAnchor(gameStatusStackPane, 18.0);
         root.setRightAnchor(gameStatusStackPane, 18.0);
 
         setGameMoney((int) getGameMoneyMap().get(getGameLevel()));
@@ -286,7 +283,7 @@ public class GameSceneWrapper extends SceneWrapper {
         towerMenuComponent.setFocusTraversable(false);
         root.getChildren().add(towerMenuComponent);
         root.setLeftAnchor(towerMenuComponent, 0.0);
-        root.setBottomAnchor(towerMenuComponent, 0.0);
+        root.setTopAnchor(towerMenuComponent, 0.0);
 
         // path setting
         path = new Rectangle(Config.STAGE_WIDTH, Config.PATH_HEIGHT);
@@ -385,8 +382,6 @@ public class GameSceneWrapper extends SceneWrapper {
             );
             projectiles.get(p).setRange(
                     projectiles.get(p).getRange() + projectiles.get(p).getDy());
-            System.out.println(projectiles.get(p).getRange());
-
 
             Iterator<Projectile> iterator = projectiles.iterator();
             Projectile temp;
@@ -479,7 +474,8 @@ public class GameSceneWrapper extends SceneWrapper {
         }
         handlePlayerMove();
         handlePlayerShoot();
-        spawnEnemy();
+        // FIXME: 2021/11/28
+//        spawnEnemy();
         moveEnemy(enemySpeed);
         triggerTowerShot();
         handleGameMoney();

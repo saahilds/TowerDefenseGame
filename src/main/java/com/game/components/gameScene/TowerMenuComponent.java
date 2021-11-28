@@ -68,6 +68,7 @@ public class TowerMenuComponent extends VBox {
         this.root = root;
         initTextList();
         func = method;
+        this.setStyle("-fx-background-color: rgba(0,0,0, 0.4)");
     }
 
     private void initTextList() {

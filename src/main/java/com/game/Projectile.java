@@ -36,7 +36,7 @@ public class Projectile {
     }
 
     private int dx = 0;
-    private int dy = -4;
+    private int dy = 4;
 
     //public Projectile() {}
     public Projectile(Circle circle) {

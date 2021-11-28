@@ -95,7 +95,7 @@ public class Tower {
                     add(new Projectile(
                             r1,
                             0,
-                            -1 * (speed),
+                            1 * (speed),
                             1000,
                             damage
                     ));
@@ -114,21 +114,21 @@ public class Tower {
                     add(new Projectile(
                             r1,
                             -1 * (speed),
-                            -1 * (speed),
+                            1 * (speed),
                             1000,
                             damage
                     ));
                     add(new Projectile(
                             r2,
                             0,
-                            -1 * (speed),
+                            1 * (speed),
                             1000,
                             damage
                     ));
                     add(new Projectile(
                             r3,
                             (speed),
-                            -1 * (speed),
+                            1 * (speed),
                             1000,
                             damage
                     ));
@@ -147,21 +147,21 @@ public class Tower {
                     add(new Projectile(
                             r1,
                             -1 * (speed),
-                            -1 * (speed),
+                            1 * (speed),
                             1000,
                             damage
                     ));
                     add(new Projectile(
                             r2,
                             0,
-                            -1 * (speed),
+                            1 * (speed),
                             1000,
                             damage
                     ));
                     add(new Projectile(
                             r3,
                             (speed),
-                            -1 * (speed),
+                            1 * (speed),
                             1000,
                             damage
                     ));

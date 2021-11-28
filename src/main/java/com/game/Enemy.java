@@ -16,6 +16,26 @@ public class Enemy {
     private StackPane stackPane;
     private Text text;
 
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    private int level;
+
+    public int getDx() {
+        return dx;
+    }
+
+    public void setDx(int dx) {
+        this.dx = dx;
+    }
+
+    private int dx = 1;
+
     public boolean isBoss() {
         return isBoss;
     }
@@ -63,12 +83,32 @@ public class Enemy {
 
     }
 
-    public Enemy(int width, int height, int level, int baseHealth, int baseDamage) {
-        int w = (int) (width * (1 + (level - 1) * 0.25));
-        int h = (int) (height * (1 + (level - 1) * 0.25));
-        damage = (int) (baseDamage * (1 + (level - 1) * 0.25));
-        maxHP = (int) (baseHealth * (1 + (level - 1) * 0.5));
-        currHP = maxHP;
+    public Enemy(int width, int height, int level, int baseHealth, int baseDamage, boolean isBoss) {
+        this.isBoss = isBoss;
+        this.level = level;
+        int w;
+        int h;
+        if (!isBoss) {
+            w = (int) (width * (1 + (level - 1) * 0.25));
+            h = (int) (height * (1 + (level - 1) * 0.25));
+            if (level < 3) {
+                setDx(3);
+            } else if (level == 3) {
+                setDx(2);
+            } else {
+                setDx(1);
+            }
+            damage = (int) (baseDamage * (1 + (level - 1) * 0.25));
+            maxHP = (int) (baseHealth * (1 + (level - 1) * 0.5));
+            currHP = maxHP;
+        } else {
+            w = (int) (width * 3);
+            h = (int) (height * 3);
+            setDx(1);
+            damage = (int) (baseDamage * (1 + (level - 1) * 0.25));
+            maxHP = (int) (baseHealth * 20);
+            currHP = maxHP;
+        }
         Rectangle rectangle = new Rectangle(w, h);
         rectangle.setFill(getImage());
         shape = rectangle;
@@ -87,9 +127,22 @@ public class Enemy {
     }
 
     private ImagePattern getImage() {
-        return new ImagePattern(
-                new Image(getClass().getResourceAsStream("/com/game/bird1.gif"))
-        );
+        Image img = new Image(getClass().getResourceAsStream("/com/game/dino_09.gif"));;
+        if (isBoss) {
+            img = new Image(getClass().getResourceAsStream("/com/game/dino_10.gif"));
+        } else if (level == 1) {
+            img = new Image(getClass().getResourceAsStream("/com/game/dino_09.gif"));
+        } else if (level == 2) {
+            img = new Image(getClass().getResourceAsStream("/com/game/dino_07.gif"));
+        } else if (level == 3) {
+            img = new Image(getClass().getResourceAsStream("/com/game/dino_06.gif"));
+        } else if (level == 4) {
+            img = new Image(getClass().getResourceAsStream("/com/game/dino_04.gif"));
+//        } else if (level == 5) {
+        } else {
+            img = new Image(getClass().getResourceAsStream("/com/game/dino_08.gif"));
+        }
+        return new ImagePattern(img);
     }
 
     public int applyDamage(int delta) {

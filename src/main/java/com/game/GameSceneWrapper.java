@@ -46,7 +46,7 @@ public class GameSceneWrapper extends SceneWrapper {
     private int projectileSpeed = 10;
 
     private final int FPS = 60;
-    private final int BOSS_SPAWN_SEC = 60;
+    private final int BOSS_SPAWN_SEC = 10;
 
     public int getGameMoneyIncrementSpeed() {
         return gameMoneyIncrementSpeed;
@@ -397,20 +397,27 @@ public class GameSceneWrapper extends SceneWrapper {
             int min = 1;
             int max = 5;
             int enemyLevel = min + (int) (Math.random() * ((max - min) + 1));
-            enemy = new Enemy(eBaseWidth, eBaseHeight, enemyLevel, eBaseHealth, eBaseDamage);
+            boolean isBoss = false;
+            enemy = new Enemy(eBaseWidth, eBaseHeight, enemyLevel, eBaseHealth, eBaseDamage, isBoss);
             enemy.getStackPane().relocate(ex, ey);
             enemies.add(enemy);
             root.getChildren().add(enemy.getStackPane());
         }
-        if (seconds == BOSS_SPAWN_SEC) {
-
+        if (counter % 600 == 0) {
+            modalToast(root, "Boss is spawned!");
+            int enemyLevel = 10;
+            boolean isBoss = true;
+            enemy = new Enemy(eBaseWidth, eBaseHeight, enemyLevel, eBaseHealth, eBaseDamage, isBoss);
+            enemy.getStackPane().relocate(ex, ey);
+            enemies.add(enemy);
+            root.getChildren().add(enemy.getStackPane());
         }
     }
 
     public void moveEnemy(int delta) {
         for (Enemy enemy : enemies) {
             StackPane entity = enemy.getStackPane();
-            entity.setTranslateX(entity.getTranslateX() + delta);
+            entity.setTranslateX(entity.getTranslateX() + enemy.getDx());
         }
 
         Iterator<Enemy> iterator = enemies.iterator();

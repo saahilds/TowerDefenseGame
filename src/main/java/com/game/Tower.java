@@ -15,6 +15,16 @@ import java.util.ArrayList;
 public class Tower {
     private Rectangle shape;
 
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    private int level = 1;
+
     public int getDx() {
         return dx;
     }
@@ -59,15 +69,6 @@ public class Tower {
         this.towerData = towerData;
     }
 
-    private TowerData towerData;
-    private Util util = new Util();
-
-    public Tower(Rectangle rectangle, TowerData towerData) {
-        this.shape = rectangle;
-        this.towerData = towerData;
-
-    }
-
     public Shape get() {
         return shape;
     }
@@ -82,15 +83,42 @@ public class Tower {
 
     private int towerUpgradeLevel = 1;
 
+    private TowerData towerData;
+    private Util util = new Util();
+
+    public Tower(Rectangle rectangle, TowerData towerData) {
+        this.shape = rectangle;
+        this.towerData = towerData;
+
+    }
+
+    public boolean requestLevelUp() {
+        if (level >= 3) {
+            return false;
+        }
+        double w = getShape().getWidth();
+        double h = getShape().getHeight();
+        getShape().setWidth(w * 1.5);
+        getShape().setHeight(h * 1.5);
+        setLevel(getLevel() + 1);
+        return true;
+    }
+
     public ArrayList<Projectile> getProjectileArrayList() {
         int speed;
         int damage;
+        double levelCoef = (level == 1)
+                ? 1
+                : (level == 2)
+                    ? 1.5
+                    : 2.0;
+        double wh = 30  * levelCoef;
         switch (this.towerData.getType()) {
             case TYPE_A:
                 speed = 3 * towerUpgradeLevel;
                 damage = -30 * towerUpgradeLevel;
                 return new ArrayList<Projectile>() {{
-                    Rectangle r1 = new Rectangle(30, 30);
+                    Rectangle r1 = new Rectangle(wh, wh);
                     r1.setFill(util.fireImgPattern);
                     add(new Projectile(
                             r1,
@@ -104,13 +132,12 @@ public class Tower {
                 speed = 2 * towerUpgradeLevel;
                 damage = -50 * towerUpgradeLevel;
                 return new ArrayList<Projectile>() {{
-                    Rectangle r1 = new Rectangle(30, 30);
-                    Rectangle r2 = new Rectangle(30, 30);
-                    Rectangle r3 = new Rectangle(30, 30);
+                    Rectangle r1 = new Rectangle(wh, wh);
+                    Rectangle r2 = new Rectangle(wh, wh);
+                    Rectangle r3 = new Rectangle(wh, wh);
                     r1.setFill(util.eggImgPattern);
                     r2.setFill(util.eggImgPattern);
                     r3.setFill(util.eggImgPattern);
-
                     add(new Projectile(
                             r1,
                             -1 * (speed),
@@ -137,9 +164,9 @@ public class Tower {
                 speed = 3 * towerUpgradeLevel;
                 damage = -50 * towerUpgradeLevel;
                 return new ArrayList<Projectile>() {{
-                    Rectangle r1 = new Rectangle(30, 30);
-                    Rectangle r2 = new Rectangle(30, 30);
-                    Rectangle r3 = new Rectangle(30, 30);
+                    Rectangle r1 = new Rectangle(wh, wh);
+                    Rectangle r2 = new Rectangle(wh, wh);
+                    Rectangle r3 = new Rectangle(wh, wh);
                     r1.setFill(util.fireExplosionImgPattern);
                     r2.setFill(util.fireExplosionImgPattern);
                     r3.setFill(util.fireExplosionImgPattern);

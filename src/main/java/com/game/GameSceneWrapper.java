@@ -162,7 +162,7 @@ public class GameSceneWrapper extends SceneWrapper {
             new Image(getClass().getResourceAsStream("/com/game/egg_03.gif"))
     );
 
-    private StackPane gameStatusStackPane = new StackPane();
+    private VBox gameStatusVbox = new VBox();
     private Rectangle path;
     private Text gameMoneyText = new Text("$: ");
     private Text monumentHealthText = new Text("Health: ");
@@ -244,10 +244,9 @@ public class GameSceneWrapper extends SceneWrapper {
         monument.get().relocate(Config.MONUMENT_SPAWN_X, Config.MONUMENT_SPAWN_Y);
         root.getChildren().addAll(player, monument.get());
 
-        gameStatusStackPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.4)");
-        root.getChildren().add(gameStatusStackPane);
-        root.setTopAnchor(gameStatusStackPane, 18.0);
-        root.setRightAnchor(gameStatusStackPane, 18.0);
+        root.getChildren().add(gameStatusVbox);
+        root.setTopAnchor(gameStatusVbox, 18.0);
+        root.setRightAnchor(gameStatusVbox, 18.0);
 
         setGameMoney((int) getGameMoneyMap().get(getGameLevel()));
         getGameLevel();
@@ -258,20 +257,18 @@ public class GameSceneWrapper extends SceneWrapper {
         gameMoneyText.setFont(Font.font(20));
         monumentHealthText.setFill(Color.GHOSTWHITE);
         monumentHealthText.setFont(Font.font(20));
-        gameStatusStackPane.getChildren().addAll(
+        gameStatusVbox.getChildren().addAll(
                 gameLevelText,
+                gameSecondsText,
                 gameMoneyText,
-                monumentHealthText,
-                gameSecondsText
+                monumentHealthText
         );
-        gameMoneyText.setTranslateY(-28);
+        gameStatusVbox.setStyle("-fx-background-color: rgba(0, 0, 0, 0.4); -fx-padding: 12;");
         gameLevelText.setFill(Color.GHOSTWHITE);
         gameLevelText.setFont(Font.font(20));
         gameLevelText.setText("Game Level: " + getGameLevel().toString());
-        gameLevelText.setTranslateY(-56);
         gameSecondsText.setFill(Color.GHOSTWHITE);
         gameSecondsText.setFont(Font.font(20));
-        gameSecondsText.setTranslateY(-84);
 
         // tower setting
         Function<String, Void> func = (String string) -> {
@@ -602,10 +599,7 @@ public class GameSceneWrapper extends SceneWrapper {
     }
 
     public void onPressEnter() {
-        boolean isIntersect = false;
-        boolean isOnPath = false;
         TowerData towerData = towerMenuComponent.getSelectedTowerData();
-
         if (towerData == null) {
             modalToast(root, "No selected Tower");
             return;
@@ -614,8 +608,8 @@ public class GameSceneWrapper extends SceneWrapper {
             modalToast(root, "cannot place the tower");
             return;
         }
-
         Rectangle rectangle = new Rectangle(40, 40, Color.YELLOW);
+        Tower tower = new Tower(rectangle, towerData);
         rectangle.setFill(towerData.getImagePattern());
         rectangle.setCursor(Cursor.HAND);
         rectangle.setOnMousePressed((t) -> {
@@ -625,14 +619,10 @@ public class GameSceneWrapper extends SceneWrapper {
             c.toFront();
         });
         rectangle.setOnMouseDragged((t) -> {
-            if (t.getSceneY() < 100) {
-                //isOnPath = true;
+            if (isIntersectingWithObjects((int) t.getSceneX(), (int) t.getSceneY())) {
                 modalToast(root, "Cannot place the tower on the path");
                 return;
-            } //else {
-            //    isOnPath = false;
-
-            //}
+            }
             double offsetX = t.getSceneX() - orgSceneX;
             double offsetY = t.getSceneY() - orgSceneY;
             if (orgSceneY <= pathHeight) {
@@ -645,29 +635,14 @@ public class GameSceneWrapper extends SceneWrapper {
             orgSceneX = t.getSceneX();
             orgSceneY = t.getSceneY();
         });
-
-        Tower tower = new Tower(rectangle, towerData);
+        rectangle.setOnMouseClicked((t) -> {
+//            System.out.println(tower);
+            tower.requestLevelUp();
+        });
         root.getChildren().add(tower.get());
         tower.get().relocate(x, y);
-        for (Tower wrapper : towers) {
-            if (Util.isIntersecting(tower.get(), wrapper.get())) {
-                isIntersect = true;
-                break;
-            }
-        }
-
-        if (isIntersect || isOnPath) {
-            root.getChildren().remove(tower.get());
-            modalToast(root, "cannot place the tower");
-        } else {
-            if (getGameMoney() - tower.getTowerData().getPrice() < 0) {
-                root.getChildren().remove(tower.get());
-                modalToast(root, "not enough money");
-            } else {
-                towers.add(tower);
-                setGameMoney(getGameMoney() - tower.getTowerData().getPrice());
-            }
-        }
+        towers.add(tower);
+        setGameMoney(getGameMoney() - tower.getTowerData().getPrice());
     }
 
     public void handleGameOver() {

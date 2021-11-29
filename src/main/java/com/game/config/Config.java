@@ -9,7 +9,7 @@ public class Config {
     public static final int MONUMENT_SPAWN_X = STAGE_WIDTH - 100;
     public static final int MONUMENT_SPAWN_Y = 560;
 
-    public static final int BOSS_SPAWN_FRAME = 1200;
+    public static final int BOSS_SPAWN_FRAME = 3600;
 
     public static final int LEFT_TOOLBAR_WIDTH = 192;
     public static final int GNB_TOP_HEIGHT = 64;

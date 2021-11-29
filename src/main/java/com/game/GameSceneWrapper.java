@@ -151,9 +151,9 @@ public class GameSceneWrapper extends SceneWrapper {
 
     public void setGameMoney(int gameMoney) {
         if (gameMoney < this.gameMoney) {
-            setTotalGameMoneySpent(getTotalGameMoneySpent() + gameMoney);
+            setTotalGameMoneySpent(getTotalGameMoneySpent() + (this.gameMoney - gameMoney));
         } else {
-            setTotalGameMoneyGain(getTotalGameMoneyGain() + gameMoney);
+            setTotalGameMoneyGain(getTotalGameMoneyGain() + (gameMoney - this.gameMoney));
         }
         this.gameMoney = gameMoney;
         gameMoneyText.setText("$: " + gameMoney);
@@ -846,7 +846,7 @@ public class GameSceneWrapper extends SceneWrapper {
 
         Text gameStatText = new Text(
                 "Play Time: " + seconds + "seconds"
-                        + "\nTotal Damage: " + getTotalDamage()
+                        + "\nTotal Damage: " + (-1) * getTotalDamage()
                         + "\nTotal Money Gain: " + getTotalGameMoneyGain()
                         + "\nTotal Money Spent: " + getTotalGameMoneySpent()
                         + "\nTotal Tower Built: " + towers.size()

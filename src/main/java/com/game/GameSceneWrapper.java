@@ -45,7 +45,7 @@ public class GameSceneWrapper extends SceneWrapper {
         return gameMoneyIncrementSpeed;
     }
 
-    private int gameMoneyIncrementSpeed = 60;
+    private int gameMoneyIncrementSpeed = 30;
 
     public int getMoneyIncrementAmount() {
         return moneyIncrementAmount;
@@ -55,7 +55,7 @@ public class GameSceneWrapper extends SceneWrapper {
         this.moneyIncrementAmount = moneyIncrementAmount;
     }
 
-    private int moneyIncrementAmount = 5;
+    private int moneyIncrementAmount = 25;
 
     public int getCounter() {
         return counter;

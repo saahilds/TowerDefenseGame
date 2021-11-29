@@ -7,8 +7,11 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 //import javafx.scene.image.Image;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -40,6 +43,11 @@ public class WelcomeSceneWrapper extends SceneWrapper {
         );
         welcomeText.setFont(Font.font("Verdana", 20));
         welcomeText.setFill(Color.GHOSTWHITE);
+
+        Rectangle logo = new Rectangle(320, 40);
+        logo.setFill(new ImagePattern(new Image(getClass().getResourceAsStream("/com/game/text_01.png"))));
+        logo.setTranslateY(50);
+
         Button startButton = new Button("Start Game");
         startButton.setOnMouseClicked(event -> {
             //initGameScene();
@@ -47,9 +55,10 @@ public class WelcomeSceneWrapper extends SceneWrapper {
         });
         startButton.getStyleClass().setAll("btn", "btn-default");
         startButton.setStyle("-fx-text-fill: white; -fx-background-color: transparent;");
-        startButton.setTranslateY(40);
+        startButton.setTranslateY(110);
         welcomStackPane.getChildren().addAll(
                 welcomeText,
+                logo,
                 startButton
         );
         welcomStackPane.setBackground(

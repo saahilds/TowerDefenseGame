@@ -284,7 +284,7 @@ public class GameSceneWrapper extends SceneWrapper {
         root.setRightAnchor(startStackPane, 0.0);
 
         // FIXME: 2021/11/27
-        initGame();
+//        initGame();
     }
 
     /**

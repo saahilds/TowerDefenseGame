@@ -31,8 +31,9 @@ public class MainApplication extends Application {
         this.stage.setResizable(false);
 
         sceneWrapper = new SceneWrapper();
-//        sceneWrapper.initWelcomeScene(stage, root);
-        sceneWrapper.initGameScene(stage, root);
+        sceneWrapper.initWelcomeScene(stage, root);
+        // FIXME: 2021/11/28
+//        sceneWrapper.initGameScene(stage, root);
         this.stage.show();
     }
 

@@ -110,8 +110,8 @@ public class Tower {
         double levelCoef = (level == 1)
                 ? 1
                 : (level == 2)
-                    ? 1.5
-                    : 2.0;
+                    ? 1.25
+                    : 1.75;
         double wh = 30  * levelCoef;
         switch (this.towerData.getType()) {
             case TYPE_A:
@@ -141,21 +141,21 @@ public class Tower {
                     add(new Projectile(
                             r1,
                             -1 * (speed),
-                            1 * (speed),
+                            2 * (speed),
                             1000,
                             damage
                     ));
-                    add(new Projectile(
-                            r2,
-                            0,
-                            1 * (speed),
-                            1000,
-                            damage
-                    ));
+//                    add(new Projectile(
+//                            r2,
+//                            0,
+//                            1 * (speed),
+//                            1000,
+//                            damage
+//                    ));
                     add(new Projectile(
                             r3,
                             (speed),
-                            1 * (speed),
+                            2 * (speed),
                             1000,
                             damage
                     ));

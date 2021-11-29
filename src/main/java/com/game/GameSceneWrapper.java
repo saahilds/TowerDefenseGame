@@ -150,6 +150,11 @@ public class GameSceneWrapper extends SceneWrapper {
 
 
     public void setGameMoney(int gameMoney) {
+        if (gameMoney < this.gameMoney) {
+            setTotalGameMoneySpent(getTotalGameMoneySpent() + gameMoney);
+        } else {
+            setTotalGameMoneyGain(getTotalGameMoneyGain() + gameMoney);
+        }
         this.gameMoney = gameMoney;
         gameMoneyText.setText("$: " + gameMoney);
     }
@@ -169,6 +174,35 @@ public class GameSceneWrapper extends SceneWrapper {
     private Text gameSecondsText = new Text("Time: ");
     private AnchorPane towerUpgradeMenu;
     private Text towerUpgradeMenuText = new Text("Time: ");
+
+    private int totalDamage = 0;
+    private int totalGameMoneyGain = 0;
+    private int totalGameMoneySpent = 0;
+
+    public int getTotalDamage() {
+        return totalDamage;
+    }
+
+    public void setTotalDamage(int totalDamage) {
+        this.totalDamage = totalDamage;
+    }
+
+    public int getTotalGameMoneyGain() {
+        return totalGameMoneyGain;
+    }
+
+    public void setTotalGameMoneyGain(int totalGameMoneyGain) {
+        this.totalGameMoneyGain = totalGameMoneyGain;
+    }
+
+    public int getTotalGameMoneySpent() {
+        return totalGameMoneySpent;
+    }
+
+    public void setTotalGameMoneySpent(int totalGameMoneySpent) {
+        this.totalGameMoneySpent = totalGameMoneySpent;
+    }
+
 
     public boolean isTowerUpgradeMenuVisible() {
         return isTowerUpgradeMenuVisible;
@@ -192,7 +226,6 @@ public class GameSceneWrapper extends SceneWrapper {
     }
 
     private Tower upgradeSelectedTower;
-
 
     public TowerData getPurchaseSelectedTowerData() {
         return towerMenuComponent.getSelectedTowerData();
@@ -463,7 +496,7 @@ public class GameSceneWrapper extends SceneWrapper {
 //        int ey = (int) (Config.ENEMY_SPAWN_Y * spawnPosition);
         int ey = (int) (path.getBoundsInParent().getMinY() + path.getBoundsInParent().getMaxY()) / 2;
 
-        if (counter % 600 == 0) {
+        if (counter % Config.BOSS_SPAWN_FRAME == 0) {
             modalToast(root, "Boss is spawned!");
             int enemyLevel = 10;
             boolean isBoss = true;
@@ -571,6 +604,7 @@ public class GameSceneWrapper extends SceneWrapper {
 
     private void handleGameMoney() {
         if (counter % gameMoneyIncrementSpeed == 0) {
+            setTotalGameMoneyGain(getTotalGameMoneyGain() + moneyIncrementAmount);
             setGameMoney(getGameMoney() + moneyIncrementAmount);
         }
     }
@@ -630,7 +664,9 @@ public class GameSceneWrapper extends SceneWrapper {
             while (enemyIterator.hasNext()) {
                 e = enemyIterator.next();
                 if (Util.isIntersecting(p.get(), e.getStackPane())) {
-                    int hpf = e.applyDamage(p.getDamage());
+                    int dmg = p.getDamage();
+                    setTotalDamage(getTotalDamage() + dmg);
+                    int hpf = e.applyDamage(dmg);
                     root.getChildren().remove(p.get());
                     if (hpf <= 0) {
                         root.getChildren().remove(e.getStackPane());
@@ -787,13 +823,66 @@ public class GameSceneWrapper extends SceneWrapper {
                 newGameButton
         );
         root.getChildren().add(gameOverStackPane);
-        root.setTopAnchor(gameOverStackPane, 0.0);
-        root.setLeftAnchor(gameOverStackPane, 0.0);
-        root.setBottomAnchor(gameOverStackPane, 0.0);
-        root.setRightAnchor(gameOverStackPane, 0.0);
+        Util.setAllAnchorD(root, gameOverStackPane, 0.0);
     }
 
     public void handleStageClear() {
+        isStopped = true;
 
+        StackPane stageClearStackPane = new StackPane();
+        VBox contents = new VBox();
+        contents.setSpacing(12);
+        stageClearStackPane.setBackground(
+                new Background(
+                        new BackgroundFill(Color.rgb(50, 50, 50, 0.7),
+                                CornerRadii.EMPTY, Insets.EMPTY)
+                )
+        );
+        Text stageClearText = new Text(
+                "Stage Clear!\n"
+        );
+        stageClearText.setFont(Font.font("Verdana", 20));
+        stageClearText.setFill(Color.GHOSTWHITE);
+
+        Text gameStatText = new Text(
+                "Play Time: " + seconds + "seconds"
+                        + "\nTotal Damage: " + getTotalDamage()
+                        + "\nTotal Money Gain: " + getTotalGameMoneyGain()
+                        + "\nTotal Money Spent: " + getTotalGameMoneySpent()
+                        + "\nTotal Tower Built: " + towers.size()
+        );
+        gameStatText.setFont(Font.font("Verdana", 14));
+        gameStatText.setStyle("-fx-line-spacing: 8; -fx-padding: 5px;");
+        gameStatText.setFill(Color.GHOSTWHITE);
+
+        Button exitButton = new Button("Exit");
+        exitButton.setOnMouseClicked(mouseEvent -> {
+            System.exit(0);
+        });
+        exitButton.getStyleClass().setAll("btn", "btn-default");
+        exitButton.setStyle("-fx-text-fill: white; -fx-padding: 5px;"
+                + "-fx-background-color: transparent; -fx-border-color: white;");
+        exitButton.setAlignment(Pos.CENTER);
+        exitButton.setMaxWidth(280);
+
+        Button newGameButton = new Button("New Game");
+        exitButton.getStyleClass().setAll("btn", "btn-default");
+        newGameButton.setStyle("-fx-text-fill: white; -fx-padding: 5px;"
+                + "-fx-background-color: transparent; -fx-border-color: white;");
+        newGameButton.setAlignment(Pos.CENTER);
+        newGameButton.setMaxWidth(280);
+        newGameButton.setOnMouseClicked(mouseEvent -> {
+            initWelcomeScene(stage, root);
+        });
+        contents.getChildren().addAll(
+                stageClearText,
+                gameStatText,
+                exitButton,
+                newGameButton
+        );
+        contents.setAlignment(Pos.CENTER);
+        stageClearStackPane.getChildren().addAll(contents);
+        root.getChildren().add(stageClearStackPane);
+        Util.setAllAnchorD(root, stageClearStackPane, 0.0);
     }
 }

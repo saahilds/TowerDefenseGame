@@ -3,6 +3,7 @@ package com.game;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
@@ -36,6 +37,13 @@ public class Util {
     public final ImagePattern eggImgPattern = new ImagePattern(
             new Image(getClass().getResourceAsStream("/com/game/egg_01.gif"))
     );
+
+    public static void setAllAnchorD(AnchorPane ap, Node node, double d) {
+        ap.setTopAnchor(node, d);
+        ap.setBottomAnchor(node, d);
+        ap.setLeftAnchor(node, d);
+        ap.setRightAnchor(node, d);
+    }
 
     public Util() {};
 }

@@ -154,7 +154,6 @@ public class GameSceneWrapper extends SceneWrapper {
         gameMoneyText.setText("$: " + gameMoney);
     }
 
-
     private double orgSceneX;
     private double orgSceneY;
 
@@ -168,6 +167,31 @@ public class GameSceneWrapper extends SceneWrapper {
     private Text monumentHealthText = new Text("Health: ");
     private Text gameLevelText = new Text("");
     private Text gameSecondsText = new Text("Time: ");
+    private AnchorPane towerUpgradeMenu;
+    private Text towerUpgradeMenuText = new Text("Time: ");
+
+    public boolean isTowerUpgradeMenuVisible() {
+        return isTowerUpgradeMenuVisible;
+    }
+
+    public void setTowerUpgradeMenuVisible(boolean towerUpgradeMenuVisible) {
+        isTowerUpgradeMenuVisible = towerUpgradeMenuVisible;
+        if (towerUpgradeMenu != null) {
+            towerUpgradeMenu.setVisible(towerUpgradeMenuVisible);
+        }
+    }
+
+    private boolean isTowerUpgradeMenuVisible = false;
+
+    public Tower getUpgradeSelectedTower() {
+        return upgradeSelectedTower;
+    }
+
+    public void setUpgradeSelectedTower(Tower upgradeSelectedTower) {
+        this.upgradeSelectedTower = upgradeSelectedTower;
+    }
+
+    private Tower upgradeSelectedTower;
 
 
     public TowerData getPurchaseSelectedTowerData() {
@@ -272,7 +296,7 @@ public class GameSceneWrapper extends SceneWrapper {
 
         // tower setting
         Function<String, Void> func = (String string) -> {
-            this.test(string);
+            this.modalToastWrapper(string);
             return null;
         };
         towerMenuComponent = new TowerMenuComponent(getGameLevel(), this.root, func);
@@ -293,11 +317,46 @@ public class GameSceneWrapper extends SceneWrapper {
 
         player.setFocusTraversable(true);
 
+        towerUpgradeMenu = new AnchorPane();
+        towerUpgradeMenuText.setStyle("-fx-line-spacing: 6;");
+        VBox towerUpgradeMenuContent = new VBox();
+        HBox towerUpgradeMenuButtonRow = new HBox();
+        // confirm button
+        Button towerUpgradeConfirmButton = new Button("Yes!");
+        towerUpgradeConfirmButton.setPrefWidth(52);
+        towerUpgradeConfirmButton.setPrefHeight(18);
+        towerUpgradeConfirmButton.setStyle("-fx-text-fill: #3a3a3a; "
+                + "-fx-background-color: transparent; -fx-border-color: #3a3a3a; -fx-border-radius: 4;");
+        towerUpgradeConfirmButton.setOnMouseClicked(e -> {
+            onClickConfirmUpgrade();
+        });
+        // close button
+        Button towerUpgradeCloseButton = new Button("No");
+        towerUpgradeCloseButton.setPrefWidth(52);
+        towerUpgradeCloseButton.setPrefHeight(18);
+        towerUpgradeCloseButton.setStyle("-fx-text-fill: #3a3a3a; "
+                + "-fx-background-color: transparent; -fx-border-color: #3a3a3a; -fx-border-radius: 4;");
+        towerUpgradeCloseButton.setOnMouseClicked(e -> {
+            setTowerUpgradeMenuVisible(false);
+        });
+
+        Rectangle bg = new Rectangle(160, 120);
+        bg.setFill(new ImagePattern(new Image(getClass().getResourceAsStream("/com/game/bubble_01.png"))));
+
+        towerUpgradeMenuButtonRow.getChildren().addAll(towerUpgradeConfirmButton, towerUpgradeCloseButton);
+
+        towerUpgradeMenuContent.getChildren().addAll(towerUpgradeMenuText, towerUpgradeMenuButtonRow);
+        towerUpgradeMenu.getChildren().addAll(bg, towerUpgradeMenuContent);
+        Util.setAllAnchorD(towerUpgradeMenu, bg, 0.0);
+        Util.setAllAnchorD(towerUpgradeMenu, towerUpgradeMenuContent, 24.0);
+        root.getChildren().add(towerUpgradeMenu);
+        setTowerUpgradeMenuVisible(false);
+
         initKeyController();
         initFrameLoop();
     }
 
-    public void test(String string) {
+    public void modalToastWrapper(String string) {
         modalToast(root, string);
     }
 
@@ -471,8 +530,7 @@ public class GameSceneWrapper extends SceneWrapper {
         }
         handlePlayerMove();
         handlePlayerShoot();
-        // FIXME: 2021/11/28
-//        spawnEnemy();
+        spawnEnemy();
         moveEnemy(enemySpeed);
         triggerTowerShot();
         handleGameMoney();
@@ -563,7 +621,12 @@ public class GameSceneWrapper extends SceneWrapper {
         while (projectileIterator.hasNext()) {
             p = projectileIterator.next();
             enemyIterator = enemies.iterator();
-
+            if (p.get().getLayoutY() > Config.STAGE_HEIGHT) {
+                root.getChildren().remove(p.get());
+                projectileIterator.remove();
+                System.out.println("REMOVE");
+                continue;
+            }
             while (enemyIterator.hasNext()) {
                 e = enemyIterator.next();
                 if (Util.isIntersecting(p.get(), e.getStackPane())) {
@@ -572,9 +635,11 @@ public class GameSceneWrapper extends SceneWrapper {
                     if (hpf <= 0) {
                         root.getChildren().remove(e.getStackPane());
                         enemyIterator.remove();
+                        if (e.isBoss()) {
+                            handleStageClear();
+                        }
                     }
                     projectileIterator.remove();
-                    return;
                 }
             }
         }
@@ -603,9 +668,11 @@ public class GameSceneWrapper extends SceneWrapper {
         if (towerData == null) {
             modalToast(root, "No selected Tower");
             return;
-        }
-        if (isIntersectingWithObjects(player)) {
+        } else if (isIntersectingWithObjects(player)) {
             modalToast(root, "cannot place the tower");
+            return;
+        } else if (getGameMoney() < towerData.getPrice()) {
+            modalToast(root, "Not enough money");
             return;
         }
         Rectangle rectangle = new Rectangle(40, 40, Color.YELLOW);
@@ -617,6 +684,7 @@ public class GameSceneWrapper extends SceneWrapper {
             orgSceneY = t.getSceneY();
             Rectangle c = (Rectangle) (t.getSource());
             c.toFront();
+            setTowerUpgradeMenuVisible(false);
         });
         rectangle.setOnMouseDragged((t) -> {
             if (isIntersectingWithObjects((int) t.getSceneX(), (int) t.getSceneY())) {
@@ -634,15 +702,46 @@ public class GameSceneWrapper extends SceneWrapper {
             }
             orgSceneX = t.getSceneX();
             orgSceneY = t.getSceneY();
+            setTowerUpgradeMenuVisible(false);
         });
         rectangle.setOnMouseClicked((t) -> {
-//            System.out.println(tower);
-            tower.requestLevelUp();
+            if (tower.getLevel() >= 3) {
+                modalToast(root, "Cannot upgrade the tower anymore.");
+                return;
+            }
+            setUpgradeSelectedTower(tower);
+            double x = t.getSceneX();
+            double y = t.getSceneY();
+            double h = rectangle.getHeight();
+            setTowerUpgradeMenuVisible(true);
+            towerUpgradeMenu.setTranslateX(x);
+            towerUpgradeMenu.setTranslateY(y - h - 60);
+            towerUpgradeMenuText.setText(
+                    tower.getTowerData().getName()
+                            + " lv." + tower.getLevel()
+                            + "\n COST: "
+                            + tower.getTowerData().getUpgradePrice()
+            );
         });
         root.getChildren().add(tower.get());
         tower.get().relocate(x, y);
         towers.add(tower);
         setGameMoney(getGameMoney() - tower.getTowerData().getPrice());
+    }
+
+    public void onClickConfirmUpgrade() {
+        Tower tower = getUpgradeSelectedTower();
+        if (tower == null) {
+            System.out.println("err");
+        } else if (getGameMoney() < tower.getTowerData().getUpgradePrice()) {
+            modalToast(root, "Not enough money");
+        } else {
+            tower.requestLevelUp();
+            setGameMoney(getGameMoney() - tower.getTowerData().getUpgradePrice());
+            modalToast(root, tower.getTowerData().getName() + "is upgraded to level " + tower.getLevel());
+        }
+        setTowerUpgradeMenuVisible(false);
+        return;
     }
 
     public void handleGameOver() {
@@ -692,5 +791,9 @@ public class GameSceneWrapper extends SceneWrapper {
         root.setLeftAnchor(gameOverStackPane, 0.0);
         root.setBottomAnchor(gameOverStackPane, 0.0);
         root.setRightAnchor(gameOverStackPane, 0.0);
+    }
+
+    public void handleStageClear() {
+
     }
 }

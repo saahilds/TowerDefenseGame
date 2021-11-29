@@ -27,7 +27,7 @@ public class MainApplication extends Application {
         this.scene = new Scene(this.root, Config.STAGE_WIDTH,
                 Config.STAGE_HEIGHT, Color.GHOSTWHITE);
 
-        this.stage.setTitle("v2");
+        this.stage.setTitle("Dino Defense");
         this.stage.setResizable(false);
 
         sceneWrapper = new SceneWrapper();

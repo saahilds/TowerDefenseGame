@@ -52,6 +52,10 @@ public class TowerData {
         this.description = description;
     }
 
+    public int getUpgradePrice() {
+        return price / 2;
+    }
+
     private TowerType type;
     private int damage;
     private int price;

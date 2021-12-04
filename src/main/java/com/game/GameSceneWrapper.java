@@ -817,10 +817,22 @@ public class GameSceneWrapper extends SceneWrapper {
         newGameButton.setOnMouseClicked(mouseEvent -> {
             initWelcomeScene(stage, root);
         });
+        Text gameStatText = new Text(
+                "Play Time: " + seconds + " seconds"
+                        + "\nTotal Damage: " + (-1) * getTotalDamage()
+                        + "\nTotal Money Gain: " + getTotalGameMoneyGain()
+                        + "\nTotal Money Spent: " + getTotalGameMoneySpent()
+                        + "\nTotal Towers Built: " + towers.size()
+        );
+        gameStatText.setFont(Font.font("Verdana", 14));
+        gameStatText.setStyle("-fx-line-spacing: 8; -fx-padding: 5px;");
+        gameStatText.setFill(Color.GHOSTWHITE);
+        gameStatText.setTranslateX(300);
         gameOverStackPane.getChildren().addAll(
                 gameOverText,
                 exitButton,
-                newGameButton
+                newGameButton,
+                gameStatText
         );
         root.getChildren().add(gameOverStackPane);
         Util.setAllAnchorD(root, gameOverStackPane, 0.0);
@@ -845,11 +857,11 @@ public class GameSceneWrapper extends SceneWrapper {
         stageClearText.setFill(Color.GHOSTWHITE);
 
         Text gameStatText = new Text(
-                "Play Time: " + seconds + "seconds"
+                "Play Time: " + seconds + " seconds"
                         + "\nTotal Damage: " + (-1) * getTotalDamage()
                         + "\nTotal Money Gain: " + getTotalGameMoneyGain()
                         + "\nTotal Money Spent: " + getTotalGameMoneySpent()
-                        + "\nTotal Tower Built: " + towers.size()
+                        + "\nTotal Towers Built: " + towers.size()
         );
         gameStatText.setFont(Font.font("Verdana", 14));
         gameStatText.setStyle("-fx-line-spacing: 8; -fx-padding: 5px;");

@@ -8,6 +8,8 @@ module com.main {
     requires org.kordamp.bootstrapfx.core;
     requires rxjavafx;
     requires hamcrest.core;
+    requires org.testfx.junit;
+    requires rxjava;
 
     opens com.main to javafx.fxml;
     exports com.main;

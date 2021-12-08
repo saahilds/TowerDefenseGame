@@ -851,7 +851,7 @@ public class GameSceneWrapper extends SceneWrapper {
                 )
         );
         Text stageClearText = new Text(
-                "Stage Clear!\n"
+                "You win!\n"
         );
         stageClearText.setFont(Font.font("Verdana", 20));
         stageClearText.setFill(Color.GHOSTWHITE);
